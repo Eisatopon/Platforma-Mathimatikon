@@ -1,11 +1,15 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Header
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
+import uuid
+import secrets
 from pathlib import Path
 from typing import List, Optional
+from datetime import datetime, timezone, timedelta
+import jwt
 from pydantic import BaseModel
 
 from seed_content import all_docs
@@ -16,6 +20,10 @@ load_dotenv(ROOT_DIR / '.env')
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
+
+JWT_SECRET = os.environ['JWT_SECRET']
+ADMIN_PASSWORD = os.environ['ADMIN_PASSWORD']
+JWT_ALG = "HS256"
 
 app = FastAPI(title="Μαθηματικά Γυμνασίου API")
 api_router = APIRouter(prefix="/api")
@@ -103,10 +111,10 @@ class Grade(BaseModel):
 async def seed_database():
     grades, lessons = all_docs()
     for g in grades:
-        await db.grades.update_one({"id": g["id"]}, {"$set": g}, upsert=True)
+        await db.grades.update_one({"id": g["id"]}, {"$setOnInsert": g}, upsert=True)
     for l in lessons:
-        await db.lessons.update_one({"id": l["id"]}, {"$set": l}, upsert=True)
-    logger.info(f"Seeded {len(grades)} grades and {len(lessons)} lessons")
+        await db.lessons.update_one({"id": l["id"]}, {"$setOnInsert": l}, upsert=True)
+    logger.info(f"Seeded {len(grades)} grades and {len(lessons)} lessons (insert-only)")
 
 
 @app.on_event("startup")
@@ -184,6 +192,97 @@ async def get_lesson(lesson_id: str):
         solutions=[Solution(**s) for s in l.get("solutions", [])],
         recap=Recap(**l.get("recap", {})),
     )
+
+
+# ---------------- Admin auth & CRUD ----------------
+class AdminLogin(BaseModel):
+    password: str
+
+
+class LessonUpsert(BaseModel):
+    gradeId: str
+    chapter: str
+    category: str
+    title: str
+    minutes: int = 10
+    order: Optional[int] = None
+    theory: List[str] = []
+    example: Example = Example(title="Παράδειγμα", text="")
+    questions: List[Question] = []
+    plan: Plan = Plan()
+    attention: List[str] = []
+    worksheet: Worksheet = Worksheet()
+    assessment: Assessment = Assessment()
+    solutions: List[Solution] = []
+    recap: Recap = Recap()
+
+
+def create_admin_token() -> str:
+    payload = {"role": "admin", "exp": datetime.now(timezone.utc) + timedelta(hours=12)}
+    return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALG)
+
+
+async def require_admin(authorization: Optional[str] = Header(None)):
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Απαιτείται σύνδεση διαχειριστή")
+    token = authorization[7:]
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALG])
+        if payload.get("role") != "admin":
+            raise HTTPException(status_code=401, detail="Μη έγκυρο token")
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Η συνεδρία έληξε, συνδέσου ξανά")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Μη έγκυρο token")
+    return True
+
+
+@api_router.post("/admin/login")
+async def admin_login(body: AdminLogin):
+    if not secrets.compare_digest(body.password, ADMIN_PASSWORD):
+        raise HTTPException(status_code=401, detail="Λάθος κωδικός")
+    return {"token": create_admin_token()}
+
+
+@api_router.get("/admin/verify")
+async def admin_verify(_: bool = Depends(require_admin)):
+    return {"ok": True}
+
+
+@api_router.post("/admin/lessons", response_model=LessonDetail)
+async def admin_create_lesson(body: LessonUpsert, _: bool = Depends(require_admin)):
+    grade = await db.grades.find_one({"id": body.gradeId})
+    if not grade:
+        raise HTTPException(status_code=400, detail="Άγνωστη τάξη")
+    doc = body.model_dump()
+    lesson_id = f"{body.gradeId}-{uuid.uuid4().hex[:6]}"
+    doc["id"] = lesson_id
+    if doc.get("order") is None:
+        last = await db.lessons.find({"gradeId": body.gradeId}).sort("order", -1).to_list(1)
+        doc["order"] = (last[0]["order"] + 1) if last else 1
+    await db.lessons.insert_one(doc)
+    return await get_lesson(lesson_id)
+
+
+@api_router.put("/admin/lessons/{lesson_id}", response_model=LessonDetail)
+async def admin_update_lesson(lesson_id: str, body: LessonUpsert, _: bool = Depends(require_admin)):
+    existing = await db.lessons.find_one({"id": lesson_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Το μάθημα δεν βρέθηκε")
+    doc = body.model_dump()
+    doc["id"] = lesson_id
+    if doc.get("order") is None:
+        doc["order"] = existing.get("order", 1)
+    await db.lessons.update_one({"id": lesson_id}, {"$set": doc})
+    return await get_lesson(lesson_id)
+
+
+@api_router.delete("/admin/lessons/{lesson_id}")
+async def admin_delete_lesson(lesson_id: str, _: bool = Depends(require_admin)):
+    res = await db.lessons.delete_one({"id": lesson_id})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Το μάθημα δεν βρέθηκε")
+    return {"ok": True}
 
 
 app.include_router(api_router)
