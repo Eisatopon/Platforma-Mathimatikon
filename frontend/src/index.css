@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+    :root {
+        --background: 240 24% 97%;
+        --foreground: 240 12% 15%;
+        --card: 0 0% 100%;
+        --card-foreground: 240 12% 15%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 240 12% 15%;
+        --primary: 243 75% 59%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 240 20% 94%;
+        --secondary-foreground: 240 12% 20%;
+        --muted: 240 20% 95%;
+        --muted-foreground: 240 6% 46%;
+        --accent: 243 75% 96%;
+        --accent-foreground: 243 75% 40%;
+        --destructive: 0 74% 55%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 240 16% 90%;
+        --input: 240 16% 90%;
+        --ring: 243 75% 59%;
+        --radius: 1rem;
+    }
+    .dark {
+        --background: 240 12% 8%;
+        --foreground: 0 0% 96%;
+        --card: 240 9% 12%;
+        --card-foreground: 0 0% 96%;
+        --popover: 240 9% 12%;
+        --popover-foreground: 0 0% 96%;
+        --primary: 243 80% 68%;
+        --primary-foreground: 240 12% 8%;
+        --secondary: 240 8% 18%;
+        --secondary-foreground: 0 0% 96%;
+        --muted: 240 8% 16%;
+        --muted-foreground: 240 6% 62%;
+        --accent: 243 40% 24%;
+        --accent-foreground: 243 80% 82%;
+        --destructive: 0 62% 48%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 240 7% 22%;
+        --input: 240 7% 22%;
+        --ring: 243 80% 68%;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+.katex { font-size: 1.02em; }
+
+@keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-rise { animation: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
