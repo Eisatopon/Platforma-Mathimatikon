@@ -39,3 +39,4 @@ export const adminRenameChapter = (gradeId, oldName, newName) => http.post(`${AP
 export const adminCreateBook = (payload) => http.post(`${API}/admin/books`, payload, auth()).then((r) => r.data);
 export const adminUpdateBook = (id, payload) => http.put(`${API}/admin/books/${id}`, payload, auth()).then((r) => r.data);
 export const adminDeleteBook = (id) => http.delete(`${API}/admin/books/${id}`, auth()).then((r) => r.data);
+export const adminImportBook = (url) => http.post(`${API}/admin/books/import`, { url }, auth()).then((r) => r.data);

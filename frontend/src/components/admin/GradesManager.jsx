@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import { Plus, Save, Trash2, GraduationCap, Library } from "lucide-react";
+import { Plus, Save, Trash2, GraduationCap, Library, Download } from "lucide-react";
 import { GRADE_COLORS } from "@/lib/ui";
-import { adminCreateGrade, adminUpdateGrade, adminDeleteGrade, adminRenameChapter, adminCreateBook, adminUpdateBook, adminDeleteBook } from "@/lib/adminApi";
+import { adminCreateGrade, adminUpdateGrade, adminDeleteGrade, adminRenameChapter, adminCreateBook, adminUpdateBook, adminDeleteBook, adminImportBook } from "@/lib/adminApi";
 
 const inp = "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30";
 const label = "block text-xs font-bold text-muted-foreground mb-1";
@@ -35,11 +35,29 @@ const BooksSection = ({ gradeId, books, onChanged }) => {
   const [np, setNp] = useState("");
   const [ncov, setNcov] = useState("");
   const [busy, setBusy] = useState(false);
-  const create = async () => { if (!nt.trim()) return; setBusy(true); try { await adminCreateBook({ gradeId, title: nt.trim(), publisher: np.trim(), coverUrl: ncov.trim() }); setNt(""); setNp(""); setNcov(""); onChanged(); } finally { setBusy(false); } };
+  const [purl, setPurl] = useState("");
+  const [importing, setImporting] = useState(false);
+  const [importErr, setImportErr] = useState("");
+  const create = async () => { if (!nt.trim()) return; setBusy(true); try { await adminCreateBook({ gradeId, title: nt.trim(), publisher: np.trim(), coverUrl: ncov.trim() }); setNt(""); setNp(""); setNcov(""); setPurl(""); onChanged(); } finally { setBusy(false); } };
+  const doImport = async () => {
+    if (!purl.trim()) return;
+    setImporting(true); setImportErr("");
+    try { const d = await adminImportBook(purl.trim()); setNt(d.title || ""); setNp(d.publisher || ""); setNcov(d.coverUrl || ""); }
+    catch (e) { setImportErr(e?.response?.data?.detail || "Αποτυχία εισαγωγής"); }
+    finally { setImporting(false); }
+  };
   return (
     <div className="mt-4 border-t border-border pt-3">
       <div className="mb-2 flex items-center gap-1.5 text-xs font-bold text-muted-foreground"><Library className="h-3.5 w-3.5" /> Βιβλία (πολλαπλό βιβλίο)</div>
       <div className="space-y-2">{books.map((b) => <BookRow key={b.id} book={b} onChanged={onChanged} />)}</div>
+      <div className="mt-3 rounded-lg border border-dashed border-border bg-secondary/30 p-2.5">
+        <div className="flex gap-2">
+          <input className={inp} placeholder="Επικόλλησε σύνδεσμο Portify (…/book/…)" value={purl} onChange={(e) => setPurl(e.target.value)} data-testid={`portify-url-${gradeId}`} />
+          <button onClick={doImport} disabled={importing} data-testid={`portify-import-${gradeId}`} className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-indigo-600 px-3 py-2 text-xs font-bold text-white hover:bg-indigo-700 disabled:opacity-50"><Download className="h-4 w-4" /> {importing ? "Εισαγωγή…" : "Εισαγωγή από Portify"}</button>
+        </div>
+        {importErr && <p className="mt-1 text-xs font-semibold text-rose-600">{importErr}</p>}
+        <p className="mt-1 text-[11px] text-muted-foreground">Τραβάει αυτόματα τίτλο, εκδότη & εξώφυλλο. Έλεγξε και πάτα «+ Βιβλίο».</p>
+      </div>
       <div className="mt-2 grid gap-2 sm:grid-cols-[1fr_1fr_1fr_auto]">
         <input className={inp} placeholder="Τίτλος νέου βιβλίου" value={nt} onChange={(e) => setNt(e.target.value)} data-testid={`new-book-title-${gradeId}`} />
         <input className={inp} placeholder="Εκδότης" value={np} onChange={(e) => setNp(e.target.value)} />

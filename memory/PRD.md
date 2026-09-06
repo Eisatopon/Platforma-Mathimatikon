@@ -50,6 +50,10 @@ Web εφαρμογή που παρουσιάζει δομημένα μαθήμα
 - Admin: διαχείριση βιβλίων ανά τάξη (tab «Τάξεις & Κεφάλαια») + επιλογή Βιβλίου στον editor μαθήματος.
 - Κατάσταση: 0 βιβλία seeded → dormant. Έτοιμο για τα 4 βιβλία/τάξη του νέου «πολλαπλού βιβλίου». (Επαληθεύτηκε χειροκίνητα: create/assign/selector/cover thumbnail/cleanup.)
 
+## Εισαγωγή από Portify (2026-06)
+- Backend: `POST /api/admin/books/import { url }` (admin) → κατεβάζει τη σελίδα Portify (httpx) και εξάγει τίτλο (h1/og:title), εκδότη (από og:title) και εξώφυλλο (preview/thumb500). 400 για μη-Portify url, 401 χωρίς token.
+- Admin UI: στο tab «Τάξεις & Κεφάλαια», κάθε τάξη έχει πεδίο συνδέσμου Portify + κουμπί «Εισαγωγή από Portify» που προσυμπληρώνει τα πεδία νέου βιβλίου (τίτλος/εκδότης/εξώφυλλο)· ο χρήστης ελέγχει και πατά «+ Βιβλίο».
+
 ## Backlog / Remaining
 - ✅ (DONE) Admin panel με απλό κωδικό (JWT) — πλήρες CRUD μαθημάτων 7 ενοτήτων στο `/admin`
 - ✅ (DONE) Αυτόματη αποσύνδεση σε 401 (axios interceptor → επιστροφή σε login)

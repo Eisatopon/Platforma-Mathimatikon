@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import List, Optional
 from datetime import datetime, timezone, timedelta
 import jwt
+import httpx
 from pydantic import BaseModel
 
 from seed_content import all_docs
@@ -410,6 +411,61 @@ async def admin_delete_book(book_id: str, _: bool = Depends(require_admin)):
         raise HTTPException(status_code=404, detail="Το βιβλίο δεν βρέθηκε")
     await db.lessons.update_many({"bookId": book_id}, {"$set": {"bookId": ""}})
     return {"ok": True}
+
+
+class ImportUrl(BaseModel):
+    url: str
+
+
+def _parse_portify(html: str, base: str = "https://www.portify.gr"):
+    import re
+
+    def meta(prop):
+        m = re.search(r'<meta[^>]+property=["\']' + re.escape(prop) + r'["\'][^>]*content=["\']([^"\']+)', html)
+        if not m:
+            m = re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]*property=["\']' + re.escape(prop), html)
+        return m.group(1) if m else ""
+
+    title = ""
+    h1 = re.search(r"<h1[^>]*>(.*?)</h1>", html, re.S)
+    if h1:
+        title = re.sub(r"<[^>]+>", "", h1.group(1)).strip()
+    og_title = meta("og:title")
+    publisher = ""
+    if "—" in og_title:
+        publisher = og_title.split("—", 1)[1].split("·")[0].strip()
+    if not title and og_title:
+        title = og_title.split("—")[0].strip()
+
+    cover = ""
+    mp = re.search(r'<img[^>]+src=["\']([^"\']*previews/[^"\']+)["\']', html)
+    if mp:
+        cover = mp.group(1)
+    if not cover:
+        mt = re.search(r'(https://ebooksdl\.cti\.gr/[^"\']+thumb500[^"\']*)', html)
+        if mt:
+            cover = mt.group(1)
+    if not cover:
+        cover = meta("og:image")
+    if cover.startswith("/"):
+        cover = base + cover
+    return {"title": title, "publisher": publisher, "coverUrl": cover}
+
+
+@api_router.post("/admin/books/import")
+async def admin_import_book(body: ImportUrl, _: bool = Depends(require_admin)):
+    if "portify.gr" not in body.url:
+        raise HTTPException(status_code=400, detail="Δώσε έγκυρο σύνδεσμο Portify")
+    try:
+        async with httpx.AsyncClient(timeout=20, follow_redirects=True, headers={"User-Agent": "Mozilla/5.0"}) as c:
+            r = await c.get(body.url)
+            r.raise_for_status()
+    except Exception:
+        raise HTTPException(status_code=502, detail="Αποτυχία ανάκτησης της σελίδας Portify")
+    data = _parse_portify(r.text)
+    if not data["title"]:
+        raise HTTPException(status_code=422, detail="Δεν βρέθηκε τίτλος βιβλίου στη σελίδα")
+    return data
 
 
 app.include_router(api_router)
