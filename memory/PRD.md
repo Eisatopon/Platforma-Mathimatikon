@@ -42,6 +42,13 @@ Web εφαρμογή που παρουσιάζει δομημένα μαθήμα
 - `solutions`: [{ title, text }]
 - `recap`: { keyPoints:[], nextLessonIds:[], furtherStudy:[] }
 
+## Κάρτες βιβλίων Portify ανά τάξη — «Υπό κατασκευή» (2026-06)
+- Κάθε σελίδα τάξης (Grade.jsx) δείχνει ενότητα «Βιβλία (Πολλαπλό βιβλίο)» με badge «Υπό κατασκευή» **πάνω** από τα μαθήματα (τα μαθήματα εμφανίζονται πάντα από κάτω· καταργήθηκε η παλιά αδρανής λογική εσωτερικού book-selector).
+- Οι κάρτες βιβλίων είναι **εξωτερικοί σύνδεσμοι** προς Portify (άνοιγμα σε νέα καρτέλα, target=_blank), με εξώφυλλο + τίτλο + εκδότη.
+- Νέο πεδίο `url` στο μοντέλο Book/BookUpsert (backend) — ο σύνδεσμος Portify της κάρτας. Το `POST /api/admin/books/import` επιστρέφει και το `url`.
+- Seed: 9 βιβλία (3 ανά τάξη — Πατάκη/Πουκαμισάς/Λυσάρι) στο `seed_content.py` (`BOOKS`/`all_books()`), idempotent upsert στο startup (persist σε fresh DB, π.χ. deploy).
+- Admin («Τάξεις & Κεφάλαια»): πεδίο link/`url` στη γραμμή κάθε βιβλίου + πλήρης διαχείριση.
+
 ## Αρχιτεκτονική Πολλαπλού Βιβλίου (σε αναμονή — 2026-06)
 Προστέθηκε επίπεδο **Βιβλίο** ανάμεσα σε Τάξη και Μάθημα, backward-compatible:
 - Data model: collection `books` { id, gradeId, title, publisher, coverUrl, order }· κάθε μάθημα έχει προαιρετικό `bookId` (default "").

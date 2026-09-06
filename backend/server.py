@@ -13,7 +13,7 @@ import jwt
 import httpx
 from pydantic import BaseModel
 
-from seed_content import all_docs
+from seed_content import all_docs, all_books
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -115,6 +115,7 @@ class Book(BaseModel):
     title: str
     publisher: str = ""
     coverUrl: str = ""
+    url: str = ""
     order: int
 
 
@@ -123,6 +124,7 @@ class BookUpsert(BaseModel):
     title: str
     publisher: str = ""
     coverUrl: str = ""
+    url: str = ""
     order: Optional[int] = None
 
 
@@ -133,7 +135,9 @@ async def seed_database():
         await db.grades.update_one({"id": g["id"]}, {"$setOnInsert": g}, upsert=True)
     for l in lessons:
         await db.lessons.update_one({"id": l["id"]}, {"$setOnInsert": l}, upsert=True)
-    logger.info(f"Seeded {len(grades)} grades and {len(lessons)} lessons (insert-only)")
+    for b in all_books():
+        await db.books.update_one({"id": b["id"]}, {"$setOnInsert": b}, upsert=True)
+    logger.info(f"Seeded {len(grades)} grades, {len(lessons)} lessons, {len(all_books())} books (insert-only)")
 
 
 @app.on_event("startup")
@@ -388,7 +392,7 @@ async def admin_create_book(body: BookUpsert, _: bool = Depends(require_admin)):
     if order is None:
         last = await db.books.find({"gradeId": body.gradeId}).sort("order", -1).to_list(1)
         order = (last[0]["order"] + 1) if last else 1
-    doc = {"id": bid, "gradeId": body.gradeId, "title": body.title, "publisher": body.publisher, "coverUrl": body.coverUrl, "order": order}
+    doc = {"id": bid, "gradeId": body.gradeId, "title": body.title, "publisher": body.publisher, "coverUrl": body.coverUrl, "url": body.url, "order": order}
     await db.books.insert_one(dict(doc))
     return Book(**doc)
 
@@ -398,7 +402,7 @@ async def admin_update_book(book_id: str, body: BookUpsert, _: bool = Depends(re
     existing = await db.books.find_one({"id": book_id})
     if not existing:
         raise HTTPException(status_code=404, detail="Το βιβλίο δεν βρέθηκε")
-    upd = {"gradeId": body.gradeId, "title": body.title, "publisher": body.publisher, "coverUrl": body.coverUrl,
+    upd = {"gradeId": body.gradeId, "title": body.title, "publisher": body.publisher, "coverUrl": body.coverUrl, "url": body.url,
            "order": body.order if body.order is not None else existing.get("order", 1)}
     await db.books.update_one({"id": book_id}, {"$set": upd})
     return Book(id=book_id, **upd)
@@ -463,6 +467,7 @@ async def admin_import_book(body: ImportUrl, _: bool = Depends(require_admin)):
     except Exception:
         raise HTTPException(status_code=502, detail="Αποτυχία ανάκτησης της σελίδας Portify")
     data = _parse_portify(r.text)
+    data["url"] = body.url
     if not data["title"]:
         raise HTTPException(status_code=422, detail="Δεν βρέθηκε τίτλος βιβλίου στη σελίδα")
     return data

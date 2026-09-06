@@ -29,6 +29,22 @@ GRADES = [
 ]
 
 
+BOOKS = [
+    # Α΄ Γυμνασίου
+    {"id": "b-g7-pataki", "gradeId": "g7", "title": "Μαθηματικά (A΄ Γυμνασίου)", "publisher": "Εκδόσεις Πατάκη", "coverUrl": "https://www.portify.gr/previews/35294.jpg", "url": "https://www.portify.gr/book/mathimatika-a-gymnasioy-ekdoseis-pataki-is-0", "order": 1},
+    {"id": "b-g7-poukamisas", "gradeId": "g7", "title": "Μαθηματικά (A΄ Γυμνασίου)", "publisher": "Εκδόσεις Πουκαμισάς", "coverUrl": "https://www.portify.gr/previews/37042.jpg", "url": "https://www.portify.gr/book/mathimatika-a-gymnasioy-ekdoseis-poykamisas-is-0", "order": 2},
+    {"id": "b-g7-lysari", "gradeId": "g7", "title": "Μαθηματικά (A΄ Γυμνασίου)", "publisher": "Εκδόσεις Λυσάρι (lisari.gr)", "coverUrl": "https://www.portify.gr/previews/35856.jpg", "url": "https://www.portify.gr/book/mathimatika-a-gymnasioy-ekdoseis-lysari-lisari-gr-is-0", "order": 3},
+    # Β΄ Γυμνασίου
+    {"id": "b-g8-pataki", "gradeId": "g8", "title": "Μαθηματικά (Β΄ Γυμνασίου)", "publisher": "Εκδόσεις Πατάκη", "coverUrl": "https://www.portify.gr/previews/35298.jpg", "url": "https://www.portify.gr/book/mathimatika-v-gymnasioy-ekdoseis-pataki-is-0", "order": 1},
+    {"id": "b-g8-poukamisas", "gradeId": "g8", "title": "Μαθηματικά (Β΄ Γυμνασίου)", "publisher": "Εκδόσεις Πουκαμισάς", "coverUrl": "https://www.portify.gr/previews/37468.jpg", "url": "https://www.portify.gr/book/mathimatika-v-gymnasioy-ekdoseis-poykamisas-is-0", "order": 2},
+    {"id": "b-g8-lysari", "gradeId": "g8", "title": "Μαθηματικά (Β΄ Γυμνασίου)", "publisher": "Εκδόσεις Λυσάρι (lisari.gr)", "coverUrl": "https://www.portify.gr/previews/35860.jpg", "url": "https://www.portify.gr/book/mathimatika-v-gymnasioy-ekdoseis-lysari-lisari-gr-is-0", "order": 3},
+    # Γ΄ Γυμνασίου
+    {"id": "b-g9-pataki", "gradeId": "g9", "title": "Μαθηματικά (Γ΄ Γυμνασίου)", "publisher": "Εκδόσεις Πατάκη", "coverUrl": "https://www.portify.gr/previews/35302.jpg", "url": "https://www.portify.gr/book/mathimatika-g-gymnasioy-ekdoseis-pataki-is-0", "order": 1},
+    {"id": "b-g9-poukamisas", "gradeId": "g9", "title": "Μαθηματικά (Γ΄ Γυμνασίου)", "publisher": "Εκδόσεις Πουκαμισάς", "coverUrl": "https://www.portify.gr/previews/37112.jpg", "url": "https://www.portify.gr/book/mathimatika-g-gymnasioy-ekdoseis-poykamisas-is-0", "order": 2},
+    {"id": "b-g9-lysari", "gradeId": "g9", "title": "Μαθηματικά (Γ΄ Γυμνασίου)", "publisher": "Εκδόσεις Λυσάρι (lisari.gr)", "coverUrl": "https://www.portify.gr/previews/35865.jpg", "url": "https://www.portify.gr/book/mathimatika-g-gymnasioy-ekdoseis-lysari-lisari-gr-is-0", "order": 3},
+]
+
+
 def L(id, gradeId, chapter, category, title, minutes, order, theory, example, questions):
     return {
         "id": id,
@@ -780,3 +796,7 @@ LESSONS = [
 
 def all_docs():
     return GRADES, LESSONS
+
+
+def all_books():
+    return BOOKS

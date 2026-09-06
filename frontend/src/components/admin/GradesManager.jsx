@@ -15,15 +15,17 @@ const BookRow = ({ book, onChanged }) => {
   const [t, setT] = useState(book.title);
   const [p, setP] = useState(book.publisher);
   const [c, setC] = useState(book.coverUrl);
+  const [u, setU] = useState(book.url || "");
   const [busy, setBusy] = useState(false);
-  const save = async () => { setBusy(true); try { await adminUpdateBook(book.id, { gradeId: book.gradeId, title: t, publisher: p, coverUrl: c }); onChanged(); } finally { setBusy(false); } };
+  const save = async () => { setBusy(true); try { await adminUpdateBook(book.id, { gradeId: book.gradeId, title: t, publisher: p, coverUrl: c, url: u }); onChanged(); } finally { setBusy(false); } };
   const del = async () => { if (!window.confirm("Διαγραφή βιβλίου;")) return; setBusy(true); try { await adminDeleteBook(book.id); onChanged(); } finally { setBusy(false); } };
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-border bg-background p-2" data-testid={`book-row-${book.id}`}>
+    <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-background p-2" data-testid={`book-row-${book.id}`}>
       <div className="h-12 w-9 shrink-0 overflow-hidden rounded bg-secondary">{c ? <img src={c} alt="" className="h-full w-full object-cover" /> : null}</div>
       <input className={inp} value={t} onChange={(e) => setT(e.target.value)} placeholder="Τίτλος" />
       <input className={inp} value={p} onChange={(e) => setP(e.target.value)} placeholder="Εκδότης" />
       <input className={inp} value={c} onChange={(e) => setC(e.target.value)} placeholder="URL εξωφύλλου" />
+      <input className={inp} value={u} onChange={(e) => setU(e.target.value)} placeholder="Σύνδεσμος Portify (link)" />
       <button onClick={save} disabled={busy} data-testid={`book-save-${book.id}`} className="shrink-0 rounded-lg border border-border px-3 py-2 text-xs font-bold hover:bg-secondary disabled:opacity-50">Αποθ.</button>
       <button onClick={del} disabled={busy} data-testid={`book-delete-${book.id}`} className="shrink-0 rounded-lg px-2 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10"><Trash2 className="h-4 w-4" /></button>
     </div>
@@ -38,7 +40,7 @@ const BooksSection = ({ gradeId, books, onChanged }) => {
   const [purl, setPurl] = useState("");
   const [importing, setImporting] = useState(false);
   const [importErr, setImportErr] = useState("");
-  const create = async () => { if (!nt.trim()) return; setBusy(true); try { await adminCreateBook({ gradeId, title: nt.trim(), publisher: np.trim(), coverUrl: ncov.trim() }); setNt(""); setNp(""); setNcov(""); setPurl(""); onChanged(); } finally { setBusy(false); } };
+  const create = async () => { if (!nt.trim()) return; setBusy(true); try { await adminCreateBook({ gradeId, title: nt.trim(), publisher: np.trim(), coverUrl: ncov.trim(), url: purl.trim() }); setNt(""); setNp(""); setNcov(""); setPurl(""); onChanged(); } finally { setBusy(false); } };
   const doImport = async () => {
     if (!purl.trim()) return;
     setImporting(true); setImportErr("");
@@ -56,7 +58,7 @@ const BooksSection = ({ gradeId, books, onChanged }) => {
           <button onClick={doImport} disabled={importing} data-testid={`portify-import-${gradeId}`} className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-indigo-600 px-3 py-2 text-xs font-bold text-white hover:bg-indigo-700 disabled:opacity-50"><Download className="h-4 w-4" /> {importing ? "Εισαγωγή…" : "Εισαγωγή από Portify"}</button>
         </div>
         {importErr && <p className="mt-1 text-xs font-semibold text-rose-600">{importErr}</p>}
-        <p className="mt-1 text-[11px] text-muted-foreground">Τραβάει αυτόματα τίτλο, εκδότη & εξώφυλλο. Έλεγξε και πάτα «+ Βιβλίο».</p>
+        <p className="mt-1 text-[11px] text-muted-foreground">Τραβάει αυτόματα τίτλο, εκδότη & εξώφυλλο. Ο σύνδεσμος αποθηκεύεται ως link της κάρτας. Έλεγξε και πάτα «+ Βιβλίο».</p>
       </div>
       <div className="mt-2 grid gap-2 sm:grid-cols-[1fr_1fr_1fr_auto]">
         <input className={inp} placeholder="Τίτλος νέου βιβλίου" value={nt} onChange={(e) => setNt(e.target.value)} data-testid={`new-book-title-${gradeId}`} />
