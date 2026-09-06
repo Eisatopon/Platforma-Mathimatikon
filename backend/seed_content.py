@@ -9,14 +9,14 @@ GRADES = [
         "id": "g7",
         "title": "Α΄ Γυμνασίου",
         "subtitle": "Αριθμητική, άλγεβρα και βασική γεωμετρία",
-        "color": "blue",
+        "color": "emerald",
         "order": 1,
     },
     {
         "id": "g8",
         "title": "Β΄ Γυμνασίου",
         "subtitle": "Εξισώσεις, συναρτήσεις και προχωρημένη γεωμετρία",
-        "color": "violet",
+        "color": "amber",
         "order": 2,
     },
     {

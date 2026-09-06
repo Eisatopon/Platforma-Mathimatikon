@@ -1,19 +1,19 @@
 import { Calculator, Sigma, Shapes, BarChart3 } from "lucide-react";
 
 export const gradeStyles = {
-  blue: {
-    iconBg: "bg-blue-100 dark:bg-blue-500/15",
-    iconText: "text-blue-600 dark:text-blue-400",
-    pct: "text-blue-600 dark:text-blue-400",
-    bar: "bg-blue-500",
-    banner: "from-blue-50 to-indigo-50 dark:from-blue-500/10 dark:to-indigo-500/10",
+  emerald: {
+    iconBg: "bg-emerald-100 dark:bg-emerald-500/15",
+    iconText: "text-emerald-600 dark:text-emerald-400",
+    pct: "text-emerald-600 dark:text-emerald-400",
+    bar: "bg-emerald-500",
+    banner: "from-emerald-50 to-teal-50 dark:from-emerald-500/10 dark:to-teal-500/10",
   },
-  violet: {
-    iconBg: "bg-violet-100 dark:bg-violet-500/15",
-    iconText: "text-violet-600 dark:text-violet-400",
-    pct: "text-violet-600 dark:text-violet-400",
-    bar: "bg-violet-500",
-    banner: "from-violet-50 to-fuchsia-50 dark:from-violet-500/10 dark:to-fuchsia-500/10",
+  amber: {
+    iconBg: "bg-amber-100 dark:bg-amber-500/15",
+    iconText: "text-amber-600 dark:text-amber-400",
+    pct: "text-amber-600 dark:text-amber-400",
+    bar: "bg-amber-500",
+    banner: "from-amber-50 to-orange-50 dark:from-amber-500/10 dark:to-orange-500/10",
   },
   rose: {
     iconBg: "bg-rose-100 dark:bg-rose-500/15",
