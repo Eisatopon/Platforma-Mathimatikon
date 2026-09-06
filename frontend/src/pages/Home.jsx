@@ -34,6 +34,7 @@ export default function Home() {
   }, []);
 
   const stats = useMemo(() => computeStats(progress, grades), [progress, grades]);
+  const isReturning = stats.completedCount > 0 || stats.xp > 0 || stats.streak > 0;
   const gradeTitle = (id) => grades.find((g) => g.id === id)?.title || "";
 
   const filtering = query.trim() !== "" || cat !== "Όλα";
@@ -66,7 +67,7 @@ export default function Home() {
                 <Sparkles className="h-3.5 w-3.5" /> Ατομική σου πορεία μάθησης
               </span>
               <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
-                Καλώς ήρθες πίσω!<br />Ας μάθουμε Μαθηματικά.
+                {isReturning ? "Καλώς ήρθες πίσω!" : "Καλώς ήρθες!"}<br />Ας μάθουμε Μαθηματικά.
               </h1>
               <p className="mt-3 max-w-md text-base text-muted-foreground">
                 Βρες το μάθημα που χρειάζεσαι, λύσε διαδραστικά κουίζ και παρακολούθησε την πρόοδό σου βήμα-βήμα.
