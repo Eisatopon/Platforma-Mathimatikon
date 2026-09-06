@@ -100,9 +100,9 @@ export default function Grade() {
                   initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 * i }}
                   className="group relative overflow-hidden rounded-2xl border border-border bg-card text-left transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5"
                 >
-                  <div className="aspect-[3/4] w-full overflow-hidden bg-secondary">
+                  <div className="aspect-[3/4] w-full overflow-hidden bg-white p-2 dark:bg-secondary">
                     {b.coverUrl ? (
-                      <img src={b.coverUrl} alt={b.title} className="h-full w-full object-cover transition-transform group-hover:scale-105" />
+                      <img src={b.coverUrl} alt={b.title} className="h-full w-full object-contain transition-transform group-hover:scale-[1.03]" />
                     ) : (
                       <div className="grid h-full place-items-center text-muted-foreground"><Library className="h-10 w-10" /></div>
                     )}
