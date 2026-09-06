@@ -29,9 +29,18 @@ Web εφαρμογή που παρουσιάζει δομημένα μαθήμα
 - ✅ 4 backend endpoints + 404 handling (testing 100%)
 - ✅ Home hero+stats+level bar, search/filter, grade cards
 - ✅ Grade page (κεφάλαια, lesson cards, πρόοδος)
-- ✅ Lesson page + διαδραστικό κουίζ e2e (feedback, score, XP, next lesson)
+- ✅ **Σελίδα μαθήματος με 7 ενότητες (accordion + step-nav)**: 1) Σχέδιο μαθήματος, 2) Θεωρία/Επανάληψη (+παράδειγμα +σημεία προσοχής), 3) Φύλλο εργασίας Α/Β/Γ (πράσινο/πορτοκαλί/κόκκινο, πεδία απάντησης σε localStorage), 4) Διαδραστικές ασκήσεις (MCQ + άμεση ανατροφοδότηση), 5) Τεστ αξιολόγησης με χρονόμετρο 15′ + βαθμολογία/επισκόπηση, 6) Λύσεις (spoiler), 7) Ανακεφαλαίωση
+- ✅ Empty states για ενότητες που θα γεμίσει ο χρήστης (1c): plan/worksheet/solutions/recap/materials
 - ✅ Achievements (stats + 8 badges + reset)
 - ✅ KaTeX, dark/light theme, localStorage gamification (testing 100%)
+
+## Πώς προστίθεται περιεχόμενο (νέα πεδία ανά μάθημα στο seed_content.py / MongoDB)
+- `plan`: { objectives:[], prerequisites:[], duration:"", materials:[], overview:"" }
+- `attention`: [] (σημεία προσοχής στη Θεωρία)
+- `worksheet`: { A:[], B:[], C:[] }
+- `assessment`: { durationMinutes:15, questions:[{prompt,options,correct,explanation}] }  (αν κενό → το τεστ πέφτει σε δείγμα από τα questions)
+- `solutions`: [{ title, text }]
+- `recap`: { keyPoints:[], nextLessonIds:[], furtherStudy:[] }
 
 ## Backlog / Remaining
 - P1: Admin panel για προσθήκη/επεξεργασία μαθημάτων (χωρίς κώδικα)

@@ -1,15 +1,50 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, ArrowLeft, BookOpen, Lightbulb, Sparkles, CheckCircle2, XCircle, RotateCcw, Trophy, Home as HomeIcon, Clock } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  ChevronRight, ArrowLeft, BookOpen, Lightbulb, Clock, Home as HomeIcon,
+  ClipboardList, PencilRuler, MousePointerClick, Timer, CheckCircle2, Flag,
+  Target, ListChecks, Package, Eye, EyeOff, AlertTriangle, Link2, GraduationCap,
+} from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MathText } from "@/components/MathText";
+import { EmptyState } from "@/components/lesson/EmptyState";
+import { Worksheet } from "@/components/lesson/Worksheet";
+import { InteractiveExercises } from "@/components/lesson/InteractiveExercises";
+import { TimedTest } from "@/components/lesson/TimedTest";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { fetchLesson, fetchGrade } from "@/lib/api";
-import { recordLessonResult } from "@/lib/progress";
 import { categoryIcon, categoryColor } from "@/lib/ui";
 
-const LETTERS = ["Α", "Β", "Γ", "Δ", "Ε"];
+const SECTIONS = [
+  { id: "plan", n: 1, title: "Σχέδιο μαθήματος", Icon: ClipboardList },
+  { id: "theory", n: 2, title: "Θεωρία / Επανάληψη", Icon: BookOpen },
+  { id: "worksheet", n: 3, title: "Φύλλο εργασίας", Icon: PencilRuler },
+  { id: "interactive", n: 4, title: "Διαδραστικές ασκήσεις", Icon: MousePointerClick },
+  { id: "test", n: 5, title: "Τεστ αξιολόγησης", Icon: Timer },
+  { id: "solutions", n: 6, title: "Λύσεις", Icon: CheckCircle2 },
+  { id: "recap", n: 7, title: "Ανακεφαλαίωση", Icon: Flag },
+];
+
+const SolutionItem = ({ sol, i }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="rounded-xl border border-border bg-card p-4">
+      <div className="flex items-center justify-between gap-3">
+        <span className="font-bold">{sol.title}</span>
+        <button data-testid={`solution-toggle-${i}`} onClick={() => setOpen((o) => !o)} className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1.5 text-xs font-bold hover:bg-secondary/70">
+          {open ? <><EyeOff className="h-3.5 w-3.5" /> Απόκρυψη</> : <><Eye className="h-3.5 w-3.5" /> Εμφάνιση λύσης</>}
+        </button>
+      </div>
+      {open && (
+        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="mt-3 overflow-hidden">
+          <MathText className="text-[15px] leading-relaxed" text={sol.text} />
+        </motion.div>
+      )}
+    </div>
+  );
+};
 
 export default function Lesson() {
   const { lessonId } = useParams();
@@ -17,16 +52,11 @@ export default function Lesson() {
   const [lesson, setLesson] = useState(null);
   const [gradeTitle, setGradeTitle] = useState("");
   const [nextLesson, setNextLesson] = useState(null);
-
-  const [mode, setMode] = useState("read"); // read | quiz | result
-  const [idx, setIdx] = useState(0);
-  const [selected, setSelected] = useState(null);
-  const [answered, setAnswered] = useState(false);
-  const [correctCount, setCorrectCount] = useState(0);
+  const [open, setOpen] = useState(["plan", "theory"]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setMode("read"); setIdx(0); setSelected(null); setAnswered(false); setCorrectCount(0);
+    setOpen(["plan", "theory"]);
     fetchLesson(lessonId).then((l) => {
       setLesson(l);
       fetchGrade(l.gradeId).then((d) => {
@@ -49,34 +79,121 @@ export default function Lesson() {
     );
   }
 
-  const q = lesson.questions[idx];
-  const total = lesson.questions.length;
-
-  const chooseAnswer = (i) => {
-    if (answered) return;
-    setSelected(i);
-    setAnswered(true);
-    if (i === q.correct) setCorrectCount((c) => c + 1);
+  const jump = (id) => {
+    setOpen((prev) => (prev.includes(id) ? prev : [...prev, id]));
+    setTimeout(() => {
+      const el = document.getElementById(`sec-${id}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
   };
 
-  const next = () => {
-    if (idx < total - 1) {
-      setIdx(idx + 1);
-      setSelected(null);
-      setAnswered(false);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      recordLessonResult(lesson.id, correctCount, total);
-      setMode("result");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+  const plan = lesson.plan || {};
+  const planHasContent = (plan.objectives?.length || plan.prerequisites?.length || plan.duration || plan.materials?.length || plan.overview);
+  const recap = lesson.recap || {};
+  const recapHasContent = (recap.keyPoints?.length || recap.nextLessonIds?.length || recap.furtherStudy?.length);
+  const testQuestions = lesson.assessment?.questions?.length ? lesson.assessment.questions : lesson.questions;
+  const testFallback = !(lesson.assessment?.questions?.length);
+
+  const renderSection = (id) => {
+    switch (id) {
+      case "plan":
+        return planHasContent ? (
+          <div className="space-y-5">
+            {plan.overview && <p className="text-[15px] leading-relaxed text-muted-foreground"><MathText text={plan.overview} /></p>}
+            {plan.objectives?.length > 0 && (
+              <div>
+                <div className="mb-2 flex items-center gap-2 text-sm font-bold"><Target className="h-4 w-4 text-primary" /> Στόχοι</div>
+                <ul className="space-y-1.5">
+                  {plan.objectives.map((o, i) => (
+                    <li key={i} className="flex gap-2 text-[15px]"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" /><MathText text={o} /></li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <div className="grid gap-4 sm:grid-cols-2">
+              {plan.prerequisites?.length > 0 && (
+                <div>
+                  <div className="mb-2 flex items-center gap-2 text-sm font-bold"><ListChecks className="h-4 w-4 text-primary" /> Προαπαιτούμενα</div>
+                  <ul className="list-inside list-disc space-y-1 text-[15px] text-muted-foreground">{plan.prerequisites.map((p, i) => <li key={i}><MathText text={p} /></li>)}</ul>
+                </div>
+              )}
+              {plan.materials?.length > 0 && (
+                <div>
+                  <div className="mb-2 flex items-center gap-2 text-sm font-bold"><Package className="h-4 w-4 text-primary" /> Υλικά</div>
+                  <ul className="list-inside list-disc space-y-1 text-[15px] text-muted-foreground">{plan.materials.map((m, i) => <li key={i}><MathText text={m} /></li>)}</ul>
+                </div>
+              )}
+            </div>
+            <div className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1.5 text-sm font-semibold"><Clock className="h-4 w-4 text-muted-foreground" /> Διάρκεια: {plan.duration || `${lesson.minutes} λεπτά`}</div>
+          </div>
+        ) : (
+          <EmptyState message="Δεν έχει προστεθεί ακόμη σχέδιο μαθήματος." hint="Εδώ θα μπουν: στόχοι, προαπαιτούμενα, διάρκεια, υλικά και επισκόπηση." />
+        );
+
+      case "theory":
+        return (
+          <div className="space-y-5">
+            <ul className="space-y-3">
+              {lesson.theory.map((t, i) => (
+                <li key={i} className="flex gap-3">
+                  <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md bg-primary/10 text-xs font-bold text-primary">{i + 1}</span>
+                  <MathText className="text-[15px] leading-relaxed" text={t} />
+                </li>
+              ))}
+            </ul>
+            <div className="rounded-xl border border-amber-300/60 bg-amber-50 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
+              <div className="mb-2 flex items-center gap-2"><Lightbulb className="h-5 w-5 text-amber-500" /><h4 className="font-extrabold text-amber-700 dark:text-amber-400">{lesson.example.title}</h4></div>
+              <MathText className="text-[15px] leading-relaxed" text={lesson.example.text} />
+            </div>
+            {lesson.attention?.length > 0 && (
+              <div className="rounded-xl border border-rose-300/60 bg-rose-50 p-4 dark:border-rose-500/30 dark:bg-rose-500/10">
+                <div className="mb-2 flex items-center gap-2"><AlertTriangle className="h-5 w-5 text-rose-500" /><h4 className="font-extrabold text-rose-700 dark:text-rose-400">Σημεία προσοχής</h4></div>
+                <ul className="list-inside list-disc space-y-1 text-[15px]">{lesson.attention.map((a, i) => <li key={i}><MathText text={a} /></li>)}</ul>
+              </div>
+            )}
+          </div>
+        );
+
+      case "worksheet":
+        return <Worksheet lessonId={lesson.id} worksheet={lesson.worksheet} />;
+
+      case "interactive":
+        return <InteractiveExercises lessonId={lesson.id} questions={lesson.questions} />;
+
+      case "test":
+        return <TimedTest lessonId={lesson.id} questions={testQuestions} durationMinutes={lesson.assessment?.durationMinutes || 15} fallback={testFallback} />;
+
+      case "solutions":
+        return lesson.solutions?.length > 0 ? (
+          <div className="space-y-3">{lesson.solutions.map((s, i) => <SolutionItem key={i} sol={s} i={i} />)}</div>
+        ) : (
+          <EmptyState message="Δεν έχουν προστεθεί ακόμη αναλυτικές λύσεις." hint="Εδώ θα μπουν λύσεις βήμα-βήμα με εναλλακτικούς τρόπους και σχόλια για συχνά λάθη." />
+        );
+
+      case "recap":
+        return recapHasContent ? (
+          <div className="space-y-5">
+            {recap.keyPoints?.length > 0 && (
+              <div>
+                <div className="mb-2 text-sm font-bold">Βασικά σημεία</div>
+                <ul className="space-y-1.5">{recap.keyPoints.map((k, i) => <li key={i} className="flex gap-2 text-[15px]"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" /><MathText text={k} /></li>)}</ul>
+              </div>
+            )}
+            {recap.furtherStudy?.length > 0 && (
+              <div>
+                <div className="mb-2 text-sm font-bold">Περαιτέρω μελέτη</div>
+                <ul className="list-inside list-disc space-y-1 text-[15px] text-muted-foreground">{recap.furtherStudy.map((f, i) => <li key={i}><MathText text={f} /></li>)}</ul>
+              </div>
+            )}
+          </div>
+        ) : (
+          <EmptyState message="Δεν έχει προστεθεί ακόμη ανακεφαλαίωση." hint="Εδώ θα μπουν 3–5 βασικά σημεία, σύνδεσμοι επόμενων μαθημάτων και περαιτέρω μελέτη." />
+        );
+
+      default:
+        return null;
     }
   };
-
-  const restartQuiz = () => {
-    setMode("quiz"); setIdx(0); setSelected(null); setAnswered(false); setCorrectCount(0);
-  };
-
-  const scorePct = Math.round((correctCount / total) * 100);
 
   return (
     <div className="App min-h-screen">
@@ -94,156 +211,57 @@ export default function Lesson() {
         {/* lesson header */}
         <div className="rounded-2xl border border-border bg-card p-5">
           <div className="flex items-center gap-4">
-            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-accent">
-              <Icon className={`h-6 w-6 ${categoryColor[lesson.category] || "text-primary"}`} />
-            </div>
+            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-accent"><Icon className={`h-6 w-6 ${categoryColor[lesson.category] || "text-primary"}`} /></div>
             <div>
               <h1 className="text-2xl font-extrabold tracking-tight"><MathText text={lesson.title} /></h1>
               <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
-                <span>{lesson.category}</span>·<span className="inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" />{lesson.minutes} λεπτά</span>·<span>{total} ερωτήσεις</span>
+                <span>{lesson.category}</span>·<span className="inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" />{lesson.minutes} λεπτά</span>·<span>{lesson.questionCount} ερωτήσεις</span>
               </div>
             </div>
           </div>
         </div>
 
-        {mode === "read" && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-5 space-y-5">
-            <div className="rounded-2xl border border-border bg-card p-5">
-              <div className="mb-4 flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-primary" />
-                <h2 className="text-lg font-extrabold">Θεωρία</h2>
-              </div>
-              <ul className="space-y-3">
-                {lesson.theory.map((t, i) => (
-                  <li key={i} className="flex gap-3">
-                    <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md bg-primary/10 text-xs font-bold text-primary">{i + 1}</span>
-                    <MathText className="text-[15px] leading-relaxed" text={t} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="rounded-2xl border border-amber-300/60 bg-amber-50 p-5 dark:border-amber-500/30 dark:bg-amber-500/10">
-              <div className="mb-2 flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-amber-500" />
-                <h3 className="font-extrabold text-amber-700 dark:text-amber-400">{lesson.example.title}</h3>
-              </div>
-              <MathText className="text-[15px] leading-relaxed" text={lesson.example.text} />
-            </div>
-
-            <button
-              data-testid="start-quiz-btn"
-              onClick={() => setMode("quiz")}
-              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-4 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-transform hover:scale-[1.01] active:scale-[0.99]"
-            >
-              <Sparkles className="h-5 w-5" /> Ξεκίνα το κουίζ
+        {/* step nav */}
+        <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
+          {SECTIONS.map((s) => (
+            <button key={s.id} data-testid={`stepnav-${s.id}`} onClick={() => jump(s.id)} className="flex shrink-0 items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground">
+              <span className="grid h-5 w-5 place-items-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">{s.n}</span>
+              {s.title}
             </button>
-          </motion.div>
-        )}
+          ))}
+        </div>
 
-        {mode === "quiz" && (
-          <div className="mt-5">
-            <div className="mb-2 flex items-center justify-between text-sm font-semibold">
-              <span data-testid="quiz-progress">Ερώτηση {idx + 1} από {total}</span>
-              <span className="text-primary">{correctCount} σωστές</span>
-            </div>
-            <div className="mb-5 h-2 overflow-hidden rounded-full bg-secondary">
-              <div className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-500" style={{ width: `${((idx + (answered ? 1 : 0)) / total) * 100}%` }} />
-            </div>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, x: 24 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -24 }}
-                transition={{ duration: 0.25 }}
-                className="rounded-2xl border border-border bg-card p-5"
-              >
-                <h2 className="text-lg font-bold leading-snug"><MathText text={q.prompt} /></h2>
-                <div className="mt-4 space-y-2.5">
-                  {q.options.map((opt, i) => {
-                    const isCorrect = i === q.correct;
-                    const isSelected = i === selected;
-                    let cls = "border-border bg-card hover:border-primary/40 hover:bg-secondary/50";
-                    let badge = "bg-secondary text-muted-foreground";
-                    if (answered) {
-                      if (isCorrect) { cls = "border-emerald-500 bg-emerald-50 dark:bg-emerald-500/10"; badge = "bg-emerald-500 text-white"; }
-                      else if (isSelected) { cls = "border-rose-500 bg-rose-50 dark:bg-rose-500/10"; badge = "bg-rose-500 text-white"; }
-                      else { cls = "border-border bg-card opacity-60"; }
-                    }
-                    return (
-                      <button
-                        key={i}
-                        data-testid={`option-${i}`}
-                        disabled={answered}
-                        onClick={() => chooseAnswer(i)}
-                        className={`flex w-full items-center gap-3 rounded-xl border-2 px-4 py-3.5 text-left transition-all ${cls}`}
-                      >
-                        <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-sm font-bold transition-colors ${badge}`}>{LETTERS[i]}</span>
-                        <span className="flex-1 font-semibold"><MathText text={opt} /></span>
-                        {answered && isCorrect && <CheckCircle2 className="h-5 w-5 text-emerald-500" />}
-                        {answered && isSelected && !isCorrect && <XCircle className="h-5 w-5 text-rose-500" />}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {answered && (
-                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="mt-4 overflow-hidden">
-                    <div className={`rounded-xl px-4 py-3 text-sm ${selected === q.correct ? "bg-emerald-50 dark:bg-emerald-500/10" : "bg-secondary"}`}>
-                      <span className={`font-bold ${selected === q.correct ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>
-                        {selected === q.correct ? "Σωστό! " : "Λάθος. "}
-                      </span>
-                      <MathText text={q.explanation} />
+        {/* 7 sections */}
+        <Accordion type="multiple" value={open} onValueChange={setOpen} className="mt-3 space-y-3">
+          {SECTIONS.map((s) => (
+            <div key={s.id} id={`sec-${s.id}`} className="scroll-mt-20 rounded-2xl border border-border bg-card">
+              <AccordionItem value={s.id} className="border-0">
+                <AccordionTrigger data-testid={`section-${s.id}`} className="px-5 py-4 hover:no-underline">
+                  <div className="flex items-center gap-3 text-left">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-sm font-bold text-white">{s.n}</span>
+                    <div className="flex items-center gap-2">
+                      <s.Icon className="h-4 w-4 text-primary" />
+                      <span className="text-base font-extrabold">{s.title}</span>
                     </div>
-                  </motion.div>
-                )}
-              </motion.div>
-            </AnimatePresence>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-5 pb-5 pt-1">{renderSection(s.id)}</AccordionContent>
+              </AccordionItem>
+            </div>
+          ))}
+        </Accordion>
 
-            <button
-              data-testid="next-question-btn"
-              disabled={!answered}
-              onClick={next}
-              className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-4 text-base font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none"
-            >
-              {idx < total - 1 ? "Επόμενη ερώτηση" : "Δες το αποτέλεσμα"} <ChevronRight className="h-5 w-5" />
+        {/* bottom navigation */}
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-between">
+          <button data-testid="back-grade-bottom" onClick={() => navigate(`/grade/${lesson.gradeId}`)} className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-bold hover:bg-secondary">
+            <HomeIcon className="h-4 w-4" /> Λίστα μαθημάτων
+          </button>
+          {nextLesson && (
+            <button data-testid="next-lesson-btn" onClick={() => navigate(`/lesson/${nextLesson.id}`)} className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/25 hover:scale-[1.03]">
+              Επόμενο μάθημα: <MathText text={nextLesson.title} /> <ChevronRight className="h-4 w-4" />
             </button>
-          </div>
-        )}
-
-        {mode === "result" && (
-          <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="mt-5 rounded-2xl border border-border bg-card p-8 text-center">
-            <div className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-xl shadow-primary/30">
-              <Trophy className="h-10 w-10" />
-            </div>
-            <h2 className="mt-5 text-3xl font-extrabold">{scorePct}%</h2>
-            <p data-testid="quiz-score" className="mt-1 text-muted-foreground">
-              Απάντησες σωστά <span className="font-bold text-foreground">{correctCount}</span> από {total} ερωτήσεις
-            </p>
-            <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-sm font-bold text-amber-700 dark:bg-amber-500/15 dark:text-amber-400">
-              <Sparkles className="h-4 w-4" /> +{correctCount * 10} XP
-            </div>
-            <p className="mt-4 text-sm text-muted-foreground">
-              {scorePct === 100 ? "Τέλεια! Άριστη επίδοση 🎉" : scorePct >= 60 ? "Μπράβο! Συνέχισε έτσι." : "Ρίξε μια ματιά ξανά στη θεωρία και δοκίμασε πάλι."}
-            </p>
-
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
-              <button data-testid="retry-btn" onClick={restartQuiz} className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-bold hover:bg-secondary">
-                <RotateCcw className="h-4 w-4" /> Ξανά
-              </button>
-              <button data-testid="back-grade-result" onClick={() => navigate(`/grade/${lesson.gradeId}`)} className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-bold hover:bg-secondary">
-                <HomeIcon className="h-4 w-4" /> Λίστα μαθημάτων
-              </button>
-              {nextLesson && (
-                <button data-testid="next-lesson-btn" onClick={() => navigate(`/lesson/${nextLesson.id}`)} className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/25 hover:scale-[1.03]">
-                  Επόμενο μάθημα <ChevronRight className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-          </motion.div>
-        )}
+          )}
+        </div>
       </main>
       <Footer />
     </div>

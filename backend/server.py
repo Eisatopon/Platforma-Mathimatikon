@@ -37,6 +37,36 @@ class Example(BaseModel):
     text: str
 
 
+class Plan(BaseModel):
+    objectives: List[str] = []
+    prerequisites: List[str] = []
+    duration: str = ""
+    materials: List[str] = []
+    overview: str = ""
+
+
+class Worksheet(BaseModel):
+    A: List[str] = []
+    B: List[str] = []
+    C: List[str] = []
+
+
+class Assessment(BaseModel):
+    durationMinutes: int = 15
+    questions: List[Question] = []
+
+
+class Solution(BaseModel):
+    title: str
+    text: str
+
+
+class Recap(BaseModel):
+    keyPoints: List[str] = []
+    nextLessonIds: List[str] = []
+    furtherStudy: List[str] = []
+
+
 class LessonSummary(BaseModel):
     id: str
     gradeId: str
@@ -52,6 +82,12 @@ class LessonDetail(LessonSummary):
     theory: List[str]
     example: Example
     questions: List[Question]
+    plan: Plan = Plan()
+    attention: List[str] = []
+    worksheet: Worksheet = Worksheet()
+    assessment: Assessment = Assessment()
+    solutions: List[Solution] = []
+    recap: Recap = Recap()
 
 
 class Grade(BaseModel):
@@ -141,6 +177,12 @@ async def get_lesson(lesson_id: str):
         questionCount=len(l.get("questions", [])),
         theory=l["theory"], example=Example(**l["example"]),
         questions=[Question(**q) for q in l["questions"]],
+        plan=Plan(**l.get("plan", {})),
+        attention=l.get("attention", []),
+        worksheet=Worksheet(**l.get("worksheet", {})),
+        assessment=Assessment(**l.get("assessment", {})),
+        solutions=[Solution(**s) for s in l.get("solutions", [])],
+        recap=Recap(**l.get("recap", {})),
     )
 
 
