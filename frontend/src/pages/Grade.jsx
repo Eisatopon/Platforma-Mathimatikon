@@ -40,7 +40,7 @@ export default function Grade() {
   }
 
   const g = data.grade;
-  const st = gradeStyles[g.color] || gradeStyles.blue;
+  const st = gradeStyles[g.color] || gradeStyles.emerald;
   const done = data.lessons.filter((l) => isCompleted(progress, l.id)).length;
   const pct = g.lessonCount ? Math.round((done / g.lessonCount) * 100) : 0;
 

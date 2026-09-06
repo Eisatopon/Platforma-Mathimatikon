@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Plus, Trash2, GripVertical } from "lucide-react";
+import { MathText } from "@/components/MathText";
 
 const inp = "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30";
 const LETTERS = ["Α", "Β", "Γ", "Δ", "Ε", "Ζ"];
@@ -26,11 +27,13 @@ export const QuestionListEditor = ({ value, onChange, testidPrefix = "q" }) => {
             <button type="button" data-testid={`${testidPrefix}-remove-${i}`} onClick={() => removeQ(i)} className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10"><Trash2 className="h-3.5 w-3.5" /> Διαγραφή</button>
           </div>
           <input className={inp} placeholder="Εκφώνηση (LaTeX σε $...$)" value={q.prompt} onChange={(e) => update(i, { prompt: e.target.value })} data-testid={`${testidPrefix}-prompt-${i}`} />
+          {q.prompt && <div className="mt-1 rounded-md bg-background px-2 py-1 text-xs"><span className="text-muted-foreground">Προεπισκόπηση: </span><MathText text={q.prompt} /></div>}
           <div className="mt-3 space-y-2">
             {q.options.map((o, oi) => (
               <div key={oi} className="flex items-center gap-2">
                 <button type="button" onClick={() => update(i, { correct: oi })} title="Ορισμός σωστής" className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-bold ${q.correct === oi ? "bg-emerald-500 text-white" : "bg-secondary text-muted-foreground"}`} data-testid={`${testidPrefix}-correct-${i}-${oi}`}>{LETTERS[oi]}</button>
                 <input className={inp} placeholder={`Επιλογή ${LETTERS[oi]}`} value={o} onChange={(e) => setOpt(i, oi, e.target.value)} data-testid={`${testidPrefix}-opt-${i}-${oi}`} />
+                {o && <span className="shrink-0 rounded-md bg-background px-2 py-1 text-xs"><MathText text={o} /></span>}
                 {q.options.length > 2 && <button type="button" onClick={() => removeOpt(i, oi)} className="text-muted-foreground hover:text-rose-600"><Trash2 className="h-4 w-4" /></button>}
               </div>
             ))}

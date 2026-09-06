@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Save, X, ClipboardList, BookOpen, PencilRuler, MousePointerClick, Timer, CheckCircle2, Flag } from "lucide-react";
 import { QuestionListEditor, SolutionListEditor } from "@/components/admin/QuestionListEditor";
+import { MathText } from "@/components/MathText";
 
 const inp = "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30";
 const label = "block text-xs font-bold text-muted-foreground mb-1";
@@ -139,6 +140,12 @@ export const LessonEditor = ({ initial, grades, onSave, onCancel }) => {
       <Section n={2} Icon={BookOpen} title="Θεωρία / Επανάληψη">
         <div className="space-y-3">
           <div><label className={label}>Θεωρία — σημεία (ένα ανά γραμμή, LaTeX σε $...$)</label><textarea rows={5} className={`${inp} resize-y`} value={theory} onChange={(e) => setTheory(e.target.value)} data-testid="editor-theory" /></div>
+          {theory.trim() && (
+            <div className="rounded-lg border border-border bg-background p-3">
+              <div className="mb-1 text-[11px] font-bold text-muted-foreground">Προεπισκόπηση θεωρίας</div>
+              <ul className="space-y-1">{lines(theory).map((t, i) => <li key={i} className="text-sm"><MathText text={t} /></li>)}</ul>
+            </div>
+          )}
           <div className="grid gap-3 sm:grid-cols-3">
             <div><label className={label}>Τίτλος παραδείγματος</label><input className={inp} value={exTitle} onChange={(e) => setExTitle(e.target.value)} /></div>
             <div className="sm:col-span-2"><label className={label}>Κείμενο παραδείγματος</label><input className={inp} value={exText} onChange={(e) => setExText(e.target.value)} /></div>

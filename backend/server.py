@@ -285,6 +285,72 @@ async def admin_delete_lesson(lesson_id: str, _: bool = Depends(require_admin)):
     return {"ok": True}
 
 
+class GradeUpsert(BaseModel):
+    title: str
+    subtitle: str = ""
+    color: str = "emerald"
+    order: Optional[int] = None
+
+
+class ReorderBody(BaseModel):
+    gradeId: str
+    orderedIds: List[str]
+
+
+class ChapterRename(BaseModel):
+    gradeId: str
+    old: str
+    new: str
+
+
+@api_router.post("/admin/grades", response_model=Grade)
+async def admin_create_grade(body: GradeUpsert, _: bool = Depends(require_admin)):
+    gid = f"g{uuid.uuid4().hex[:6]}"
+    order = body.order
+    if order is None:
+        last = await db.grades.find().sort("order", -1).to_list(1)
+        order = (last[0]["order"] + 1) if last else 1
+    doc = {"id": gid, "title": body.title, "subtitle": body.subtitle, "color": body.color, "order": order}
+    await db.grades.insert_one(dict(doc))
+    return Grade(**doc, lessonCount=0)
+
+
+@api_router.put("/admin/grades/{grade_id}", response_model=Grade)
+async def admin_update_grade(grade_id: str, body: GradeUpsert, _: bool = Depends(require_admin)):
+    existing = await db.grades.find_one({"id": grade_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Η τάξη δεν βρέθηκε")
+    upd = {"title": body.title, "subtitle": body.subtitle, "color": body.color,
+           "order": body.order if body.order is not None else existing.get("order", 1)}
+    await db.grades.update_one({"id": grade_id}, {"$set": upd})
+    count = await db.lessons.count_documents({"gradeId": grade_id})
+    return Grade(id=grade_id, lessonCount=count, **upd)
+
+
+@api_router.delete("/admin/grades/{grade_id}")
+async def admin_delete_grade(grade_id: str, _: bool = Depends(require_admin)):
+    count = await db.lessons.count_documents({"gradeId": grade_id})
+    if count > 0:
+        raise HTTPException(status_code=400, detail=f"Η τάξη έχει {count} μαθήματα. Διάγραψέ τα πρώτα.")
+    res = await db.grades.delete_one({"id": grade_id})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Η τάξη δεν βρέθηκε")
+    return {"ok": True}
+
+
+@api_router.post("/admin/chapters/rename")
+async def admin_rename_chapter(body: ChapterRename, _: bool = Depends(require_admin)):
+    res = await db.lessons.update_many({"gradeId": body.gradeId, "chapter": body.old}, {"$set": {"chapter": body.new}})
+    return {"ok": True, "updated": res.modified_count}
+
+
+@api_router.post("/admin/lessons/reorder")
+async def admin_reorder_lessons(body: ReorderBody, _: bool = Depends(require_admin)):
+    for i, lid in enumerate(body.orderedIds):
+        await db.lessons.update_one({"id": lid, "gradeId": body.gradeId}, {"$set": {"order": i + 1}})
+    return {"ok": True}
+
+
 app.include_router(api_router)
 
 app.add_middleware(

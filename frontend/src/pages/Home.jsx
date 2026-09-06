@@ -139,7 +139,7 @@ export default function Home() {
         {!filtering ? (
           <section className="mt-6 grid gap-5 md:grid-cols-3">
             {grades.map((g, i) => {
-              const st = gradeStyles[g.color] || gradeStyles.blue;
+              const st = gradeStyles[g.color] || gradeStyles.emerald;
               const done = completedInGrade(progress, g.id);
               const pct = g.lessonCount ? Math.round((done / g.lessonCount) * 100) : 0;
               return (

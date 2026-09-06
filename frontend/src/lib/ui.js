@@ -22,7 +22,30 @@ export const gradeStyles = {
     bar: "bg-rose-500",
     banner: "from-rose-50 to-pink-50 dark:from-rose-500/10 dark:to-pink-500/10",
   },
+  sky: {
+    iconBg: "bg-sky-100 dark:bg-sky-500/15",
+    iconText: "text-sky-600 dark:text-sky-400",
+    pct: "text-sky-600 dark:text-sky-400",
+    bar: "bg-sky-500",
+    banner: "from-sky-50 to-blue-50 dark:from-sky-500/10 dark:to-blue-500/10",
+  },
+  violet: {
+    iconBg: "bg-violet-100 dark:bg-violet-500/15",
+    iconText: "text-violet-600 dark:text-violet-400",
+    pct: "text-violet-600 dark:text-violet-400",
+    bar: "bg-violet-500",
+    banner: "from-violet-50 to-fuchsia-50 dark:from-violet-500/10 dark:to-fuchsia-500/10",
+  },
+  teal: {
+    iconBg: "bg-teal-100 dark:bg-teal-500/15",
+    iconText: "text-teal-600 dark:text-teal-400",
+    pct: "text-teal-600 dark:text-teal-400",
+    bar: "bg-teal-500",
+    banner: "from-teal-50 to-emerald-50 dark:from-teal-500/10 dark:to-emerald-500/10",
+  },
 };
+
+export const GRADE_COLORS = ["emerald", "amber", "rose", "sky", "violet", "teal"];
 
 export const categoryIcon = {
   Αριθμητική: Calculator,

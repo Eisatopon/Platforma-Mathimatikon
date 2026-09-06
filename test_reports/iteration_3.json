@@ -1,0 +1,29 @@
+{
+  "summary": "Full-stack testing of new admin features (grades CRUD, chapter rename, lesson reorder, auto-logout, KaTeX preview) + regression. Backend pytest: 31/31 passed in 3.14s (11 new tests in test_admin_new_features.py: unauth 401 for POST/PUT/DELETE grades + reorder + chapter rename; grade create→get→update→delete flow with lessonCount=0 verification; delete-with-lessons→400 (g7 has 21); update/delete unknown grade→404; chapter rename modifies N lessons + restore; reorder reverses g7 order + verifies orders 1..21 + restore original). Frontend: login (mathadmin2026) → tabs 'Μαθήματα'/'Τάξεις & Κεφάλαια' visible; created TEST_UI_Grade (auto-id g487449, 7 chars), edited title & saved (persisted), deleted empty grade (row removed); drag-drop of admin-row-g7-1-1 to position-4 via Playwright drag_to changed on-screen order AND persisted after page reload (reorder API 200), then restored to original via direct API; KaTeX rendered 2 nodes when typing $\\frac{1}{2}$ in editor theory; auto-logout verified — manually removed 'admin-token' from localStorage then clicked grade-save-g7 → 401 fired 'admin-unauthorized' event → returned to Login gate (admin-password input visible) without hard crash; regression /grade/g7 renders 21 lessons across chapters, /lesson/g7-1-1 renders theory+example+sections with KaTeX. Seed data preserved (3 grades / 47 lessons / g7 original order restored).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/backend/tests/test_admin_new_features.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py still uses deprecated @app.on_event('startup'/'shutdown') — migrate to FastAPI lifespan handler.",
+    "admin_delete_grade correctly blocks (400) when grade has lessons and returns 404 for unknown gradeId — good.",
+    "admin_reorder_lessons scopes update by {id, gradeId} preventing cross-grade order corruption — correct; however no validation that orderedIds contains every lesson of that grade (partial list would leave some rows with stale order values). Consider warning if len(orderedIds) != count.",
+    "admin_rename_chapter is idempotent-friendly (uses update_many, returns modified_count) — good.",
+    "Frontend adminApi.js interceptor correctly dispatches 'admin-unauthorized' on 401 for /admin/* (except /admin/login) and Admin.jsx listens to switch to Login — clean pattern.",
+    "GradesManager.jsx passes color as free string; there's no server-side validation that color is in GRADE_COLORS list — minor.",
+    "Public /grade/g7 renders lesson cards as non-anchor elements (0 <a href='/lesson/...'>) — likely programmatic navigation via onClick; consider using <Link> for accessibility/SEO but not blocking."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_admin_new_features.py"
+  ],
+  "success_rate": {"backend": "100% (31/31)", "frontend": "100%"},
+  "test_credentials": "Admin password: mathadmin2026 (backend/.env ADMIN_PASSWORD)",
+  "seed_data_creation": "Transient: TEST_UI_Grade (created & deleted via UI); TEST_Grade/TEST_Grade_Upd (pytest, deleted in finally); chapter of g7 briefly renamed to TEST_<orig> then restored; g7 lesson order briefly reversed via drag+direct API then restored to original 1..21. DB clean at end: 3 grades / 47 lessons.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All new admin features (grades CRUD, chapter rename, lesson reorder, auto-logout on 401, KaTeX live preview) fully verified backend + UI. Playwright drag-drop works via locator.drag_to (synthetic dispatchEvent DragEvent+DataTransfer does NOT trigger React DnD handlers — use drag_to). data-testids in use: admin-tab-lessons/grades, new-grade-title, new-grade-create, grade-title-{id}, grade-save-{id}, grade-delete-{id}, admin-row-{lid} (draggable). To restore reorder state, POST /api/admin/lessons/reorder with original ids array."
+}
