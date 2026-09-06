@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Lock, LogOut, Plus, Pencil, Trash2, Sigma, ChevronLeft, BookOpen, GripVertical, GraduationCap, Layers } from "lucide-react";
-import { fetchGrades, fetchAllLessons, fetchLesson } from "@/lib/api";
+import { fetchGrades, fetchAllLessons, fetchLesson, fetchBooks } from "@/lib/api";
 import { adminLogin, adminVerify, adminCreate, adminUpdate, adminDelete, adminReorder, getToken, setToken, clearToken } from "@/lib/adminApi";
 import { LessonEditor } from "@/components/admin/LessonEditor";
 import { GradesManager } from "@/components/admin/GradesManager";
@@ -37,6 +37,7 @@ export default function Admin() {
   const [authed, setAuthed] = useState(null);
   const [grades, setGrades] = useState([]);
   const [lessons, setLessons] = useState([]);
+  const [books, setBooks] = useState([]);
   const [tab, setTab] = useState("lessons"); // lessons | grades
   const [view, setView] = useState("list"); // list | editor
   const [editing, setEditing] = useState(null);
@@ -57,6 +58,7 @@ export default function Admin() {
   const loadList = () => {
     fetchGrades().then(setGrades).catch(() => {});
     fetchAllLessons().then(setLessons).catch(() => {});
+    fetchBooks().then(setBooks).catch(() => {});
   };
   useEffect(() => { if (authed) loadList(); }, [authed]);
 
@@ -124,7 +126,7 @@ export default function Admin() {
         {view === "editor" ? (
           <>
             <button onClick={() => { setView("list"); setEditing(null); }} className="mb-4 inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground"><ChevronLeft className="h-4 w-4" /> Πίσω στη λίστα</button>
-            {loadingEditor ? <div className="py-20 text-center text-muted-foreground">Φόρτωση…</div> : <LessonEditor initial={editing} grades={grades} onSave={handleSave} onCancel={() => { setView("list"); setEditing(null); }} />}
+            {loadingEditor ? <div className="py-20 text-center text-muted-foreground">Φόρτωση…</div> : <LessonEditor initial={editing} grades={grades} books={books} onSave={handleSave} onCancel={() => { setView("list"); setEditing(null); }} />}
           </>
         ) : (
           <>
@@ -165,7 +167,7 @@ export default function Admin() {
                 ))}
               </div>
             ) : (
-              <GradesManager grades={grades} lessons={lessons} onChanged={loadList} />
+              <GradesManager grades={grades} lessons={lessons} books={books} onChanged={loadList} />
             )}
           </>
         )}

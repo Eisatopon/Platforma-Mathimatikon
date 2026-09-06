@@ -35,3 +35,7 @@ export const adminCreateGrade = (payload) => http.post(`${API}/admin/grades`, pa
 export const adminUpdateGrade = (id, payload) => http.put(`${API}/admin/grades/${id}`, payload, auth()).then((r) => r.data);
 export const adminDeleteGrade = (id) => http.delete(`${API}/admin/grades/${id}`, auth()).then((r) => r.data);
 export const adminRenameChapter = (gradeId, oldName, newName) => http.post(`${API}/admin/chapters/rename`, { gradeId, old: oldName, new: newName }, auth()).then((r) => r.data);
+
+export const adminCreateBook = (payload) => http.post(`${API}/admin/books`, payload, auth()).then((r) => r.data);
+export const adminUpdateBook = (id, payload) => http.put(`${API}/admin/books/${id}`, payload, auth()).then((r) => r.data);
+export const adminDeleteBook = (id) => http.delete(`${API}/admin/books/${id}`, auth()).then((r) => r.data);

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Save, X, ClipboardList, BookOpen, PencilRuler, MousePointerClick, Timer, CheckCircle2, Flag } from "lucide-react";
 import { QuestionListEditor, SolutionListEditor } from "@/components/admin/QuestionListEditor";
 import { MathText } from "@/components/MathText";
@@ -21,9 +21,10 @@ const Section = ({ Icon, n, title, children }) => (
   </div>
 );
 
-export const LessonEditor = ({ initial, grades, onSave, onCancel }) => {
+export const LessonEditor = ({ initial, grades, books = [], onSave, onCancel }) => {
   const d = initial || {};
   const [gradeId, setGradeId] = useState(d.gradeId || (grades[0]?.id || "g7"));
+  const [bookId, setBookId] = useState(d.bookId || "");
   const [chapter, setChapter] = useState(d.chapter || "");
   const [category, setCategory] = useState(d.category || "Αριθμητική");
   const [title, setTitle] = useState(d.title || "");
@@ -59,8 +60,13 @@ export const LessonEditor = ({ initial, grades, onSave, onCancel }) => {
 
   const valid = gradeId && chapter.trim() && title.trim();
 
+  const gradeBooks = books.filter((b) => b.gradeId === gradeId);
+  useEffect(() => {
+    if (bookId && !books.some((b) => b.id === bookId && b.gradeId === gradeId)) setBookId("");
+  }, [gradeId]); // eslint-disable-line
+
   const buildPayload = () => ({
-    gradeId, chapter: chapter.trim(), category, title: title.trim(), minutes: Number(minutes) || 10,
+    gradeId, bookId, chapter: chapter.trim(), category, title: title.trim(), minutes: Number(minutes) || 10,
     order: d.order ?? null,
     theory: lines(theory),
     example: { title: exTitle.trim() || "Παράδειγμα", text: exText },
@@ -110,6 +116,15 @@ export const LessonEditor = ({ initial, grades, onSave, onCancel }) => {
               {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
+          {gradeBooks.length > 0 && (
+            <div className="sm:col-span-2">
+              <label className={label}>Βιβλίο (πολλαπλό βιβλίο)</label>
+              <select className={inp} value={bookId} onChange={(e) => setBookId(e.target.value)} data-testid="editor-book">
+                <option value="">— Χωρίς βιβλίο —</option>
+                {gradeBooks.map((b) => <option key={b.id} value={b.id}>{b.title}</option>)}
+              </select>
+            </div>
+          )}
           <div>
             <label className={label}>Κεφάλαιο</label>
             <input className={inp} value={chapter} onChange={(e) => setChapter(e.target.value)} placeholder="π.χ. Κλάσματα" data-testid="editor-chapter" />

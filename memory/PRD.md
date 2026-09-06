@@ -42,6 +42,14 @@ Web εφαρμογή που παρουσιάζει δομημένα μαθήμα
 - `solutions`: [{ title, text }]
 - `recap`: { keyPoints:[], nextLessonIds:[], furtherStudy:[] }
 
+## Αρχιτεκτονική Πολλαπλού Βιβλίου (σε αναμονή — 2026-06)
+Προστέθηκε επίπεδο **Βιβλίο** ανάμεσα σε Τάξη και Μάθημα, backward-compatible:
+- Data model: collection `books` { id, gradeId, title, publisher, coverUrl, order }· κάθε μάθημα έχει προαιρετικό `bookId` (default "").
+- API: `GET /api/books`, `GET /api/grades/{id}` επιστρέφει και `books[]`· admin CRUD `POST/PUT/DELETE /api/admin/books` (η διαγραφή βιβλίου καθαρίζει το bookId των μαθημάτων του).
+- Student UX: η σελίδα τάξης δείχνει «Διάλεξε βιβλίο» (κάρτες με εξώφυλλο/thumbnail) ΜΟΝΟ όταν υπάρχουν βιβλία· διαφορετικά συμπεριφέρεται όπως πριν (μαθήματα απευθείας). Επιλογή βιβλίου → κεφάλαια/μαθήματα του βιβλίου (φίλτρο bookId) + «Όλα τα βιβλία».
+- Admin: διαχείριση βιβλίων ανά τάξη (tab «Τάξεις & Κεφάλαια») + επιλογή Βιβλίου στον editor μαθήματος.
+- Κατάσταση: 0 βιβλία seeded → dormant. Έτοιμο για τα 4 βιβλία/τάξη του νέου «πολλαπλού βιβλίου». (Επαληθεύτηκε χειροκίνητα: create/assign/selector/cover thumbnail/cleanup.)
+
 ## Backlog / Remaining
 - ✅ (DONE) Admin panel με απλό κωδικό (JWT) — πλήρες CRUD μαθημάτων 7 ενοτήτων στο `/admin`
 - ✅ (DONE) Αυτόματη αποσύνδεση σε 401 (axios interceptor → επιστροφή σε login)

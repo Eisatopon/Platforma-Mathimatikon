@@ -78,6 +78,7 @@ class Recap(BaseModel):
 class LessonSummary(BaseModel):
     id: str
     gradeId: str
+    bookId: str = ""
     chapter: str
     category: str
     title: str
@@ -105,6 +106,23 @@ class Grade(BaseModel):
     color: str
     order: int
     lessonCount: int
+
+
+class Book(BaseModel):
+    id: str
+    gradeId: str
+    title: str
+    publisher: str = ""
+    coverUrl: str = ""
+    order: int
+
+
+class BookUpsert(BaseModel):
+    gradeId: str
+    title: str
+    publisher: str = ""
+    coverUrl: str = ""
+    order: Optional[int] = None
 
 
 # ---------------- Seeding ----------------
@@ -148,12 +166,18 @@ async def get_all_lessons():
     lessons = await db.lessons.find({}, {"_id": 0}).sort("order", 1).to_list(1000)
     return [
         LessonSummary(
-            id=l["id"], gradeId=l["gradeId"], chapter=l["chapter"], category=l["category"],
+            id=l["id"], gradeId=l["gradeId"], bookId=l.get("bookId", ""), chapter=l["chapter"], category=l["category"],
             title=l["title"], minutes=l["minutes"], order=l["order"],
             questionCount=len(l.get("questions", [])),
         )
         for l in lessons
     ]
+
+
+@api_router.get("/books", response_model=List[Book])
+async def get_all_books():
+    books = await db.books.find({}, {"_id": 0}).sort("order", 1).to_list(500)
+    return [Book(**b) for b in books]
 
 
 @api_router.get("/grades/{grade_id}")
@@ -164,14 +188,15 @@ async def get_grade(grade_id: str):
     lessons = await db.lessons.find({"gradeId": grade_id}, {"_id": 0}).sort("order", 1).to_list(500)
     summaries = [
         LessonSummary(
-            id=l["id"], gradeId=l["gradeId"], chapter=l["chapter"], category=l["category"],
+            id=l["id"], gradeId=l["gradeId"], bookId=l.get("bookId", ""), chapter=l["chapter"], category=l["category"],
             title=l["title"], minutes=l["minutes"], order=l["order"],
             questionCount=len(l.get("questions", [])),
         )
         for l in lessons
     ]
+    books = await db.books.find({"gradeId": grade_id}, {"_id": 0}).sort("order", 1).to_list(100)
     grade_out = Grade(**grade, lessonCount=len(summaries))
-    return {"grade": grade_out, "lessons": summaries}
+    return {"grade": grade_out, "books": [Book(**b) for b in books], "lessons": summaries}
 
 
 @api_router.get("/lessons/{lesson_id}", response_model=LessonDetail)
@@ -180,7 +205,7 @@ async def get_lesson(lesson_id: str):
     if not l:
         raise HTTPException(status_code=404, detail="Το μάθημα δεν βρέθηκε")
     return LessonDetail(
-        id=l["id"], gradeId=l["gradeId"], chapter=l["chapter"], category=l["category"],
+        id=l["id"], gradeId=l["gradeId"], bookId=l.get("bookId", ""), chapter=l["chapter"], category=l["category"],
         title=l["title"], minutes=l["minutes"], order=l["order"],
         questionCount=len(l.get("questions", [])),
         theory=l["theory"], example=Example(**l["example"]),
@@ -201,6 +226,7 @@ class AdminLogin(BaseModel):
 
 class LessonUpsert(BaseModel):
     gradeId: str
+    bookId: str = ""
     chapter: str
     category: str
     title: str
@@ -348,6 +374,41 @@ async def admin_rename_chapter(body: ChapterRename, _: bool = Depends(require_ad
 async def admin_reorder_lessons(body: ReorderBody, _: bool = Depends(require_admin)):
     for i, lid in enumerate(body.orderedIds):
         await db.lessons.update_one({"id": lid, "gradeId": body.gradeId}, {"$set": {"order": i + 1}})
+    return {"ok": True}
+
+
+@api_router.post("/admin/books", response_model=Book)
+async def admin_create_book(body: BookUpsert, _: bool = Depends(require_admin)):
+    grade = await db.grades.find_one({"id": body.gradeId})
+    if not grade:
+        raise HTTPException(status_code=400, detail="Άγνωστη τάξη")
+    bid = f"b{uuid.uuid4().hex[:6]}"
+    order = body.order
+    if order is None:
+        last = await db.books.find({"gradeId": body.gradeId}).sort("order", -1).to_list(1)
+        order = (last[0]["order"] + 1) if last else 1
+    doc = {"id": bid, "gradeId": body.gradeId, "title": body.title, "publisher": body.publisher, "coverUrl": body.coverUrl, "order": order}
+    await db.books.insert_one(dict(doc))
+    return Book(**doc)
+
+
+@api_router.put("/admin/books/{book_id}", response_model=Book)
+async def admin_update_book(book_id: str, body: BookUpsert, _: bool = Depends(require_admin)):
+    existing = await db.books.find_one({"id": book_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Το βιβλίο δεν βρέθηκε")
+    upd = {"gradeId": body.gradeId, "title": body.title, "publisher": body.publisher, "coverUrl": body.coverUrl,
+           "order": body.order if body.order is not None else existing.get("order", 1)}
+    await db.books.update_one({"id": book_id}, {"$set": upd})
+    return Book(id=book_id, **upd)
+
+
+@api_router.delete("/admin/books/{book_id}")
+async def admin_delete_book(book_id: str, _: bool = Depends(require_admin)):
+    res = await db.books.delete_one({"id": book_id})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Το βιβλίο δεν βρέθηκε")
+    await db.lessons.update_many({"bookId": book_id}, {"$set": {"bookId": ""}})
     return {"ok": True}
 
 
