@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Πλατφόρμα Μαθηματικών EisatoponAI</title>
+  <desc id="desc">Λευκό ανοιχτό βιβλίο με κόκκινο γράμμα e σε μπλε φόντο</desc>
+  <rect width="512" height="512" rx="104" fill="#1F4E7B"/>
+  <path d="M92 143c55-15 111-5 164 35v211c-48-42-103-54-164-37V143Z" fill="#fff"/>
+  <path d="M420 143c-55-15-111-5-164 35v211c48-42 103-54 164-37V143Z" fill="#fff"/>
+  <path d="M256 178v211" fill="none" stroke="#DCEBFA" stroke-width="12" stroke-linecap="round"/>
+  <path d="M103 373c56-13 106 0 153 39 47-39 97-52 153-39" fill="none" stroke="#B8D5EE" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M325 274c0-44-28-72-70-72-48 0-79 34-79 83 0 50 32 82 83 82 28 0 51-9 67-24l-24-30c-11 9-25 14-40 14-21 0-36-10-41-28h103c1-8 1-16 1-25Zm-104-8c4-17 16-27 34-27 17 0 29 10 32 27h-66Z" fill="#EF233C"/>
+</svg>
