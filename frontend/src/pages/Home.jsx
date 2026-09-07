@@ -11,6 +11,34 @@ import { gradeStyles, categoryIcon, categoryColor } from "@/lib/ui";
 
 const CATEGORIES = ["Όλα", "Άλγεβρα", "Γεωμετρία", "Αριθμητική", "Στατιστική", "Ολοκληρωμένα", "Σε εξέλιξη"];
 
+// Render the three grade cards immediately; the API refreshes these values in the background.
+const INITIAL_GRADES = [
+  {
+    id: "g7",
+    title: "Α΄ Γυμνασίου",
+    subtitle: "Αριθμητική, άλγεβρα και βασική γεωμετρία",
+    color: "emerald",
+    order: 1,
+    lessonCount: 26,
+  },
+  {
+    id: "g8",
+    title: "Β΄ Γυμνασίου",
+    subtitle: "Εξισώσεις, συναρτήσεις και προχωρημένη γεωμετρία",
+    color: "amber",
+    order: 2,
+    lessonCount: 13,
+  },
+  {
+    id: "g9",
+    title: "Γ΄ Γυμνασίου",
+    subtitle: "Πολυώνυμα, συστήματα, στατιστική και πιθανότητες",
+    color: "rose",
+    order: 3,
+    lessonCount: 13,
+  },
+];
+
 const StatBox = ({ Icon, color, value, label, testid }) => (
   <div data-testid={testid} className="rounded-2xl border border-border bg-card p-3.5">
     <Icon className={`h-4 w-4 ${color}`} />
@@ -21,7 +49,7 @@ const StatBox = ({ Icon, color, value, label, testid }) => (
 
 export default function Home() {
   const navigate = useNavigate();
-  const [grades, setGrades] = useState([]);
+  const [grades, setGrades] = useState(INITIAL_GRADES);
   const [lessons, setLessons] = useState([]);
   const [progress, setProgress] = useState(getProgress());
   const [query, setQuery] = useState("");
