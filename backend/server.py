@@ -134,10 +134,18 @@ async def seed_database():
     for g in grades:
         await db.grades.update_one({"id": g["id"]}, {"$setOnInsert": g}, upsert=True)
     for l in lessons:
-        await db.lessons.update_one({"id": l["id"]}, {"$setOnInsert": l}, upsert=True)
+        # Lessons are fully overwritten on every startup so that seed_content.py stays the
+        # single source of truth — no manual DB cleanup needed between deploys. Any lesson
+        # content edited directly via the Admin panel (rather than in seed_content.py) will
+        # be reset to match seed_content.py on the next deploy.
+        await db.lessons.update_one({"id": l["id"]}, {"$set": l}, upsert=True)
     for b in all_books():
         await db.books.update_one({"id": b["id"]}, {"$setOnInsert": b}, upsert=True)
-    logger.info(f"Seeded {len(grades)} grades, {len(lessons)} lessons, {len(all_books())} books (insert-only)")
+    current_lesson_ids = [l["id"] for l in lessons]
+    del_result = await db.lessons.delete_many({"id": {"$nin": current_lesson_ids}})
+    if del_result.deleted_count:
+        logger.info(f"Removed {del_result.deleted_count} orphaned lesson(s) no longer in seed_content.py")
+    logger.info(f"Seeded {len(grades)} grades, {len(lessons)} lessons (overwrite), {len(all_books())} books")
 
 
 @app.on_event("startup")
