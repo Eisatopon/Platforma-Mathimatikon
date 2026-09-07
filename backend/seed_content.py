@@ -31,11 +31,11 @@ GRADES = [
 
 BOOKS = [
     # Α΄ Γυμνασίου
-    {"id": "b-g7-pataki", "gradeId": "g7", "title": "Μαθηματικά (A΄ Γυμνασίου)", "publisher": "Εκδόσεις Πατάκη", "coverUrl": "/covers/mathimatika-a-patakis.jpg", "url": "https://www.portify.gr/book/mathimatika-a-gymnasioy-ekdoseis-pataki-is-0", "order": 1},
+    {"id": "b-g7-pataki", "gradeId": "g7", "title": "Μαθηματικά (A΄ Γυμνασίου)", "publisher": "Εκδόσεις Πατάκη", "coverUrl": "/platforma/covers/mathimatika-a-patakis.jpg", "url": "https://www.portify.gr/book/mathimatika-a-gymnasioy-ekdoseis-pataki-is-0", "order": 1},
     {"id": "b-g7-poukamisas", "gradeId": "g7", "title": "Μαθηματικά (A΄ Γυμνασίου)", "publisher": "Εκδόσεις Πουκαμισάς", "coverUrl": "https://www.portify.gr/previews/37042.jpg", "url": "https://www.portify.gr/book/mathimatika-a-gymnasioy-ekdoseis-poykamisas-is-0", "order": 2},
     {"id": "b-g7-lysari", "gradeId": "g7", "title": "Μαθηματικά (A΄ Γυμνασίου)", "publisher": "Εκδόσεις Λυσάρι (lisari.gr)", "coverUrl": "https://www.portify.gr/previews/35856.jpg", "url": "https://www.portify.gr/book/mathimatika-a-gymnasioy-ekdoseis-lysari-lisari-gr-is-0", "order": 3},
     # Β΄ Γυμνασίου
-    {"id": "b-g8-pataki", "gradeId": "g8", "title": "Μαθηματικά (Β΄ Γυμνασίου)", "publisher": "Εκδόσεις Πατάκη", "coverUrl": "/covers/mathimatika-b-patakis.jpg", "url": "https://www.portify.gr/book/mathimatika-v-gymnasioy-ekdoseis-pataki-is-0", "order": 1},
+    {"id": "b-g8-pataki", "gradeId": "g8", "title": "Μαθηματικά (Β΄ Γυμνασίου)", "publisher": "Εκδόσεις Πατάκη", "coverUrl": "/platforma/covers/mathimatika-b-patakis.jpg", "url": "https://www.portify.gr/book/mathimatika-v-gymnasioy-ekdoseis-pataki-is-0", "order": 1},
     {"id": "b-g8-poukamisas", "gradeId": "g8", "title": "Μαθηματικά (Β΄ Γυμνασίου)", "publisher": "Εκδόσεις Πουκαμισάς", "coverUrl": "https://www.portify.gr/previews/37468.jpg", "url": "https://www.portify.gr/book/mathimatika-v-gymnasioy-ekdoseis-poykamisas-is-0", "order": 2},
     {"id": "b-g8-lysari", "gradeId": "g8", "title": "Μαθηματικά (Β΄ Γυμνασίου)", "publisher": "Εκδόσεις Λυσάρι (lisari.gr)", "coverUrl": "https://www.portify.gr/previews/35860.jpg", "url": "https://www.portify.gr/book/mathimatika-v-gymnasioy-ekdoseis-lysari-lisari-gr-is-0", "order": 3},
     # Γ΄ Γυμνασίου
