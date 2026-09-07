@@ -140,7 +140,7 @@ async def seed_database():
         # be reset to match seed_content.py on the next deploy.
         await db.lessons.update_one({"id": l["id"]}, {"$set": l}, upsert=True)
     for b in all_books():
-        await db.books.update_one({"id": b["id"]}, {"$setOnInsert": b}, upsert=True)
+        await db.books.update_one({"id": b["id"]}, {"$set": b}, upsert=True)
     current_lesson_ids = [l["id"] for l in lessons]
     del_result = await db.lessons.delete_many({"id": {"$nin": current_lesson_ids}})
     if del_result.deleted_count:
