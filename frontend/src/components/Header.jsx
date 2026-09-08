@@ -40,13 +40,13 @@ export const Header = () => {
             src={`${process.env.PUBLIC_URL}/mathtopon-mark.svg`}
             alt=""
             aria-hidden="true"
-            className="h-10 w-[52px] shrink-0"
+            className="-translate-y-1.5 h-11 w-14 shrink-0"
           />
           <div className="leading-tight">
-            <div className="text-[17px] font-extrabold tracking-tight">
+            <div className="text-[18px] font-extrabold tracking-tight">
               <span className="text-[#1F4E7B] dark:text-[#75B7E3]">Math</span><span className="text-foreground">Topon</span>
             </div>
-            <div className="text-[10px] font-medium text-muted-foreground">Ο τόπος των Μαθηματικών</div>
+            <div className="text-[11px] font-medium text-foreground/65">Ο τόπος των Μαθηματικών</div>
           </div>
         </Link>
 
