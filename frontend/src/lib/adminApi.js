@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const API = `${process.env.REACT_APP_BACKEND_URL || "https://platforma-mathimatikon.onrender.com"}/api`;
 const TOKEN_KEY = "admin-token";
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
