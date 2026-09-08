@@ -88,7 +88,7 @@ export default function Lesson() {
   };
 
   const plan = lesson.plan || {};
-  const planHasContent = (plan.objectives?.length || plan.prerequisites?.length || plan.duration || plan.materials?.length || plan.overview);
+  const planHasContent = (plan.objectives?.length || plan.prerequisites?.length || plan.duration || plan.materials?.length || plan.overview || plan.phases?.length || plan.formativeAssessment?.length || plan.exitTicket?.length);
   const recap = lesson.recap || {};
   const recapHasContent = (recap.keyPoints?.length || recap.nextLessonIds?.length || recap.furtherStudy?.length);
   const testQuestions = lesson.assessment?.questions?.length ? lesson.assessment.questions : lesson.questions;
@@ -124,6 +124,49 @@ export default function Lesson() {
                 </div>
               )}
             </div>
+            {plan.phases?.length > 0 && (
+              <div>
+                <div className="mb-3 flex items-center gap-2 text-sm font-bold"><ClipboardList className="h-4 w-4 text-primary" /> Πορεία διδασκαλίας</div>
+                <ol className="space-y-3">
+                  {plan.phases.map((phase, i) => (
+                    <li key={i} className="grid grid-cols-[34px_1fr] gap-3 rounded-xl border border-border bg-secondary/35 p-3">
+                      <span className="grid h-8 w-8 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{phase.minutes}΄</span>
+                      <div>
+                        <div className="text-sm font-extrabold">{phase.title}</div>
+                        <MathText className="mt-1 block text-[14px] leading-relaxed text-muted-foreground" text={phase.description} />
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+            {plan.formativeAssessment?.length > 0 && (
+              <div className="rounded-xl border border-sky-300/60 bg-sky-50 p-4 dark:border-sky-500/30 dark:bg-sky-500/10">
+                <div className="mb-2 text-sm font-extrabold text-sky-800 dark:text-sky-300">Διαμορφωτικός έλεγχος</div>
+                <ul className="list-inside list-disc space-y-1.5 text-[14px]">{plan.formativeAssessment.map((item, i) => <li key={i}><MathText text={item} /></li>)}</ul>
+              </div>
+            )}
+            {(plan.differentiation?.support?.length > 0 || plan.differentiation?.challenge?.length > 0) && (
+              <div>
+                <div className="mb-2 text-sm font-bold">Διαφοροποίηση</div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-xl border border-border p-4">
+                    <div className="mb-2 text-sm font-extrabold">Υποστήριξη</div>
+                    <ul className="list-inside list-disc space-y-1 text-[14px] text-muted-foreground">{plan.differentiation.support?.map((item, i) => <li key={i}><MathText text={item} /></li>)}</ul>
+                  </div>
+                  <div className="rounded-xl border border-border p-4">
+                    <div className="mb-2 text-sm font-extrabold">Πρόκληση</div>
+                    <ul className="list-inside list-disc space-y-1 text-[14px] text-muted-foreground">{plan.differentiation.challenge?.map((item, i) => <li key={i}><MathText text={item} /></li>)}</ul>
+                  </div>
+                </div>
+              </div>
+            )}
+            {plan.exitTicket?.length > 0 && (
+              <div className="rounded-xl border border-emerald-300/60 bg-emerald-50 p-4 dark:border-emerald-500/30 dark:bg-emerald-500/10">
+                <div className="mb-2 text-sm font-extrabold text-emerald-800 dark:text-emerald-300">Έλεγχος εξόδου</div>
+                <ol className="list-inside list-decimal space-y-1.5 text-[14px]">{plan.exitTicket.map((item, i) => <li key={i}><MathText text={item} /></li>)}</ol>
+              </div>
+            )}
             <div className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1.5 text-sm font-semibold"><Clock className="h-4 w-4 text-muted-foreground" /> Διάρκεια: {plan.duration || `${lesson.minutes} λεπτά`}</div>
           </div>
         ) : (
