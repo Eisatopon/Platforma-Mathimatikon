@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, Trophy, Flame, Zap, Moon, Sun, Sigma } from "lucide-react";
+import { Home, Trophy, Flame, Zap, Moon, Sun } from "lucide-react";
 import { getProgress, subscribe, computeXp, levelInfo } from "@/lib/progress";
 import { getTheme, toggleTheme } from "@/lib/theme";
 
@@ -36,12 +36,17 @@ export const Header = () => {
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-4">
         <Link to="/" data-testid="logo-link" className="flex items-center gap-2.5">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/30">
-            <Sigma className="h-5 w-5" strokeWidth={2.5} />
-          </div>
+          <img
+            src={`${process.env.PUBLIC_URL}/mathtopon-mark.svg`}
+            alt=""
+            aria-hidden="true"
+            className="h-10 w-[52px] shrink-0"
+          />
           <div className="leading-tight">
-            <div className="text-[15px] font-extrabold tracking-tight">Μαθηματικά</div>
-            <div className="text-[11px] text-muted-foreground">Γυμνασίου · Βήμα-Βήμα</div>
+            <div className="text-[17px] font-extrabold tracking-tight">
+              <span className="text-[#1F4E7B] dark:text-[#75B7E3]">Math</span><span className="text-foreground">Topon</span>
+            </div>
+            <div className="text-[10px] font-medium text-muted-foreground">Ο τόπος των Μαθηματικών</div>
           </div>
         </Link>
 
