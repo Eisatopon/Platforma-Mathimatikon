@@ -40,7 +40,7 @@ export const Header = () => {
             src={`${process.env.PUBLIC_URL}/mathtopon-mark.svg`}
             alt=""
             aria-hidden="true"
-            className="-translate-y-1.5 h-11 w-14 shrink-0"
+            className="h-11 w-14 shrink-0"
           />
           <div className="leading-tight">
             <div className="text-[18px] font-extrabold tracking-tight">
