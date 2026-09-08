@@ -52,12 +52,27 @@ class Figure(BaseModel):
     caption: str = ""
 
 
+class LessonPhase(BaseModel):
+    title: str
+    minutes: int
+    description: str
+
+
+class Differentiation(BaseModel):
+    support: List[str] = []
+    challenge: List[str] = []
+
+
 class Plan(BaseModel):
     objectives: List[str] = []
     prerequisites: List[str] = []
     duration: str = ""
     materials: List[str] = []
     overview: str = ""
+    phases: List[LessonPhase] = []
+    formativeAssessment: List[str] = []
+    differentiation: Differentiation = Differentiation()
+    exitTicket: List[str] = []
 
 
 class Worksheet(BaseModel):
