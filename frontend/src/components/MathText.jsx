@@ -9,6 +9,10 @@ function escapeHtml(s) {
     .replace(/>/g, "&gt;");
 }
 
+function formatPlainText(value) {
+  return escapeHtml(value).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+}
+
 function renderKatex(expr, display) {
   try {
     return katex.renderToString(expr, { throwOnError: false, displayMode: display });
@@ -27,13 +31,13 @@ function toHtml(input) {
       .map((p) => {
         if (p.startsWith("$$") && p.endsWith("$$")) return renderKatex(p.slice(2, -2), true);
         if (p.startsWith("$") && p.endsWith("$")) return renderKatex(p.slice(1, -1), false);
-        return escapeHtml(p);
+        return formatPlainText(p);
       })
       .join("");
   }
   // bare latex detection (used for quiz options)
   if (/[\\^_{}~]/.test(s)) return renderKatex(s, false);
-  return escapeHtml(s);
+  return formatPlainText(s);
 }
 
 export const MathText = ({ text, className }) => {
