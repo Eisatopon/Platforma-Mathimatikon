@@ -46,6 +46,12 @@ class Example(BaseModel):
     text: str
 
 
+class Figure(BaseModel):
+    title: str = ""
+    url: str
+    caption: str = ""
+
+
 class Plan(BaseModel):
     objectives: List[str] = []
     prerequisites: List[str] = []
@@ -91,6 +97,7 @@ class LessonSummary(BaseModel):
 class LessonDetail(LessonSummary):
     theory: List[str]
     example: Example
+    figures: List[Figure] = []
     questions: List[Question]
     plan: Plan = Plan()
     attention: List[str] = []
@@ -222,6 +229,7 @@ async def get_lesson(lesson_id: str):
         title=l["title"], minutes=l["minutes"], order=l["order"],
         questionCount=len(l.get("questions", [])),
         theory=l["theory"], example=Example(**l["example"]),
+        figures=[Figure(**f) for f in l.get("figures", [])],
         questions=[Question(**q) for q in l["questions"]],
         plan=Plan(**l.get("plan", {})),
         attention=l.get("attention", []),
@@ -247,6 +255,7 @@ class LessonUpsert(BaseModel):
     order: Optional[int] = None
     theory: List[str] = []
     example: Example = Example(title="Παράδειγμα", text="")
+    figures: List[Figure] = []
     questions: List[Question] = []
     plan: Plan = Plan()
     attention: List[str] = []
