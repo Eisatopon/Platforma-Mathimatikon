@@ -62,6 +62,7 @@
     "zod": "3.24.4"
   },
   "scripts": {
+    "prebuild": "python3 ../backend/export_static_content.py",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test"

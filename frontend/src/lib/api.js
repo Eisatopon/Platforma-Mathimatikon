@@ -1,4 +1,5 @@
 import axios from "axios";
+import content from "@/data/content.json";
 
 const API = `${process.env.REACT_APP_BACKEND_URL || "https://platforma-mathimatikon.onrender.com"}/api`;
 const CACHE_PREFIX = "mathtopon-api-v1:";
@@ -21,8 +22,25 @@ const remember = (key, value) => {
   return value;
 };
 
-export const fetchGrades = () => axios.get(`${API}/grades`).then((r) => remember("grades", r.data));
-export const fetchAllLessons = () => axios.get(`${API}/lessons`).then((r) => remember("lessons", r.data));
-export const fetchGrade = (id) => axios.get(`${API}/grades/${id}`).then((r) => remember(`grade:${id}`, r.data));
-export const fetchLesson = (id) => axios.get(`${API}/lessons/${id}`).then((r) => remember(`lesson:${id}`, r.data));
-export const fetchBooks = () => axios.get(`${API}/books`).then((r) => remember("books", r.data));
+const staticGrade = (id) => {
+  const grade = content.grades.find((item) => item.id === id);
+  if (!grade) return null;
+  return {
+    grade,
+    books: content.books.filter((item) => item.gradeId === id),
+    lessons: content.lessons.filter((item) => item.gradeId === id),
+  };
+};
+
+const localFirst = (key, value, remoteUrl) => {
+  if (value) return Promise.resolve(remember(key, value));
+  return axios.get(remoteUrl).then((response) => remember(key, response.data));
+};
+
+// Public curriculum is bundled with the app. The API is only a fallback for
+// an unknown/new ID, so a sleeping free Render service cannot delay the UI.
+export const fetchGrades = () => localFirst("grades", content.grades, `${API}/grades`);
+export const fetchAllLessons = () => localFirst("lessons", content.lessons, `${API}/lessons`);
+export const fetchGrade = (id) => localFirst(`grade:${id}`, staticGrade(id), `${API}/grades/${id}`);
+export const fetchLesson = (id) => localFirst(`lesson:${id}`, content.lessonDetails[id], `${API}/lessons/${id}`);
+export const fetchBooks = () => localFirst("books", content.books, `${API}/books`);
