@@ -18,7 +18,7 @@ OUTPUT = ROOT / "frontend" / "src" / "data" / "content.json"
 def lesson_detail(lesson):
     result = dict(lesson)
     result.setdefault("bookId", "")
-    result["questionCount"] = len(result.get("questions", []))
+    result["questionCount"] = len(result.get("practiceQuestions", result.get("questions", [])))
     result.setdefault("figures", [])
     result.setdefault("plan", {})
     result.setdefault("attention", [])
@@ -39,7 +39,7 @@ def lesson_summary(lesson):
         "title": lesson["title"],
         "minutes": lesson["minutes"],
         "order": lesson["order"],
-        "questionCount": len(lesson.get("questions", [])),
+        "questionCount": len(lesson.get("practiceQuestions", lesson.get("questions", []))),
     }
 
 

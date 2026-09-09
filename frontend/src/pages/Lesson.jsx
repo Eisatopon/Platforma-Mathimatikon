@@ -13,6 +13,7 @@ import { EmptyState } from "@/components/lesson/EmptyState";
 import { Worksheet } from "@/components/lesson/Worksheet";
 import { InteractiveExercises } from "@/components/lesson/InteractiveExercises";
 import { TimedTest } from "@/components/lesson/TimedTest";
+import { GuidedPractice } from "@/components/lesson/GuidedPractice";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { fetchLesson, fetchGrade, readApiCache } from "@/lib/api";
 import { categoryIcon, categoryColor } from "@/lib/ui";
@@ -200,6 +201,7 @@ export default function Lesson() {
               <div className="mb-2 flex items-center gap-2"><Lightbulb className="h-5 w-5 text-amber-500" /><h4 className="font-extrabold text-amber-700 dark:text-amber-400">{lesson.example.title}</h4></div>
               <MathText className="text-[15px] leading-relaxed" text={lesson.example.text} />
             </div>
+            <GuidedPractice lessonId={lesson.id} item={lesson.guidedPractice} />
             {lesson.attention?.length > 0 && (
               <div className="rounded-xl border border-rose-300/60 bg-rose-50 p-4 dark:border-rose-500/30 dark:bg-rose-500/10">
                 <div className="mb-2 flex items-center gap-2"><AlertTriangle className="h-5 w-5 text-rose-500" /><h4 className="font-extrabold text-rose-700 dark:text-rose-400">Σημεία προσοχής</h4></div>

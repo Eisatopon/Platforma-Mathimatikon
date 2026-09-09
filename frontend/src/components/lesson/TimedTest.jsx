@@ -17,12 +17,21 @@ export const TimedTest = ({ lessonId, questions, durationMinutes = 15, fallback 
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(durationMinutes * 60);
   const timerRef = useRef(null);
+  const recordedRef = useRef(false);
 
   useEffect(() => () => clearInterval(timerRef.current), []);
+
+  useEffect(() => {
+    if (phase !== "done" || recordedRef.current) return;
+    const correct = questions.reduce((sum, question, index) => sum + (answers[index] === question.correct ? 1 : 0), 0);
+    recordLessonResult(lessonId, correct, total);
+    recordedRef.current = true;
+  }, [phase, answers, questions, lessonId, total]);
 
   const start = () => {
     setAnswers({});
     setTimeLeft(durationMinutes * 60);
+    recordedRef.current = false;
     setPhase("running");
     timerRef.current = setInterval(() => {
       setTimeLeft((t) => {
@@ -45,8 +54,6 @@ export const TimedTest = ({ lessonId, questions, durationMinutes = 15, fallback 
   };
 
   const submit = () => {
-    const correct = questions.reduce((s, q, i) => s + (answers[i] === q.correct ? 1 : 0), 0);
-    recordLessonResult(lessonId, correct, total);
     finish();
   };
 

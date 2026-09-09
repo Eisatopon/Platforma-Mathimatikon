@@ -1,13 +1,13 @@
 const KEY = "math-gym-progress-v1";
 
-const empty = () => ({ completed: {}, mastery: {}, streak: { count: 0, lastDate: null } });
+const empty = () => ({ completed: {}, mastery: {}, skills: {}, streak: { count: 0, lastDate: null } });
 
 export function getProgress() {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return empty();
     const p = JSON.parse(raw);
-    return { completed: p.completed || {}, mastery: p.mastery || {}, streak: p.streak || { count: 0, lastDate: null } };
+    return { completed: p.completed || {}, mastery: p.mastery || {}, skills: p.skills || {}, streak: p.streak || { count: 0, lastDate: null } };
   } catch {
     return empty();
   }
@@ -68,27 +68,48 @@ export function getLessonMastery(progress, lessonId) {
   return value || { level: 0, attempts: 0, dueAt: null, lastScore: null };
 }
 
-export function recordPracticeResult(lessonId, { firstTryCorrect, secondTryCorrect, total }) {
+export function recordPracticeResult(lessonId, { firstTryCorrect, secondTryCorrect, total, representations = [], skillResults = {} }) {
   const p = getProgress();
   const previous = getLessonMastery(p, lessonId);
   const score = total ? (firstTryCorrect + secondTryCorrect * 0.5) / total : 0;
   let level = previous.level || 0;
+  const successfulSessions = (previous.successfulSessions || 0) + (score >= 0.8 ? 1 : 0);
+  const representationHistory = Array.from(new Set([...(previous.representations || []), ...representations]));
 
-  // Mastery is earned over repeated successful sessions, not a single quiz.
-  if (score >= 0.8) level = Math.min(3, level + 1);
+  // Mastery needs repeated success; the highest level also needs more than one representation.
+  if (score >= 0.8 && level < 2) level = Math.min(2, level + 1);
+  else if (score >= 0.8 && successfulSessions >= 3 && representationHistory.length >= 2) level = 3;
   else if (score < 0.5) level = Math.max(1, level - 1);
   else level = Math.max(1, level);
 
   const due = new Date();
-  due.setDate(due.getDate() + REVIEW_INTERVALS[level]);
+  const reviewDays = level === 3
+    ? (successfulSessions >= 5 ? 45 : successfulSessions >= 4 ? 21 : 7)
+    : REVIEW_INTERVALS[level];
+  due.setDate(due.getDate() + reviewDays);
   p.mastery[lessonId] = {
     level,
     attempts: (previous.attempts || 0) + 1,
     lastScore: Math.round(score * 100),
     firstTryAccuracy: total ? Math.round((firstTryCorrect / total) * 100) : 0,
+    successfulSessions,
+    representations: representationHistory,
     lastPractisedAt: Date.now(),
     dueAt: due.getTime(),
+    reviewDays,
   };
+
+  for (const [skill, result] of Object.entries(skillResults)) {
+    const key = `${lessonId}::${skill}`;
+    const oldSkill = p.skills[key] || { level: 0, attempts: 0, successfulSessions: 0 };
+    const skillScore = result.total ? result.earned / result.total : 0;
+    const skillSuccesses = oldSkill.successfulSessions + (skillScore >= 0.8 ? 1 : 0);
+    let skillLevel = oldSkill.level;
+    if (skillScore >= 0.8 && skillLevel < 2) skillLevel += 1;
+    else if (skillScore >= 0.8 && skillSuccesses >= 3) skillLevel = 3;
+    else if (skillScore < 0.5) skillLevel = Math.max(1, skillLevel - 1);
+    p.skills[key] = { level: skillLevel, attempts: oldSkill.attempts + 1, successfulSessions: skillSuccesses, lastScore: Math.round(skillScore * 100), updatedAt: Date.now() };
+  }
 
   // Keep the existing XP/achievement model compatible.
   const equivalentCorrect = Math.round(firstTryCorrect + secondTryCorrect * 0.5);
@@ -132,15 +153,19 @@ export function levelInfo(xp) {
 }
 
 export function isCompleted(progress, lessonId) {
-  return !!progress.completed[lessonId];
+  const mastery = progress.mastery?.[lessonId];
+  // Legacy records remain visible, but a lesson using the new learning loop
+  // is complete only after it reaches at least satisfactory mastery.
+  return mastery ? mastery.level >= 2 : !!progress.completed[lessonId];
 }
 
 export function completedInGrade(progress, gradeId) {
-  return Object.keys(progress.completed).filter((id) => id.split("-")[0] === gradeId).length;
+  const lessonIds = new Set([...Object.keys(progress.completed), ...Object.keys(progress.mastery || {})]);
+  return [...lessonIds].filter((id) => id.split("-")[0] === gradeId && isCompleted(progress, id)).length;
 }
 
 export function computeStats(progress, grades) {
-  const completedIds = Object.keys(progress.completed);
+  const completedIds = Object.keys(progress.completed).filter((id) => isCompleted(progress, id));
   const completedCount = completedIds.length;
   const totalLessons = grades.reduce((s, g) => s + g.lessonCount, 0);
   const xp = computeXp(progress);
@@ -154,7 +179,7 @@ export function computeStats(progress, grades) {
 }
 
 export function computeBadges(progress, grades) {
-  const completedIds = Object.keys(progress.completed);
+  const completedIds = Object.keys(progress.completed).filter((id) => isCompleted(progress, id));
   const completedCount = completedIds.length;
   const totalLessons = grades.reduce((s, g) => s + g.lessonCount, 0);
   const perfect = completedIds.some((id) => {

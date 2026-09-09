@@ -4,6 +4,8 @@
 Το κείμενο υποστηρίζει LaTeX ανάμεσα σε $...$ (inline) ή $$...$$ (block).
 """
 
+import re
+
 GRADES = [
     {
         "id": "g7",
@@ -3875,9 +3877,178 @@ ADAPTIVE_PRACTICE = {
     ],
 }
 
+
+def _enrich_question(question, lesson, index):
+    """Give every A Gymnasium item the metadata required by the learning loop."""
+    item = dict(question)
+    item.setdefault("id", f"{lesson['id']}-q{index + 1}")
+    item.setdefault("skill", lesson["title"])
+    item.setdefault("difficulty", 1 if index < 2 else 2 if index < 4 else 3)
+    item.setdefault("representation", ("symbolic", "verbal", "application")[index % 3])
+    explanation = item.get("explanation", "Ξαναδιάβασε τη θεωρία και έλεγξε κάθε βήμα.")
+    item.setdefault("hints", [
+        "Εντόπισε πρώτα τι δίνεται και τι ζητείται.",
+        "Σύνδεσε τα δεδομένα με τον βασικό κανόνα του μαθήματος.",
+    ])
+    item.setdefault("optionFeedback", [
+        f"Η επιλογή «{option}» δεν συμφωνεί με τον κανόνα που χρειάζεται εδώ. "
+        "Πιθανότατα χρησιμοποιήθηκε λάθος δεδομένο ή παραλείφθηκε ένας έλεγχος· "
+        "ξανασύνδεσε όσα δίνονται με αυτό που ζητείται."
+        if option_index != item.get("correct") else ""
+        for option_index, option in enumerate(item.get("options", []))
+    ])
+    item.setdefault("explanation", explanation)
+    return item
+
+
+def _complete_g7_learning_design(lesson):
+    """Apply the common research-backed specification to all 60 A Gymnasium lessons."""
+    if lesson.get("gradeId") != "g7":
+        return
+
+    base = lesson.get("questions", [])
+    assessment = lesson.get("assessment", {}).get("questions", [])
+    bank = []
+    seen = set()
+    for question in [*base, *assessment]:
+        signature = question.get("prompt", "")
+        if signature and signature not in seen:
+            seen.add(signature)
+            bank.append(_enrich_question(question, lesson, len(bank)))
+
+    # The three pilot lessons keep their richer hand-authored banks below.
+    worksheet = lesson.get("worksheet", {})
+    solutions = lesson.get("solutions", [])
+    correct_0 = bank[0]["options"][bank[0]["correct"]] if bank else ""
+    correct_1 = bank[1]["options"][bank[1]["correct"]] if len(bank) > 1 else correct_0
+
+    def plain_answer(value):
+        value = value.replace("$", "").replace("\\cdot", "·").strip()
+        value = re.sub(r"\\frac\{([^{}]+)\}\{([^{}]+)\}", r"\1/\2", value)
+        return value
+
+    production = [
+        {
+            "id": f"{lesson['id']}-input",
+            "type": "input",
+            "skill": lesson["title"],
+            "difficulty": 2,
+            "representation": "constructed-response",
+            "prompt": f"Απάντησε χωρίς επιλογές: {bank[0]['prompt'] if bank else lesson['title']}",
+            "acceptedAnswers": [correct_0, plain_answer(correct_0)],
+            "explanation": bank[0].get("explanation", "") if bank else "",
+            "hints": bank[0].get("hints", []) if bank else ["Χρησιμοποίησε τον βασικό κανόνα.", "Έλεγξε προσεκτικά το αποτέλεσμα."],
+        },
+        {
+            "id": f"{lesson['id']}-fill",
+            "type": "fill",
+            "skill": lesson["title"],
+            "difficulty": 2,
+            "representation": "verbal",
+            "prompt": f"Συμπλήρωσε την απάντηση: {bank[1]['prompt'] if len(bank) > 1 else lesson['title']}",
+            "acceptedAnswers": [correct_1, plain_answer(correct_1)],
+            "explanation": bank[1].get("explanation", "") if len(bank) > 1 else "",
+            "hints": bank[1].get("hints", []) if len(bank) > 1 else ["Θυμήσου τον ορισμό.", "Έλεγξε τη θεωρία."],
+        },
+        {
+            "id": f"{lesson['id']}-error",
+            "type": "self-check",
+            "activityKind": "error-correction",
+            "skill": lesson["title"],
+            "difficulty": 3,
+            "representation": "error-analysis",
+            "prompt": f"Εντόπισε και διόρθωσε το λάθος: {lesson.get('attention', ['Ένας μαθητής εφαρμόζει τον κανόνα χωρίς να ελέγξει τις προϋποθέσεις του.'])[0]}",
+            "modelAnswer": bank[0].get("explanation", lesson.get("attention", [""])[0]) if bank else lesson.get("attention", [""])[0],
+            "hints": ["Ονόμασε πρώτα τον κανόνα που παραβιάζεται.", "Γράψε τη σωστή διαδικασία και όχι μόνο το τελικό αποτέλεσμα."],
+        },
+        {
+            "id": f"{lesson['id']}-investigation",
+            "type": "self-check",
+            "activityKind": "geometry-investigation" if lesson.get("category") == "Γεωμετρία" else "transfer",
+            "skill": lesson["title"],
+            "difficulty": 3,
+            "representation": "application",
+            "prompt": (worksheet.get("C") or worksheet.get("B") or [f"Δημιούργησε ένα δικό σου παράδειγμα για το θέμα «{lesson['title']}» και αιτιολόγησέ το."])[0],
+            "modelAnswer": solutions[-1].get("text", "Σύγκρινε τη στρατηγική σου με το λυμένο παράδειγμα και έλεγξε κάθε βήμα.") if solutions else "Σύγκρινε τη στρατηγική σου με το λυμένο παράδειγμα και έλεγξε κάθε βήμα.",
+            "hints": ["Δοκίμασε πρώτα μια απλούστερη περίπτωση ή ένα πρόχειρο σχήμα.", "Αιτιολόγησε ποια ιδιότητα χρησιμοποιείς."],
+        },
+        {
+            "id": f"{lesson['id']}-matching",
+            "type": "matching",
+            "skill": lesson["title"],
+            "difficulty": 2,
+            "representation": "multiple-representation",
+            "prompt": "Αντιστοίχισε κάθε ερώτημα με τη σωστή απάντηση.",
+            "pairs": [
+                {"left": bank[0]["prompt"], "right": correct_0},
+                {"left": bank[1]["prompt"], "right": correct_1},
+            ] if len(bank) > 1 else [{"left": lesson["title"], "right": correct_0}],
+            "explanation": "Κάθε ζεύγος συνδέει το ερώτημα με το αποτέλεσμα που προκύπτει από τον αντίστοιχο κανόνα.",
+            "hints": ["Λύσε κάθε ερώτημα χωριστά πριν κάνεις την αντιστοίχιση.", "Έλεγξε αν κάθε απάντηση χρησιμοποιήθηκε ακριβώς μία φορά."],
+        },
+        {
+            "id": f"{lesson['id']}-ordering",
+            "type": "ordering",
+            "skill": lesson["title"],
+            "difficulty": 2,
+            "representation": "procedural",
+            "prompt": "Βάλε τα βήματα επίλυσης στη σωστή σειρά.",
+            "steps": [
+                "Καταγράφω τα δεδομένα και το ζητούμενο.",
+                "Επιλέγω τον κατάλληλο κανόνα ή την ιδιότητα.",
+                "Εφαρμόζω τον κανόνα και εκτελώ προσεκτικά τα βήματα.",
+                "Ελέγχω αν το αποτέλεσμα απαντά στο ζητούμενο.",
+            ],
+            "explanation": "Η οργανωμένη επίλυση αρχίζει από τα δεδομένα, συνεχίζει με επιλογή και εφαρμογή του κανόνα και τελειώνει με έλεγχο.",
+            "hints": ["Πρώτα πρέπει να γνωρίζεις τι δίνεται και τι ζητείται.", "Ο έλεγχος του αποτελέσματος γίνεται τελευταίος."],
+        },
+    ]
+
+    # Six focused selected-response items plus all six richer activity formats.
+    lesson.setdefault("practiceQuestions", [*bank[:6], *production])
+    lesson["questionCount"] = len(lesson["practiceQuestions"])
+    lesson.setdefault("guidedPractice", {
+        "prompt": bank[-1]["prompt"] if bank else f"Εξήγησε με δικά σου λόγια το θέμα «{lesson['title']}».",
+        "hint": "Γράψε πρώτα τη στρατηγική σου και μετά εκτέλεσε τους υπολογισμούς ή την κατασκευή.",
+        "solution": bank[-1].get("explanation", "Σύγκρινε τη λύση σου με το λυμένο παράδειγμα." ) if bank else "Σύγκρινε την απάντησή σου με τα βασικά σημεία της θεωρίας.",
+    })
+    lesson.setdefault("learningSpecification", {
+        "flow": ["ανάκληση", "λυμένο παράδειγμα", "καθοδηγούμενη εφαρμογή", "ανεξάρτητη εξάσκηση", "επανάληψη"],
+        "masteryRequiresRepeatedSuccess": True,
+        "secondAttemptWeight": 0.6,
+    })
+
+
+for lesson in LESSONS:
+    _complete_g7_learning_design(lesson)
+
 for lesson in LESSONS:
     if lesson["id"] in ADAPTIVE_PRACTICE:
-        lesson["practiceQuestions"] = ADAPTIVE_PRACTICE[lesson["id"]]
+        authored = ADAPTIVE_PRACTICE[lesson["id"]]
+        rich_items = [item for item in lesson["practiceQuestions"] if item.get("type")]
+        lesson["practiceQuestions"] = [*authored[:6], *rich_items]
+        for index, question in enumerate(lesson["practiceQuestions"]):
+            question.setdefault("representation", ("symbolic", "verbal", "application")[index % 3])
+        lesson["questionCount"] = len(lesson["practiceQuestions"])
+
+
+# Κάθε μάθημα μετά το πρώτο ανακαλεί μία δεξιότητα από το αμέσως προηγούμενο.
+g7_lessons = sorted((lesson for lesson in LESSONS if lesson.get("gradeId") == "g7"), key=lambda item: item["order"])
+for index, lesson in enumerate(g7_lessons):
+    if index:
+        previous = g7_lessons[index - 1]
+        source = previous["practiceQuestions"][0]
+        recall = dict(source)
+        recall["id"] = f"{lesson['id']}-recall-{previous['id']}"
+        recall["recall"] = True
+        recall["sourceLessonId"] = previous["id"]
+        recall["skill"] = f"Επανάληψη: {previous['title']}"
+        current = lesson["practiceQuestions"]
+        removable = next((position for position, question in enumerate(current) if not question.get("type")), 0)
+        lesson["practiceQuestions"] = [question for position, question in enumerate(current) if position != removable][:11] + [recall]
+    elif len(lesson["practiceQuestions"]) < 10:
+        lesson["practiceQuestions"].append(dict(lesson["practiceQuestions"][-1], id=f"{lesson['id']}-transfer-2"))
+    lesson["questionCount"] = len(lesson["practiceQuestions"])
 
 
 # Τα δύο αρχικά συγκεντρωτικά μαθήματα της Α΄ Γυμνασίου αντικαταστάθηκαν
