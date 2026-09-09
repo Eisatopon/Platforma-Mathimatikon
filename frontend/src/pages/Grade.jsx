@@ -5,20 +5,32 @@ import { ArrowLeft, ChevronRight, Clock, CheckCircle2, Circle, BookOpen, Library
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MathText } from "@/components/MathText";
-import { fetchGrade } from "@/lib/api";
+import { fetchGrade, readApiCache } from "@/lib/api";
 import { getProgress, subscribe, isCompleted } from "@/lib/progress";
 import { gradeStyles, categoryIcon, categoryColor } from "@/lib/ui";
 
 export default function Grade() {
   const { gradeId } = useParams();
   const navigate = useNavigate();
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(() => readApiCache(`grade:${gradeId}`));
+  const [slowLoading, setSlowLoading] = useState(false);
   const [progress, setProgress] = useState(getProgress());
 
   useEffect(() => {
+    setData(readApiCache(`grade:${gradeId}`));
+    setSlowLoading(false);
+    const slowTimer = window.setTimeout(() => setSlowLoading(true), 1800);
     fetchGrade(gradeId).then(setData).catch(() => {});
-    return subscribe(setProgress);
+    const unsubscribe = subscribe(setProgress);
+    return () => {
+      window.clearTimeout(slowTimer);
+      unsubscribe();
+    };
   }, [gradeId]);
+
+  useEffect(() => {
+    if (data) setSlowLoading(false);
+  }, [data]);
 
   const books = data?.books || [];
   const hasBooks = books.length > 0;
@@ -37,7 +49,10 @@ export default function Grade() {
     return (
       <div className="App min-h-screen">
         <Header />
-        <div className="mx-auto max-w-5xl px-4 py-20 text-center text-muted-foreground">Φόρτωση…</div>
+        <div className="mx-auto max-w-5xl px-4 py-20 text-center text-muted-foreground">
+          <div className="font-semibold">Φόρτωση μαθημάτων…</div>
+          {slowLoading && <div className="mt-2 text-sm">Η δωρεάν εκπαιδευτική υπηρεσία ενεργοποιείται. Η πρώτη φόρτωση μπορεί να χρειαστεί έως ένα λεπτό.</div>}
+        </div>
       </div>
     );
   }
