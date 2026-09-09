@@ -1,13 +1,13 @@
 const KEY = "math-gym-progress-v1";
 
-const empty = () => ({ completed: {}, streak: { count: 0, lastDate: null } });
+const empty = () => ({ completed: {}, mastery: {}, streak: { count: 0, lastDate: null } });
 
 export function getProgress() {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return empty();
     const p = JSON.parse(raw);
-    return { completed: p.completed || {}, streak: p.streak || { count: 0, lastDate: null } };
+    return { completed: p.completed || {}, mastery: p.mastery || {}, streak: p.streak || { count: 0, lastDate: null } };
   } catch {
     return empty();
   }
@@ -52,6 +52,69 @@ export function recordLessonResult(lessonId, correct, total) {
   if (p.streak.count < 1) p.streak.count = 1;
   save(p);
   return p;
+}
+
+const REVIEW_INTERVALS = [1, 1, 3, 7];
+
+export const MASTERY_LEVELS = [
+  { key: "not-started", label: "Δεν ξεκίνησε" },
+  { key: "practising", label: "Σε εξάσκηση" },
+  { key: "proficient", label: "Ικανοποιητική κατάκτηση" },
+  { key: "mastered", label: "Κατακτήθηκε" },
+];
+
+export function getLessonMastery(progress, lessonId) {
+  const value = progress.mastery?.[lessonId];
+  return value || { level: 0, attempts: 0, dueAt: null, lastScore: null };
+}
+
+export function recordPracticeResult(lessonId, { firstTryCorrect, secondTryCorrect, total }) {
+  const p = getProgress();
+  const previous = getLessonMastery(p, lessonId);
+  const score = total ? (firstTryCorrect + secondTryCorrect * 0.5) / total : 0;
+  let level = previous.level || 0;
+
+  // Mastery is earned over repeated successful sessions, not a single quiz.
+  if (score >= 0.8) level = Math.min(3, level + 1);
+  else if (score < 0.5) level = Math.max(1, level - 1);
+  else level = Math.max(1, level);
+
+  const due = new Date();
+  due.setDate(due.getDate() + REVIEW_INTERVALS[level]);
+  p.mastery[lessonId] = {
+    level,
+    attempts: (previous.attempts || 0) + 1,
+    lastScore: Math.round(score * 100),
+    firstTryAccuracy: total ? Math.round((firstTryCorrect / total) * 100) : 0,
+    lastPractisedAt: Date.now(),
+    dueAt: due.getTime(),
+  };
+
+  // Keep the existing XP/achievement model compatible.
+  const equivalentCorrect = Math.round(firstTryCorrect + secondTryCorrect * 0.5);
+  const old = p.completed[lessonId];
+  if (!old || equivalentCorrect > old.correct) {
+    p.completed[lessonId] = { correct: equivalentCorrect, total, ts: Date.now() };
+  }
+  updateStreak(p);
+  save(p);
+  return p.mastery[lessonId];
+}
+
+function updateStreak(p) {
+  const today = todayStr();
+  const last = p.streak.lastDate;
+  if (last !== today) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    p.streak.count = last === yesterday.toISOString().slice(0, 10) ? p.streak.count + 1 : 1;
+    p.streak.lastDate = today;
+  }
+}
+
+export function isReviewDue(progress, lessonId, now = Date.now()) {
+  const mastery = getLessonMastery(progress, lessonId);
+  return mastery.level > 0 && mastery.dueAt && mastery.dueAt <= now;
 }
 
 export function resetProgress() {

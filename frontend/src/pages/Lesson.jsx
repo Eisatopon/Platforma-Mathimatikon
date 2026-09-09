@@ -213,7 +213,7 @@ export default function Lesson() {
         return <Worksheet lessonId={lesson.id} worksheet={lesson.worksheet} />;
 
       case "interactive":
-        return <InteractiveExercises lessonId={lesson.id} questions={lesson.questions} />;
+        return <InteractiveExercises key={lesson.id} lessonId={lesson.id} questions={lesson.practiceQuestions?.length ? lesson.practiceQuestions : lesson.questions} />;
 
       case "test":
         return <TimedTest lessonId={lesson.id} questions={testQuestions} durationMinutes={lesson.assessment?.durationMinutes || 15} fallback={testFallback} />;

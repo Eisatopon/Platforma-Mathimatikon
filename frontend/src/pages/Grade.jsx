@@ -6,7 +6,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MathText } from "@/components/MathText";
 import { fetchGrade, readApiCache } from "@/lib/api";
-import { getProgress, subscribe, isCompleted } from "@/lib/progress";
+import { getProgress, subscribe, isCompleted, getLessonMastery, MASTERY_LEVELS, isReviewDue } from "@/lib/progress";
 import { gradeStyles, categoryIcon, categoryColor } from "@/lib/ui";
 
 export default function Grade() {
@@ -153,6 +153,9 @@ export default function Grade() {
                 <div className="grid gap-3 sm:grid-cols-2">
                   {ch.lessons.map((l, li) => {
                     const c = isCompleted(progress, l.id);
+                    const mastery = getLessonMastery(progress, l.id);
+                    const masteryLabel = MASTERY_LEVELS[mastery.level]?.label;
+                    const reviewDue = isReviewDue(progress, l.id);
                     return (
                       <motion.button
                         key={l.id}
@@ -169,6 +172,7 @@ export default function Grade() {
                           <div className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
                             <span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" />{l.minutes} λεπτά</span>·<span>{l.questionCount} ερωτήσεις</span>
                           </div>
+                          {mastery.level > 0 && <div className={`mt-1 text-[11px] font-bold ${reviewDue ? "text-amber-600" : "text-indigo-600 dark:text-indigo-300"}`}>{reviewDue ? "Ώρα για επανάληψη" : masteryLabel}</div>}
                         </div>
                         <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
                       </motion.button>

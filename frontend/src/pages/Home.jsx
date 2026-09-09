@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Search, Zap, Flame, Target, GraduationCap, Play, Trophy, ChevronRight, Sparkles, CheckCircle2, Clock } from "lucide-react";
+import { Search, Zap, Flame, Target, GraduationCap, Play, Trophy, ChevronRight, Sparkles, CheckCircle2, Clock, Brain, CalendarClock } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MathText } from "@/components/MathText";
 import { fetchGrades, fetchAllLessons, readApiCache } from "@/lib/api";
-import { getProgress, subscribe, computeStats, isCompleted, completedInGrade } from "@/lib/progress";
+import { getProgress, subscribe, computeStats, isCompleted, completedInGrade, isReviewDue } from "@/lib/progress";
 import { gradeStyles, categoryIcon, categoryColor } from "@/lib/ui";
 
 const CATEGORIES = ["Όλα", "Άλγεβρα", "Γεωμετρία", "Αριθμητική", "Στατιστική", "Ολοκληρωμένα", "Σε εξέλιξη"];
@@ -77,6 +77,7 @@ export default function Home() {
       return matchQ && matchC;
     });
   }, [lessons, query, cat, progress]);
+  const dueLessons = useMemo(() => lessons.filter((lesson) => isReviewDue(progress, lesson.id)).slice(0, 6), [lessons, progress]);
 
   return (
     <div className="App min-h-screen">
@@ -162,6 +163,22 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {dueLessons.length > 0 && !filtering && (
+          <section className="mt-6 rounded-2xl border border-indigo-200 bg-indigo-50/70 p-4 dark:border-indigo-500/30 dark:bg-indigo-500/10" data-testid="review-due-section">
+            <div className="flex items-center gap-2 font-extrabold text-indigo-800 dark:text-indigo-300"><CalendarClock className="h-5 w-5" /> Ώρα για σύντομη επανάληψη</div>
+            <p className="mt-1 text-xs text-muted-foreground">Η επανάληψη παλαιότερων δεξιοτήτων γίνεται τη στιγμή που βοηθά περισσότερο τη συγκράτηση.</p>
+            <div className="mt-3 grid gap-2 sm:grid-cols-2">
+              {dueLessons.map((lesson) => (
+                <button key={lesson.id} onClick={() => navigate(`/lesson/${lesson.id}`)} className="flex items-center gap-3 rounded-xl border border-border bg-card p-3 text-left hover:border-primary/40">
+                  <Brain className="h-5 w-5 shrink-0 text-indigo-500" />
+                  <span className="min-w-0 flex-1 truncate text-sm font-bold"><MathText text={lesson.title} /></span>
+                  <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Content */}
         {!filtering ? (

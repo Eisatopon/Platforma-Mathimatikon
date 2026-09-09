@@ -41,6 +41,14 @@ class Question(BaseModel):
     explanation: str
 
 
+class PracticeQuestion(Question):
+    id: str = ""
+    skill: str = ""
+    difficulty: int = 1
+    hints: List[str] = []
+    optionFeedback: List[str] = []
+
+
 class Example(BaseModel):
     title: str
     text: str
@@ -114,6 +122,7 @@ class LessonDetail(LessonSummary):
     example: Example
     figures: List[Figure] = []
     questions: List[Question]
+    practiceQuestions: List[PracticeQuestion] = []
     plan: Plan = Plan()
     attention: List[str] = []
     worksheet: Worksheet = Worksheet()
@@ -246,6 +255,7 @@ async def get_lesson(lesson_id: str):
         theory=l["theory"], example=Example(**l["example"]),
         figures=[Figure(**f) for f in l.get("figures", [])],
         questions=[Question(**q) for q in l["questions"]],
+        practiceQuestions=[PracticeQuestion(**q) for q in l.get("practiceQuestions", [])],
         plan=Plan(**l.get("plan", {})),
         attention=l.get("attention", []),
         worksheet=Worksheet(**l.get("worksheet", {})),
