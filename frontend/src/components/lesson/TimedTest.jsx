@@ -5,6 +5,11 @@ import { recordLessonResult } from "@/lib/progress";
 
 const LETTERS = ["Α", "Β", "Γ", "Δ", "Ε"];
 
+function questionPrompt(question) {
+  const prompt = question?.prompt || question?.question || "";
+  return String(prompt).trim() || "Επίλεξε τη σωστή απάντηση από τις παρακάτω επιλογές.";
+}
+
 function fmt(sec) {
   const m = Math.floor(sec / 60);
   const s = sec % 60;
@@ -102,7 +107,8 @@ export const TimedTest = ({ lessonId, questions, durationMinutes = 15, fallback 
             const chosen = answers[i];
             return (
               <div key={i} className="rounded-xl border border-border bg-card p-4">
-                <div className="text-sm font-bold"><span className="text-muted-foreground">{i + 1}. </span><MathText text={q.prompt} /></div>
+                <div className="mb-1 text-xs font-extrabold uppercase tracking-wide text-primary">Ερώτηση {i + 1}</div>
+                <div className="text-base font-bold leading-snug"><MathText text={questionPrompt(q)} /></div>
                 <div className="mt-2 space-y-1.5">
                   {q.options.map((opt, oi) => {
                     const isCorrect = oi === q.correct;
@@ -142,7 +148,8 @@ export const TimedTest = ({ lessonId, questions, durationMinutes = 15, fallback 
       <div className="space-y-5">
         {questions.map((q, i) => (
           <div key={i} className="rounded-xl border border-border bg-card p-4">
-            <div className="text-sm font-bold leading-snug"><span className="text-muted-foreground">{i + 1}. </span><MathText text={q.prompt} /></div>
+            <div className="mb-1 text-xs font-extrabold uppercase tracking-wide text-primary">Ερώτηση {i + 1}</div>
+            <div className="rounded-lg bg-secondary/60 px-3 py-2.5 text-base font-bold leading-snug"><MathText text={questionPrompt(q)} /></div>
             <div className="mt-3 grid gap-2 sm:grid-cols-2">
               {q.options.map((opt, oi) => {
                 const sel = answers[i] === oi;
