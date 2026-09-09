@@ -14,7 +14,7 @@ import { Worksheet } from "@/components/lesson/Worksheet";
 import { InteractiveExercises } from "@/components/lesson/InteractiveExercises";
 import { TimedTest } from "@/components/lesson/TimedTest";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { fetchLesson, fetchGrade } from "@/lib/api";
+import { fetchLesson, fetchGrade, readApiCache } from "@/lib/api";
 import { categoryIcon, categoryColor } from "@/lib/ui";
 
 const SECTIONS = [
@@ -49,7 +49,8 @@ const SolutionItem = ({ sol, i }) => {
 export default function Lesson() {
   const { lessonId } = useParams();
   const navigate = useNavigate();
-  const [lesson, setLesson] = useState(null);
+  const [lesson, setLesson] = useState(() => readApiCache(`lesson:${lessonId}`));
+  const [slowLoading, setSlowLoading] = useState(false);
   const [gradeTitle, setGradeTitle] = useState("");
   const [nextLesson, setNextLesson] = useState(null);
   const [open, setOpen] = useState(["plan", "theory"]);
@@ -57,6 +58,9 @@ export default function Lesson() {
   useEffect(() => {
     window.scrollTo(0, 0);
     setOpen(["plan", "theory"]);
+    setLesson(readApiCache(`lesson:${lessonId}`));
+    setSlowLoading(false);
+    const slowTimer = window.setTimeout(() => setSlowLoading(true), 1800);
     fetchLesson(lessonId).then((l) => {
       setLesson(l);
       fetchGrade(l.gradeId).then((d) => {
@@ -66,7 +70,12 @@ export default function Lesson() {
         setNextLesson(pos >= 0 && pos < arr.length - 1 ? arr[pos + 1] : null);
       }).catch(() => {});
     }).catch(() => {});
+    return () => window.clearTimeout(slowTimer);
   }, [lessonId]);
+
+  useEffect(() => {
+    if (lesson) setSlowLoading(false);
+  }, [lesson]);
 
   const Icon = useMemo(() => (lesson ? categoryIcon[lesson.category] || BookOpen : BookOpen), [lesson]);
 
@@ -74,7 +83,10 @@ export default function Lesson() {
     return (
       <div className="App min-h-screen">
         <Header />
-        <div className="mx-auto max-w-3xl px-4 py-20 text-center text-muted-foreground">Φόρτωση…</div>
+        <div className="mx-auto max-w-3xl px-4 py-20 text-center text-muted-foreground">
+          <div className="font-semibold">Φόρτωση μαθήματος…</div>
+          {slowLoading && <div className="mt-2 text-sm">Η δωρεάν εκπαιδευτική υπηρεσία ενεργοποιείται. Η πρώτη φόρτωση μπορεί να χρειαστεί έως ένα λεπτό.</div>}
+        </div>
       </div>
     );
   }
