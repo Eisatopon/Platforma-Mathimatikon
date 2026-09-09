@@ -5,7 +5,7 @@ import { Search, Zap, Flame, Target, GraduationCap, Play, Trophy, ChevronRight, 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MathText } from "@/components/MathText";
-import { fetchGrades, fetchAllLessons } from "@/lib/api";
+import { fetchGrades, fetchAllLessons, readApiCache } from "@/lib/api";
 import { getProgress, subscribe, computeStats, isCompleted, completedInGrade } from "@/lib/progress";
 import { gradeStyles, categoryIcon, categoryColor } from "@/lib/ui";
 
@@ -19,7 +19,7 @@ const INITIAL_GRADES = [
     subtitle: "Αριθμητική, άλγεβρα και βασική γεωμετρία",
     color: "emerald",
     order: 1,
-    lessonCount: 26,
+    lessonCount: 60,
   },
   {
     id: "g8",
@@ -49,8 +49,8 @@ const StatBox = ({ Icon, color, value, label, testid }) => (
 
 export default function Home() {
   const navigate = useNavigate();
-  const [grades, setGrades] = useState(INITIAL_GRADES);
-  const [lessons, setLessons] = useState([]);
+  const [grades, setGrades] = useState(() => readApiCache("grades", INITIAL_GRADES));
+  const [lessons, setLessons] = useState(() => readApiCache("lessons", []));
   const [progress, setProgress] = useState(getProgress());
   const [query, setQuery] = useState("");
   const [cat, setCat] = useState("Όλα");
