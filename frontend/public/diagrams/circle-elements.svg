@@ -1,22 +1,22 @@
-<svg viewBox="0 0 640 460" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
-  <rect width="640" height="460" fill="#ffffff"/>
-  <g transform="translate(320,220)">
-    <circle cx="0" cy="0" r="160" fill="none" stroke="#1e293b" stroke-width="2.5"/>
+<svg viewBox="0 0 640 520" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="640" height="520" fill="#ffffff"/>
+  <g transform="translate(320,240)">
+    <circle cx="0" cy="0" r="150" fill="none" stroke="#1e293b" stroke-width="2.5"/>
     <!-- center -->
     <circle cx="0" cy="0" r="4" fill="#dc2626"/>
-    <text x="14" y="4" font-size="16" fill="#dc2626" font-weight="700">Κ</text>
-    <!-- radius -->
-    <line x1="0" y1="0" x2="113" y2="-113" stroke="#6366f1" stroke-width="3"/>
-    <text x="45" y="-72" font-size="16" fill="#6366f1" font-weight="700">ακτίνα</text>
-    <!-- diameter -->
-    <line x1="-160" y1="60" x2="140" y2="-104" stroke="#10b981" stroke-width="3"/>
-    <text x="-150" y="90" font-size="16" fill="#10b981" font-weight="700">διάμετρος</text>
-    <!-- chord -->
-    <line x1="-90" y1="130" x2="130" y2="90" stroke="#f59e0b" stroke-width="3"/>
-    <text x="-30" y="150" font-size="16" fill="#f59e0b" font-weight="700">χορδή</text>
-    <!-- arc highlight -->
-    <path d="M 160 0 A 160 160 0 0 1 113 113" fill="none" stroke="#7c3aed" stroke-width="5"/>
-    <text x="175" y="70" font-size="16" fill="#7c3aed" font-weight="700">τόξο</text>
+    <text x="12" y="-8" font-size="17" fill="#dc2626" font-weight="700">Κ</text>
+    <!-- radius: horizontal to the right, label above it, clear of the circle -->
+    <line x1="0" y1="0" x2="150" y2="0" stroke="#6366f1" stroke-width="3"/>
+    <text x="55" y="-14" font-size="17" fill="#6366f1" font-weight="700">ακτίνα</text>
+    <!-- diameter: vertical, label to the left, clear of the circle -->
+    <line x1="0" y1="-150" x2="0" y2="150" stroke="#10b981" stroke-width="3"/>
+    <text x="-140" y="-95" font-size="17" fill="#10b981" font-weight="700">διάμετρος</text>
+    <!-- chord: a horizontal-ish segment low in the circle, label below it -->
+    <line x1="-110" y1="90" x2="110" y2="90" stroke="#f59e0b" stroke-width="3"/>
+    <text x="-30" y="120" font-size="17" fill="#f59e0b" font-weight="700">χορδή</text>
+    <!-- arc: highlighted quarter-arc top-right, label outside the circle -->
+    <path d="M 150 0 A 150 150 0 0 1 0 150" fill="none" stroke="#7c3aed" stroke-width="6"/>
+    <text x="115" y="135" font-size="17" fill="#7c3aed" font-weight="700">τόξο</text>
   </g>
-  <text x="320" y="440" font-size="16" fill="#475569" text-anchor="middle">Στοιχεία κύκλου: κέντρο, ακτίνα, διάμετρος, χορδή, τόξο</text>
+  <text x="320" y="495" font-size="17" fill="#475569" text-anchor="middle">Στοιχεία κύκλου: κέντρο, ακτίνα, διάμετρος, χορδή, τόξο</text>
 </svg>
