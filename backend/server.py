@@ -7,11 +7,11 @@ import logging
 import uuid
 import secrets
 from pathlib import Path
-from typing import List, Optional
+from typing import Any, List, Optional
 from datetime import datetime, timezone, timedelta
 import jwt
 import httpx
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from seed_content import all_docs, all_books
 
@@ -41,12 +41,28 @@ class Question(BaseModel):
     explanation: str
 
 
-class PracticeQuestion(Question):
+class PracticeQuestion(BaseModel):
+    """All interactive activity formats used by the lesson player."""
+    model_config = ConfigDict(extra="allow")
+
+    prompt: str
     id: str = ""
     skill: str = ""
     difficulty: int = 1
+    representation: str = ""
+    type: Optional[str] = None
+    options: List[str] = []
+    correct: Optional[int] = None
+    explanation: str = ""
     hints: List[str] = []
     optionFeedback: List[str] = []
+    acceptedAnswers: List[str] = []
+    modelAnswer: str = ""
+    activityKind: str = ""
+    pairs: List[Any] = []
+    steps: List[str] = []
+    recall: bool = False
+    sourceLessonId: str = ""
 
 
 class Example(BaseModel):
@@ -105,6 +121,20 @@ class Recap(BaseModel):
     furtherStudy: List[str] = []
 
 
+class GuidedPractice(BaseModel):
+    prompt: str = ""
+    hint: str = ""
+    solution: str = ""
+
+
+class LearningSpecification(BaseModel):
+    model_config = ConfigDict(extra="allow")
+
+    flow: List[str] = []
+    masteryRequiresRepeatedSuccess: bool = False
+    secondAttemptWeight: float = 1.0
+
+
 class LessonSummary(BaseModel):
     id: str
     gradeId: str
@@ -129,6 +159,8 @@ class LessonDetail(LessonSummary):
     assessment: Assessment = Assessment()
     solutions: List[Solution] = []
     recap: Recap = Recap()
+    guidedPractice: GuidedPractice = GuidedPractice()
+    learningSpecification: LearningSpecification = LearningSpecification()
 
 
 class Grade(BaseModel):
@@ -251,7 +283,7 @@ async def get_lesson(lesson_id: str):
     return LessonDetail(
         id=l["id"], gradeId=l["gradeId"], bookId=l.get("bookId", ""), chapter=l["chapter"], category=l["category"],
         title=l["title"], minutes=l["minutes"], order=l["order"],
-        questionCount=len(l.get("questions", [])),
+        questionCount=len(l.get("practiceQuestions", l.get("questions", []))),
         theory=l["theory"], example=Example(**l["example"]),
         figures=[Figure(**f) for f in l.get("figures", [])],
         questions=[Question(**q) for q in l["questions"]],
@@ -262,6 +294,8 @@ async def get_lesson(lesson_id: str):
         assessment=Assessment(**l.get("assessment", {})),
         solutions=[Solution(**s) for s in l.get("solutions", [])],
         recap=Recap(**l.get("recap", {})),
+        guidedPractice=GuidedPractice(**l.get("guidedPractice", {})),
+        learningSpecification=LearningSpecification(**l.get("learningSpecification", {})),
     )
 
 
@@ -282,12 +316,15 @@ class LessonUpsert(BaseModel):
     example: Example = Example(title="Παράδειγμα", text="")
     figures: List[Figure] = []
     questions: List[Question] = []
+    practiceQuestions: Optional[List[PracticeQuestion]] = None
     plan: Plan = Plan()
     attention: List[str] = []
     worksheet: Worksheet = Worksheet()
     assessment: Assessment = Assessment()
     solutions: List[Solution] = []
     recap: Recap = Recap()
+    guidedPractice: Optional[GuidedPractice] = None
+    learningSpecification: Optional[LearningSpecification] = None
 
 
 def create_admin_token() -> str:
@@ -327,7 +364,7 @@ async def admin_create_lesson(body: LessonUpsert, _: bool = Depends(require_admi
     grade = await db.grades.find_one({"id": body.gradeId})
     if not grade:
         raise HTTPException(status_code=400, detail="Άγνωστη τάξη")
-    doc = body.model_dump()
+    doc = body.model_dump(exclude_none=True)
     lesson_id = f"{body.gradeId}-{uuid.uuid4().hex[:6]}"
     doc["id"] = lesson_id
     if doc.get("order") is None:
@@ -342,7 +379,9 @@ async def admin_update_lesson(lesson_id: str, body: LessonUpsert, _: bool = Depe
     existing = await db.lessons.find_one({"id": lesson_id})
     if not existing:
         raise HTTPException(status_code=404, detail="Το μάθημα δεν βρέθηκε")
-    doc = body.model_dump()
+    # Optional advanced-learning fields are preserved when an older admin UI
+    # does not send them; an explicit empty value can still clear a field.
+    doc = body.model_dump(exclude_none=True)
     doc["id"] = lesson_id
     if doc.get("order") is None:
         doc["order"] = existing.get("order", 1)
