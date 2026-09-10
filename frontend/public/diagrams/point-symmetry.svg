@@ -1,0 +1,16 @@
+<svg viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="640" height="380" fill="#ffffff"/>
+  <g transform="translate(320,190)">
+    <circle cx="0" cy="0" r="5" fill="#dc2626"/>
+    <text x="14" y="-10" font-size="16" fill="#dc2626" font-weight="700">Κ (κέντρο συμμετρίας)</text>
+    <!-- shape 1 -->
+    <polygon points="-200,-40 -120,-40 -120,-100 -200,-100" fill="#a5b4fc" stroke="#6366f1" stroke-width="2.5"/>
+    <text x="-160" y="-115" font-size="16" font-weight="700" fill="#1e293b" text-anchor="middle">Α</text>
+    <!-- shape 2 mirrored through K (180 rotation) -->
+    <polygon points="200,40 120,40 120,100 200,100" fill="#a5b4fc" stroke="#6366f1" stroke-width="2.5"/>
+    <text x="160" y="118" font-size="16" font-weight="700" fill="#1e293b" text-anchor="middle">Α΄</text>
+    <!-- lines through center -->
+    <line x1="-160" y1="-70" x2="160" y2="70" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 3"/>
+  </g>
+  <text x="320" y="340" font-size="16" fill="#475569" text-anchor="middle">Το Α΄ προκύπτει με περιστροφή του Α κατά 180° γύρω από το Κ</text>
+</svg>
