@@ -1,0 +1,17 @@
+<svg viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="640" height="400" fill="#ffffff"/>
+  <g transform="translate(320,30)">
+    <line x1="0" y1="0" x2="0" y2="300" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <text x="14" y="20" font-size="16" fill="#dc2626" font-weight="700">άξονας συμμετρίας</text>
+    <!-- triangle on left -->
+    <polygon points="-40,260 -140,260 -90,140" fill="#a5b4fc" stroke="#6366f1" stroke-width="2.5"/>
+    <!-- mirrored triangle on right -->
+    <polygon points="40,260 140,260 90,140" fill="#a5b4fc" stroke="#6366f1" stroke-width="2.5"/>
+    <!-- correspondence lines -->
+    <line x1="-90" y1="140" x2="90" y2="140" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <line x1="-140" y1="260" x2="140" y2="260" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <text x="-90" y="130" font-size="16" font-weight="700" fill="#1e293b" text-anchor="middle">Α</text>
+    <text x="90" y="130" font-size="16" font-weight="700" fill="#1e293b" text-anchor="middle">Α΄</text>
+  </g>
+  <text x="320" y="370" font-size="16" fill="#475569" text-anchor="middle">Το σχήμα Α΄ είναι συμμετρικό του Α ως προς τον άξονα</text>
+</svg>
