@@ -197,6 +197,17 @@ export default function Lesson() {
                 </li>
               ))}
             </ul>
+            {lesson.figures?.length > 0 && (
+              <div className="grid gap-4 sm:grid-cols-2">
+                {lesson.figures.map((f, i) => (
+                  <figure key={i} className="overflow-hidden rounded-xl border border-border bg-card">
+                    {f.title && <div className="border-b border-border bg-secondary/50 px-3 py-1.5 text-xs font-bold">{f.title}</div>}
+                    <img src={f.url} alt={f.caption || f.title || "Σχήμα"} className="w-full object-contain p-2" loading="lazy" />
+                    {f.caption && <figcaption className="border-t border-border px-3 py-1.5 text-xs text-muted-foreground">{f.caption}</figcaption>}
+                  </figure>
+                ))}
+              </div>
+            )}
             <div className="rounded-xl border border-amber-300/60 bg-amber-50 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
               <div className="mb-2 flex items-center gap-2"><Lightbulb className="h-5 w-5 text-amber-500" /><h4 className="font-extrabold text-amber-700 dark:text-amber-400">{lesson.example.title}</h4></div>
               <MathText className="text-[15px] leading-relaxed" text={lesson.example.text} />
