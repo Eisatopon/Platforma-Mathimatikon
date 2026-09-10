@@ -1,0 +1,23 @@
+<svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="640" height="420" fill="#ffffff"/>
+  <g transform="translate(60,40)">
+    <!-- two parallel lines -->
+    <line x1="0" y1="80" x2="480" y2="80" stroke="#1e293b" stroke-width="2.5"/>
+    <line x1="0" y1="240" x2="480" y2="240" stroke="#1e293b" stroke-width="2.5"/>
+    <!-- parallel marks -->
+    <polygon points="240,72 250,80 240,88" fill="#1e293b"/>
+    <polygon points="240,232 250,240 240,248" fill="#1e293b"/>
+    <!-- transversal -->
+    <line x1="120" y1="0" x2="360" y2="320" stroke="#dc2626" stroke-width="2.5"/>
+    <!-- top intersection angles -->
+    <circle cx="176" cy="80" r="3" fill="#1e293b"/>
+    <path d="M 196 80 A 20 20 0 0 0 187 62" fill="none" stroke="#6366f1" stroke-width="2.5"/>
+    <text x="200" y="60" font-size="15" fill="#6366f1" font-weight="700">α</text>
+    <!-- bottom intersection angles -->
+    <circle cx="272" cy="240" r="3" fill="#1e293b"/>
+    <path d="M 292 240 A 20 20 0 0 0 283 222" fill="none" stroke="#10b981" stroke-width="2.5"/>
+    <text x="296" y="220" font-size="15" fill="#10b981" font-weight="700">β</text>
+  </g>
+  <text x="320" y="360" font-size="16" fill="#475569" text-anchor="middle">Δύο παράλληλες ευθείες τέμνονται από τρίτη (τέμνουσα)</text>
+  <text x="320" y="385" font-size="16" fill="#475569" text-anchor="middle">Οι γωνίες α, β (εντός εναλλάξ) είναι ίσες</text>
+</svg>
