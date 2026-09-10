@@ -1,0 +1,26 @@
+<svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="700" height="420" fill="#ffffff"/>
+  <!-- Vertical angles: two crossing lines -->
+  <g transform="translate(40,30)">
+    <line x1="30" y1="150" x2="270" y2="150" stroke="#1e293b" stroke-width="2.5"/>
+    <line x1="70" y1="40" x2="230" y2="260" stroke="#1e293b" stroke-width="2.5"/>
+    <path d="M 175 150 A 30 30 0 0 0 161 123" fill="none" stroke="#6366f1" stroke-width="2.5"/>
+    <path d="M 125 150 A 30 30 0 0 1 139 177" fill="none" stroke="#6366f1" stroke-width="2.5"/>
+    <path d="M 150 120 A 30 30 0 0 0 121 141" fill="none" stroke="#10b981" stroke-width="2.5"/>
+    <path d="M 150 180 A 30 30 0 0 0 179 159" fill="none" stroke="#10b981" stroke-width="2.5"/>
+  </g>
+  <text x="170" y="320" font-size="16" fill="#475569" text-anchor="middle">Κατακορυφήν γωνίες:</text>
+  <text x="170" y="345" font-size="16" fill="#475569" text-anchor="middle">μοβ = μοβ, πράσινο = πράσινο</text>
+
+  <!-- Adjacent + supplementary angles -->
+  <g transform="translate(420,30)">
+    <line x1="30" y1="150" x2="270" y2="150" stroke="#1e293b" stroke-width="2.5"/>
+    <line x1="150" y1="150" x2="110" y2="40" stroke="#1e293b" stroke-width="2.5"/>
+    <path d="M 150 120 A 30 30 0 0 0 123 133" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="103" y="115" font-size="16" fill="#f59e0b" font-weight="700">α</text>
+    <path d="M 118 150 A 30 30 0 0 0 138 123" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="155" y="112" font-size="16" fill="#dc2626" font-weight="700">β</text>
+  </g>
+  <text x="550" y="320" font-size="16" fill="#475569" text-anchor="middle">Εφεξής γωνίες α, β:</text>
+  <text x="550" y="345" font-size="16" fill="#475569" text-anchor="middle">παραπληρωματικές, α+β=180°</text>
+</svg>
