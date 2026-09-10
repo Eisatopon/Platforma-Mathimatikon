@@ -1,0 +1,43 @@
+<svg viewBox="0 0 680 480" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="680" height="480" fill="#ffffff"/>
+
+  <!-- Point A -->
+  <g>
+    <circle cx="80" cy="60" r="5" fill="#6366f1"/>
+    <text x="80" y="40" font-size="20" font-weight="700" fill="#1e293b" text-anchor="middle">A</text>
+    <text x="340" y="65" font-size="17" fill="#475569" text-anchor="middle">Σημείο — δεν έχει διαστάσεις</text>
+  </g>
+
+  <!-- Segment AB -->
+  <g>
+    <line x1="80" y1="150" x2="340" y2="150" stroke="#6366f1" stroke-width="3"/>
+    <circle cx="80" cy="150" r="5" fill="#6366f1"/>
+    <circle cx="340" cy="150" r="5" fill="#6366f1"/>
+    <text x="80" y="132" font-size="18" font-weight="700" fill="#1e293b" text-anchor="middle">A</text>
+    <text x="340" y="132" font-size="18" font-weight="700" fill="#1e293b" text-anchor="middle">B</text>
+    <text x="340" y="180" font-size="17" fill="#475569" text-anchor="middle">Ευθύγραμμο τμήμα ΑΒ — έχει αρχή και τέλος</text>
+  </g>
+
+  <!-- Ray from A through B -->
+  <g>
+    <line x1="80" y1="250" x2="600" y2="250" stroke="#10b981" stroke-width="3"/>
+    <polygon points="600,250 582,242 582,258" fill="#10b981"/>
+    <circle cx="80" cy="250" r="5" fill="#10b981"/>
+    <circle cx="260" cy="250" r="5" fill="#10b981"/>
+    <text x="80" y="232" font-size="18" font-weight="700" fill="#1e293b" text-anchor="middle">A</text>
+    <text x="260" y="232" font-size="18" font-weight="700" fill="#1e293b" text-anchor="middle">B</text>
+    <text x="340" y="280" font-size="17" fill="#475569" text-anchor="middle">Ημιευθεία ΑΒ — αρχή στο Α, συνεχίζει επ' άπειρον</text>
+  </g>
+
+  <!-- Line through A and B, both directions infinite -->
+  <g>
+    <line x1="40" y1="370" x2="640" y2="370" stroke="#f59e0b" stroke-width="3"/>
+    <polygon points="640,370 622,362 622,378" fill="#f59e0b"/>
+    <polygon points="40,370 58,362 58,378" fill="#f59e0b"/>
+    <circle cx="240" cy="370" r="5" fill="#f59e0b"/>
+    <circle cx="400" cy="370" r="5" fill="#f59e0b"/>
+    <text x="240" y="352" font-size="18" font-weight="700" fill="#1e293b" text-anchor="middle">A</text>
+    <text x="400" y="352" font-size="18" font-weight="700" fill="#1e293b" text-anchor="middle">B</text>
+    <text x="340" y="410" font-size="17" fill="#475569" text-anchor="middle">Ευθεία ΑΒ — απεριόριστη και προς τις δύο κατευθύνσεις</text>
+  </g>
+</svg>
