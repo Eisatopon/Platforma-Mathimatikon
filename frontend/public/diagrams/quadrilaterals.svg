@@ -1,0 +1,30 @@
+<svg viewBox="0 0 700 480" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="700" height="480" fill="#ffffff"/>
+  <!-- Parallelogram -->
+  <g transform="translate(40,30)">
+    <polygon points="30,120 170,120 140,20 0,20" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="85" y="150" font-size="16" fill="#475569" text-anchor="middle">Παραλληλόγραμμο</text>
+  </g>
+  <!-- Rectangle -->
+  <g transform="translate(260,30)">
+    <polygon points="0,20 170,20 170,120 0,120" fill="#dbeafe" stroke="#6366f1" stroke-width="2.5"/>
+    <rect x="0" y="102" width="16" height="16" fill="none" stroke="#6366f1" stroke-width="2"/>
+    <text x="85" y="150" font-size="16" fill="#475569" text-anchor="middle">Ορθογώνιο</text>
+  </g>
+  <!-- Rhombus -->
+  <g transform="translate(480,30)">
+    <polygon points="85,10 165,70 85,130 5,70" fill="#dcfce7" stroke="#10b981" stroke-width="2.5"/>
+    <text x="85" y="150" font-size="16" fill="#475569" text-anchor="middle">Ρόμβος</text>
+  </g>
+  <!-- Square -->
+  <g transform="translate(150,230)">
+    <polygon points="0,20 120,20 120,140 0,140" fill="#fce7f3" stroke="#db2777" stroke-width="2.5"/>
+    <rect x="0" y="122" width="16" height="16" fill="none" stroke="#db2777" stroke-width="2"/>
+    <text x="60" y="170" font-size="16" fill="#475569" text-anchor="middle">Τετράγωνο</text>
+  </g>
+  <!-- Trapezoid -->
+  <g transform="translate(400,230)">
+    <polygon points="30,20 150,20 190,140 0,140" fill="#ede9fe" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="95" y="170" font-size="16" fill="#475569" text-anchor="middle">Τραπέζιο</text>
+  </g>
+</svg>
