@@ -1,0 +1,23 @@
+<svg viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="500" height="340" fill="#ffffff"/>
+  <defs>
+    <marker id="b1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#dc2626"/></marker>
+    <marker id="b2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#6366f1"/></marker>
+    <marker id="b3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#10b981"/></marker>
+  </defs>
+  <!-- main vector -->
+  <line x1="60" y1="280" x2="340" y2="80" stroke="#dc2626" stroke-width="3.5" marker-end="url(#b1)"/>
+  <text x="220" y="150" font-size="18" fill="#dc2626" font-weight="700">διάνυσμα α</text>
+
+  <!-- horizontal component -->
+  <line x1="60" y1="280" x2="340" y2="280" stroke="#6366f1" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#b2)"/>
+  <text x="200" y="305" font-size="16" fill="#6366f1" font-weight="700">αx (οριζόντια)</text>
+
+  <!-- vertical component -->
+  <line x1="340" y1="280" x2="340" y2="80" stroke="#10b981" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#b3)"/>
+  <text x="345" y="190" font-size="15" fill="#10b981" font-weight="700">αy (κάθετη)</text>
+
+  <rect x="320" y="255" width="20" height="20" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+
+  <text x="240" y="330" font-size="15" fill="#475569" text-anchor="middle">Κάθε διάνυσμα αναλύεται σε δύο κάθετες συνιστώσες</text>
+</svg>
