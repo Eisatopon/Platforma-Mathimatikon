@@ -1,0 +1,28 @@
+<svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="640" height="480" fill="#ffffff"/>
+  <g stroke="#e2e8f0" stroke-width="1">
+    <line x1="80" y1="60" x2="80" y2="400"/><line x1="160" y1="60" x2="160" y2="400"/>
+    <line x1="240" y1="60" x2="240" y2="400"/><line x1="320" y1="60" x2="320" y2="400"/>
+    <line x1="400" y1="60" x2="400" y2="400"/><line x1="480" y1="60" x2="480" y2="400"/>
+    <line x1="560" y1="60" x2="560" y2="400"/>
+    <line x1="80" y1="80" x2="560" y2="80"/><line x1="80" y1="140" x2="560" y2="140"/>
+    <line x1="80" y1="200" x2="560" y2="200"/><line x1="80" y1="260" x2="560" y2="260"/>
+    <line x1="80" y1="320" x2="560" y2="320"/><line x1="80" y1="380" x2="560" y2="380"/>
+  </g>
+  <line x1="80" y1="380" x2="560" y2="380" stroke="#1e293b" stroke-width="2"/>
+  <line x1="120" y1="60" x2="120" y2="400" stroke="#1e293b" stroke-width="2"/>
+  <polygon points="560,380 548,374 548,386" fill="#1e293b"/>
+  <polygon points="120,60 114,72 126,72" fill="#1e293b"/>
+  <text x="565" y="385" font-size="14" fill="#1e293b">x (km)</text>
+  <text x="130" y="58" font-size="14" fill="#1e293b">y (€)</text>
+  <text x="105" y="395" font-size="13" fill="#64748b" text-anchor="middle">0</text>
+
+  <!-- y=1.5x+2, scale x:60px/km, y:20px/euro, for x=0..6 -->
+  <line x1="120" y1="340" x2="480" y2="70" stroke="#10b981" stroke-width="3"/>
+  <circle cx="120" cy="340" r="5" fill="#dc2626"/>
+  <text x="135" y="335" font-size="14" fill="#dc2626" font-weight="700">(0,2) — σταθερό κόστος</text>
+  <circle cx="360" cy="160" r="4" fill="#10b981"/>
+  <text x="372" y="155" font-size="14" fill="#10b981" font-weight="700">(4,8)</text>
+
+  <text x="320" y="440" font-size="17" fill="#475569" text-anchor="middle">Η ευθεία y=1,5x+2 (κόστος ταξί) — τέμνει τον y-άξονα στο (0,2)</text>
+</svg>
