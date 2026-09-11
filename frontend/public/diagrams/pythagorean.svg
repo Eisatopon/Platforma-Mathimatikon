@@ -1,0 +1,26 @@
+<svg viewBox="0 60 600 500" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect x="0" y="60" width="600" height="500" fill="#ffffff"/>
+
+  <!-- Right triangle: A=(200,260) top, B=(200,380) right-angle, C=(360,380) -->
+  <polygon points="200,380 360,380 200,260" fill="#fde68a" stroke="#1e293b" stroke-width="2.5"/>
+  <rect x="200" y="360" width="20" height="20" fill="none" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Square on leg BC (bottom, length 4), extending downward (away from triangle) -->
+  <rect x="200" y="380" width="160" height="160" fill="#dbeafe" stroke="#6366f1" stroke-width="2.5"/>
+  <text x="280" y="465" font-size="22" fill="#6366f1" font-weight="700" text-anchor="middle">16</text>
+
+  <!-- Square on leg AB (left, length 3), extending leftward (away from triangle) -->
+  <rect x="40" y="260" width="160" height="120" fill="#dcfce7" stroke="#10b981" stroke-width="2.5"/>
+  <text x="120" y="325" font-size="22" fill="#10b981" font-weight="700" text-anchor="middle">9</text>
+
+  <!-- Square on hypotenuse AC, extending AWAY from B (up-right direction, corrected) -->
+  <polygon points="200,260 360,380 480,220 320,100" fill="#fce7f3" stroke="#db2777" stroke-width="2.5"/>
+  <text x="330" y="255" font-size="22" fill="#db2777" font-weight="700" text-anchor="middle">25</text>
+
+  <!-- Leg-length labels, inside the visible triangle -->
+  <text x="280" y="373" font-size="17" fill="#1e293b" font-weight="700" text-anchor="middle">4</text>
+  <text x="193" y="325" font-size="17" fill="#1e293b" font-weight="700" text-anchor="middle">3</text>
+  <text x="300" y="305" font-size="17" fill="#1e293b" font-weight="700" text-anchor="middle">5</text>
+
+  <text x="300" y="20" font-size="18" fill="#475569" text-anchor="middle">Πυθαγόρειο θεώρημα: 3² + 4² = 5²  (9 + 16 = 25)</text>
+</svg>
