@@ -1,0 +1,26 @@
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="640" height="320" fill="#ffffff"/>
+
+  <!-- 45-45-90 triangle -->
+  <g transform="translate(60,30)">
+    <polygon points="0,180 180,180 180,0" fill="#dbeafe" stroke="#6366f1" stroke-width="2.5"/>
+    <rect x="150" y="150" width="30" height="30" fill="none" stroke="#1e293b" stroke-width="2"/>
+    <text x="90" y="200" font-size="15" fill="#1e293b" text-anchor="middle">1</text>
+    <text x="200" y="95" font-size="15" fill="#1e293b" text-anchor="middle">1</text>
+    <text x="60" y="110" font-size="15" fill="#1e293b" text-anchor="middle" transform="rotate(-45,60,110)">√2</text>
+    <text x="15" y="165" font-size="16" fill="#dc2626" font-weight="700">45°</text>
+    <text x="90" y="240" font-size="15" fill="#475569" text-anchor="middle" font-weight="700">45°-45°-90°</text>
+  </g>
+
+  <!-- 30-60-90 triangle -->
+  <g transform="translate(360,30)">
+    <polygon points="0,180 155,180 155,0" fill="#dcfce7" stroke="#10b981" stroke-width="2.5"/>
+    <rect x="125" y="150" width="30" height="30" fill="none" stroke="#1e293b" stroke-width="2"/>
+    <text x="77" y="200" font-size="15" fill="#1e293b" text-anchor="middle">√3</text>
+    <text x="175" y="95" font-size="15" fill="#1e293b" text-anchor="middle">1</text>
+    <text x="60" y="105" font-size="15" fill="#1e293b" text-anchor="middle" transform="rotate(-49,60,105)">2</text>
+    <text x="15" y="165" font-size="16" fill="#dc2626" font-weight="700">60°</text>
+    <text x="130" y="30" font-size="16" fill="#f59e0b" font-weight="700">30°</text>
+    <text x="77" y="240" font-size="15" fill="#475569" text-anchor="middle" font-weight="700">30°-60°-90°</text>
+  </g>
+</svg>
