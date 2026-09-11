@@ -8271,6 +8271,25 @@ def _apply_g8_chapterb1_practice(lessons):
 LESSONS = _apply_g8_chapterb1_practice(LESSONS)
 
 
+# --- Σύνδεση σχημάτων εμβαδού/Πυθαγορείου με τα αντίστοιχα μαθήματα ---
+G8_B1_FIGURE_MAPPING = {
+    "g8-b1-3": [{"title": "Τύποι εμβαδού", "url": "/platforma/diagrams/area-formulas.svg", "caption": "Βάση και ύψος σε τρίγωνο, παραλληλόγραμμο, τραπέζιο."}],
+    "g8-b1-4": [{"title": "Πυθαγόρειο θεώρημα", "url": "/platforma/diagrams/pythagorean.svg", "caption": "Τα τετράγωνα πάνω στις κάθετες πλευρές έχουν άθροισμα ίσο με το τετράγωνο της υποτείνουσας."}],
+}
+
+
+def _apply_g8_b1_figure_mapping(lessons):
+    by_id = {l["id"]: l for l in lessons}
+    for lid, figs in G8_B1_FIGURE_MAPPING.items():
+        l = by_id.get(lid)
+        if l is not None:
+            l["figures"] = figs
+    return lessons
+
+
+LESSONS = _apply_g8_b1_figure_mapping(LESSONS)
+
+
 def all_docs():
     return GRADES, LESSONS
 
