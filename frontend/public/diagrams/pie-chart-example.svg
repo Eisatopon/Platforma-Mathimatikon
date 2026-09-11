@@ -1,0 +1,20 @@
+<svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+<rect width="640" height="480" fill="#ffffff"/>
+<path d="M 320 240 L 320.0 90.0 A 150 150 0 0 1 366.4 382.7 Z" fill="#6366f1" stroke="#ffffff" stroke-width="2"/>
+<path d="M 320 240 L 366.4 382.7 A 150 150 0 0 1 170.0 240.0 Z" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+<path d="M 320 240 L 170.0 240.0 A 150 150 0 0 1 231.8 118.6 Z" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+<path d="M 320 240 L 231.8 118.6 A 150 150 0 0 1 320.0 90.0 Z" fill="#a855f7" stroke="#ffffff" stroke-width="2"/>
+<text x="416.3" y="224.7" font-size="17" font-weight="700" fill="#ffffff" text-anchor="middle">45%</text>
+<text x="262.7" y="318.9" font-size="17" font-weight="700" fill="#ffffff" text-anchor="middle">30%</text>
+<text x="233.1" y="195.7" font-size="17" font-weight="700" fill="#ffffff" text-anchor="middle">15%</text>
+<text x="289.9" y="147.3" font-size="17" font-weight="700" fill="#ffffff" text-anchor="middle">10%</text>
+<rect x="60" y="420" width="14" height="14" fill="#6366f1"/>
+<text x="80" y="432" font-size="13" fill="#1e293b">Ποδόσφαιρο</text>
+<rect x="200" y="420" width="14" height="14" fill="#10b981"/>
+<text x="220" y="432" font-size="13" fill="#1e293b">Μπάσκετ</text>
+<rect x="340" y="420" width="14" height="14" fill="#f59e0b"/>
+<text x="360" y="432" font-size="13" fill="#1e293b">Βόλεϊ</text>
+<rect x="480" y="420" width="14" height="14" fill="#a855f7"/>
+<text x="500" y="432" font-size="13" fill="#1e293b">Άλλο</text>
+<text x="320" y="40" font-size="17" fill="#475569" text-anchor="middle">Κυκλικό διάγραμμα: αγαπημένο άθλημα 40 μαθητών</text>
+</svg>
