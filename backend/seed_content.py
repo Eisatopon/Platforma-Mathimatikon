@@ -7719,6 +7719,30 @@ def _apply_g8_chapter4_practice(lessons):
 LESSONS = _apply_g8_chapter4_practice(LESSONS)
 
 
+# --- Σύνδεση των 5 νέων σχημάτων/γραφημάτων Β΄ Γυμνασίου με τα αντίστοιχα μαθήματα ---
+G8_FIGURE_MAPPING = {
+    "g8-a3-3": [{"title": "Η ευθεία y=αx", "url": "/platforma/diagrams/line-through-origin.svg", "caption": "Η ευθεία y=2x περνάει πάντα από την αρχή των αξόνων."}],
+    "g8-a3-4": [{"title": "Η ευθεία y=αx+β", "url": "/platforma/diagrams/line-with-intercept.svg", "caption": "Το β είναι το σημείο τομής με τον y-άξονα."}],
+    "g8-a3-5": [{"title": "Η υπερβολή y=α/x", "url": "/platforma/diagrams/hyperbola.svg", "caption": "Δύο ξεχωριστοί κλάδοι, ποτέ δεν αγγίζουν τους άξονες."}],
+    "g8-a4-2": [
+        {"title": "Ραβδόγραμμα", "url": "/platforma/diagrams/bar-chart-example.svg", "caption": "Το ύψος κάθε ράβδου δείχνει τη συχνότητα."},
+        {"title": "Κυκλικό διάγραμμα", "url": "/platforma/diagrams/pie-chart-example.svg", "caption": "Κάθε κομμάτι δείχνει το ποσοστό της κατηγορίας."},
+    ],
+}
+
+
+def _apply_g8_figure_mapping(lessons):
+    by_id = {l["id"]: l for l in lessons}
+    for lid, figs in G8_FIGURE_MAPPING.items():
+        l = by_id.get(lid)
+        if l is not None:
+            l["figures"] = figs
+    return lessons
+
+
+LESSONS = _apply_g8_figure_mapping(LESSONS)
+
+
 def all_docs():
     return GRADES, LESSONS
 
