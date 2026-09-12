@@ -1,0 +1,15 @@
+<svg viewBox="0 0 500 460" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="500" height="460" fill="#ffffff"/>
+  <circle cx="250" cy="220" r="150" fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <polygon points="250.0,70.0 379.9,145.0 379.9,295.0 250.0,370.0 120.1,295.0 120.1,145.0" fill="#dbeafe" stroke="#6366f1" stroke-width="2.5"/>
+  <circle cx="250" cy="220" r="4" fill="#dc2626"/>
+  <text x="260" y="215" font-size="15" fill="#dc2626" font-weight="700">Κ</text>
+
+  <line x1="250" y1="220" x2="250.0" y2="70.0" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5 3"/>
+  <text x="260.0" y="145.0" font-size="14" fill="#f59e0b" font-weight="700">R (ακτίνα)</text>
+
+  <line x1="250" y1="220" x2="315.0" y2="107.5" stroke="#10b981" stroke-width="2" stroke-dasharray="5 3"/>
+  <text x="212.5" y="178.8" font-size="14" fill="#10b981" font-weight="700">απόστημα α</text>
+
+  <text x="250" y="435" font-size="15" fill="#475569" text-anchor="middle">Κανονικό εξάγωνο — κεντρική γωνία = 360°/6 = 60°</text>
+</svg>
