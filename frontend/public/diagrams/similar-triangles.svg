@@ -1,0 +1,24 @@
+<svg viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="560" height="260" fill="#ffffff"/>
+
+  <!-- small triangle -->
+  <polygon points="40,200 130,200 40,140" fill="#eef2ff" stroke="#6366f1" stroke-width="2.5"/>
+  <text x="25" y="220" font-size="14" fill="#1e293b" font-weight="700">Α</text>
+  <text x="132" y="220" font-size="14" fill="#1e293b" font-weight="700">Β</text>
+  <text x="20" y="140" font-size="14" fill="#1e293b" font-weight="700">Γ</text>
+  <path d="M 40 190 A 10 10 0 0 1 50 200" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+
+  <!-- large similar triangle, ratio 2 -->
+  <polygon points="250,220 430,220 250,100" fill="#dcfce7" stroke="#10b981" stroke-width="2.5"/>
+  <text x="235" y="240" font-size="14" fill="#1e293b" font-weight="700">Δ</text>
+  <text x="432" y="240" font-size="14" fill="#1e293b" font-weight="700">Ε</text>
+  <text x="230" y="100" font-size="14" fill="#1e293b" font-weight="700">Ζ</text>
+  <path d="M 250 200 A 20 20 0 0 1 270 220" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+
+  <text x="85" y="250" font-size="14" fill="#475569" text-anchor="middle">ΑΒΓ</text>
+  <text x="340" y="250" font-size="14" fill="#475569" text-anchor="middle">ΔΕΖ (διπλάσιο)</text>
+
+  <text x="480" y="150" font-size="15" fill="#1e293b" text-anchor="middle">ΔΕ/ΑΒ =</text>
+  <text x="480" y="170" font-size="15" fill="#1e293b" text-anchor="middle">ΕΖ/ΒΓ =</text>
+  <text x="480" y="190" font-size="15" fill="#1e293b" text-anchor="middle">ΖΔ/ΓΑ = 2</text>
+</svg>
