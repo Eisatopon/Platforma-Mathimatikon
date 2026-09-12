@@ -1,0 +1,19 @@
+<svg viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="560" height="280" fill="#ffffff"/>
+
+  <!-- small square, side 60px representing 1 unit -->
+  <rect x="60" y="150" width="60" height="60" fill="#eef2ff" stroke="#6366f1" stroke-width="2.5"/>
+  <text x="90" y="230" font-size="14" fill="#6366f1" text-anchor="middle" font-weight="700">πλευρά=1, Ε=1</text>
+
+  <!-- large square, side 120px = 2 units, subdivided into 4 unit squares to show area=4 -->
+  <g transform="translate(260,90)">
+    <rect x="0" y="0" width="60" height="60" fill="#dcfce7" stroke="#10b981" stroke-width="1.5"/>
+    <rect x="60" y="0" width="60" height="60" fill="#dcfce7" stroke="#10b981" stroke-width="1.5"/>
+    <rect x="0" y="60" width="60" height="60" fill="#dcfce7" stroke="#10b981" stroke-width="1.5"/>
+    <rect x="60" y="60" width="60" height="60" fill="#dcfce7" stroke="#10b981" stroke-width="1.5"/>
+    <rect x="0" y="0" width="120" height="120" fill="none" stroke="#10b981" stroke-width="3"/>
+  </g>
+  <text x="320" y="230" font-size="14" fill="#10b981" text-anchor="middle" font-weight="700">πλευρά=2, Ε=4 (=2²)</text>
+
+  <text x="280" y="260" font-size="16" fill="#475569" text-anchor="middle">Λόγος ομοιότητας κ=2 ⟹ λόγος εμβαδών = κ² = 4</text>
+</svg>
