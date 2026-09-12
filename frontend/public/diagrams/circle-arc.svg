@@ -1,0 +1,24 @@
+<svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="680" height="340" fill="#ffffff"/>
+
+  <!-- Circumference -->
+  <g transform="translate(150,150)">
+    <circle cx="0" cy="0" r="100" fill="none" stroke="#6366f1" stroke-width="3.5"/>
+    <circle cx="0" cy="0" r="3" fill="#dc2626"/>
+    <line x1="0" y1="0" x2="100" y2="0" stroke="#dc2626" stroke-width="2"/>
+    <text x="45" y="-8" font-size="15" fill="#dc2626" font-weight="700">r</text>
+    <text x="0" y="150" font-size="16" fill="#1e293b" text-anchor="middle" font-weight="700">Μήκος κύκλου</text>
+    <text x="0" y="172" font-size="16" fill="#475569" text-anchor="middle">L = 2πr</text>
+  </g>
+
+  <!-- Arc -->
+  <g transform="translate(480,150)">
+    <circle cx="0" cy="0" r="100" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+    <path d="M 100 0 A 100 100 0 0 1 0 -100" fill="none" stroke="#10b981" stroke-width="4.5"/>
+    <circle cx="0" cy="0" r="3" fill="#dc2626"/>
+    <text x="10" y="-15" font-size="15" fill="#dc2626" font-weight="700">θ</text>
+    <path d="M 40 0 A 40 40 0 0 1 0 -40" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="0" y="150" font-size="16" fill="#1e293b" text-anchor="middle" font-weight="700">Μήκος τόξου</text>
+    <text x="0" y="172" font-size="16" fill="#475569" text-anchor="middle">ℓ = (θ/360°)·2πr</text>
+  </g>
+</svg>
