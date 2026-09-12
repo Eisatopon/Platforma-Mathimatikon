@@ -1,0 +1,24 @@
+<svg viewBox="0 0 500 460" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="500" height="460" fill="#ffffff"/>
+  <circle cx="250" cy="220" r="150" fill="none" stroke="#1e293b" stroke-width="2"/>
+  <circle cx="250" cy="220" r="4" fill="#dc2626"/>
+  <text x="262" y="215" font-size="15" fill="#dc2626" font-weight="700">Κ</text>
+
+  <!-- points on circle: A at top-left arc, B at bottom, C at top-right (for central and inscribed angle on same arc AB) -->
+  <!-- central angle at K for arc AB -->
+  <line x1="250" y1="220" x2="120" y2="130" stroke="#6366f1" stroke-width="2.5"/>
+  <line x1="250" y1="220" x2="250" y2="370" stroke="#6366f1" stroke-width="2.5"/>
+  <text x="105" y="118" font-size="15" fill="#1e293b" font-weight="700">Α</text>
+  <text x="250" y="392" font-size="15" fill="#1e293b" font-weight="700">Β</text>
+  <path d="M 200 195 A 60 60 0 0 0 194 262" fill="none" stroke="#6366f1" stroke-width="2"/>
+  <text x="165" y="250" font-size="15" fill="#6366f1" font-weight="700">κεντρική</text>
+
+  <!-- inscribed angle from point C on major arc, viewing A and B -->
+  <line x1="390" y1="170" x2="120" y2="130" stroke="#10b981" stroke-width="2.5"/>
+  <line x1="390" y1="170" x2="250" y2="370" stroke="#10b981" stroke-width="2.5"/>
+  <text x="395" y="160" font-size="15" fill="#1e293b" font-weight="700">Γ</text>
+  <path d="M 340 178 A 40 40 0 0 0 355 220" fill="none" stroke="#10b981" stroke-width="2"/>
+  <text x="330" y="240" font-size="15" fill="#10b981" font-weight="700">εγγεγραμμένη</text>
+
+  <text x="250" y="435" font-size="15" fill="#475569" text-anchor="middle">Εγγεγραμμένη = μισή της κεντρικής γωνίας (ίδιο τόξο)</text>
+</svg>
