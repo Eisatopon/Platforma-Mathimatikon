@@ -1,0 +1,30 @@
+<svg viewBox="0 0 660 320" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="660" height="320" fill="#ffffff"/>
+
+  <!-- Pyramid (square base) -->
+  <g transform="translate(60,30)">
+    <polygon points="0,180 140,180 175,150 35,150" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="90" y1="165" x2="90" y2="20" stroke="#f59e0b" stroke-width="2.5"/>
+    <line x1="0" y1="180" x2="90" y2="20" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="140" y1="180" x2="90" y2="20" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="175" y1="150" x2="90" y2="20" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="35" y1="150" x2="90" y2="20" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 3"/>
+    <text x="65" y="10" font-size="13" fill="#1e293b" font-weight="700">κορυφή</text>
+    <text x="100" y="100" font-size="14" fill="#f59e0b" font-weight="700">υ</text>
+    <text x="90" y="215" font-size="15" fill="#1e293b" text-anchor="middle" font-weight="700">Πυραμίδα</text>
+    <text x="90" y="235" font-size="12" fill="#475569" text-anchor="middle">βάση: πολύγωνο</text>
+  </g>
+
+  <!-- Cone -->
+  <g transform="translate(400,30)">
+    <ellipse cx="90" cy="180" rx="90" ry="26" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+    <line x1="90" y1="20" x2="0" y2="180" stroke="#db2777" stroke-width="2.5"/>
+    <line x1="90" y1="20" x2="180" y2="180" stroke="#db2777" stroke-width="2.5"/>
+    <line x1="90" y1="20" x2="90" y2="180" stroke="#db2777" stroke-width="2" stroke-dasharray="4 3"/>
+    <text x="65" y="10" font-size="13" fill="#1e293b" font-weight="700">κορυφή</text>
+    <text x="100" y="100" font-size="14" fill="#db2777" font-weight="700">υ</text>
+    <text x="118" y="140" font-size="12" fill="#1e293b" font-weight="700">λ (γενέτειρα)</text>
+    <text x="90" y="215" font-size="15" fill="#1e293b" text-anchor="middle" font-weight="700">Κώνος</text>
+    <text x="90" y="235" font-size="12" fill="#475569" text-anchor="middle">βάση: κύκλος</text>
+  </g>
+</svg>
