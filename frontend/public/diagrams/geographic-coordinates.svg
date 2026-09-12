@@ -1,0 +1,17 @@
+<svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="560" height="340" fill="#ffffff"/>
+  <circle cx="220" cy="150" r="110" fill="#f0fdf4" stroke="#1e293b" stroke-width="2"/>
+  <ellipse cx="220" cy="150" rx="110" ry="26" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+  <text x="345" y="155" font-size="13" fill="#dc2626" font-weight="700">Ισημερινός</text>
+  <text x="345" y="172" font-size="12" fill="#dc2626">(γεωγρ. πλάτος 0°)</text>
+
+  <ellipse cx="220" cy="150" rx="26" ry="110" fill="none" stroke="#6366f1" stroke-width="2.5"/>
+  <text x="130" y="35" font-size="13" fill="#6366f1" font-weight="700">Μεσημβρινός</text>
+  <text x="120" y="52" font-size="12" fill="#6366f1">(γεωγρ. μήκος)</text>
+
+  <circle cx="280" cy="100" r="4" fill="#f59e0b"/>
+  <text x="292" y="95" font-size="13" fill="#f59e0b" font-weight="700">Σημείο</text>
+  <text x="292" y="110" font-size="12" fill="#f59e0b">(πλάτος, μήκος)</text>
+
+  <text x="280" y="310" font-size="14" fill="#475569" text-anchor="middle">Κάθε σημείο ορίζεται από γεωγραφικό πλάτος και μήκος</text>
+</svg>
