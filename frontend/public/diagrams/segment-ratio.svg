@@ -1,0 +1,20 @@
+<svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="560" height="200" fill="#ffffff"/>
+
+  <line x1="60" y1="100" x2="500" y2="100" stroke="#1e293b" stroke-width="3"/>
+  <circle cx="60" cy="100" r="5" fill="#6366f1"/>
+  <circle cx="500" cy="100" r="5" fill="#6366f1"/>
+  <circle cx="236" cy="100" r="5" fill="#dc2626"/>
+
+  <text x="55" y="130" font-size="17" fill="#1e293b" font-weight="700">Α</text>
+  <text x="495" y="130" font-size="17" fill="#1e293b" font-weight="700">Β</text>
+  <text x="230" y="80" font-size="17" fill="#dc2626" font-weight="700">Μ</text>
+
+  <line x1="60" y1="60" x2="236" y2="60" stroke="#6366f1" stroke-width="2"/>
+  <text x="140" y="50" font-size="15" fill="#6366f1" font-weight="700" text-anchor="middle">ΑΜ (2 μονάδες)</text>
+
+  <line x1="236" y1="150" x2="500" y2="150" stroke="#10b981" stroke-width="2"/>
+  <text x="368" y="170" font-size="15" fill="#10b981" font-weight="700" text-anchor="middle">ΜΒ (3 μονάδες)</text>
+
+  <text x="280" y="195" font-size="16" fill="#475569" text-anchor="middle">Λόγος ΑΜ:ΜΒ = 2:3</text>
+</svg>
