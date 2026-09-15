@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" role="img" aria-labelledby="title desc">
+  <title id="title">Τα σύνολα των πραγματικών αριθμών</title>
+  <desc id="desc">Οι φυσικοί περιέχονται στους ακεραίους, οι ακέραιοι στους ρητούς και οι ρητοί στους πραγματικούς. Οι άρρητοι αποτελούν το υπόλοιπο μέρος των πραγματικών.</desc>
+  <rect width="900" height="470" rx="28" fill="#f7f9fc"/>
+  <text x="450" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#173f6b">Τα σύνολα των πραγματικών αριθμών</text>
+  <rect x="65" y="82" width="770" height="330" rx="30" fill="#e8f1fb" stroke="#1f4e7b" stroke-width="4"/>
+  <text x="795" y="120" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#1f4e7b">ℝ</text>
+  <rect x="105" y="125" width="470" height="245" rx="28" fill="#d9efe9" stroke="#1f7a6e" stroke-width="4"/>
+  <text x="530" y="162" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#176459">ℚ</text>
+  <rect x="145" y="170" width="330" height="155" rx="26" fill="#fff0d8" stroke="#d7902f" stroke-width="4"/>
+  <text x="432" y="208" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#9a641f">ℤ</text>
+  <rect x="185" y="215" width="185" height="70" rx="24" fill="#fde1dc" stroke="#cf5d4f" stroke-width="4"/>
+  <text x="278" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#9f3f35">ℕ</text>
+  <g font-family="Arial, sans-serif" fill="#263b50" font-size="22">
+    <text x="620" y="190" font-weight="700">Άρρητοι</text>
+    <text x="620" y="225">√2, √3, π</text>
+    <text x="178" y="352">−3</text><text x="390" y="352">2/5</text><text x="240" y="258">5</text>
+  </g>
+  <text x="450" y="446" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#51677c">ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ  και  ℝ = ρητοί ∪ άρρητοι</text>
+</svg>
