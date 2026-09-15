@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">Αναπαράσταση ανισώσεων στην αριθμογραμμή</title>
+  <desc id="desc">Σύγκριση της λύσης x μεγαλύτερο από μείον 3 με κενό σημείο και βέλος δεξιά, και της λύσης x μικρότερο ή ίσο από 2 με γεμάτο σημείο και βέλος αριστερά.</desc>
+  <rect width="900" height="430" rx="28" fill="#f7f9fc"/>
+  <text x="450" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#173f6b">Λύσεις ανισώσεων στην αριθμογραμμή</text>
+  <g font-family="Arial, sans-serif" fill="#263b50">
+    <text x="90" y="122" font-size="25" font-weight="700">x &gt; −3</text>
+    <line x1="185" y1="150" x2="790" y2="150" stroke="#49627a" stroke-width="4"/>
+    <path d="M790 150l-18-11v22z" fill="#49627a"/>
+    <g stroke="#49627a" stroke-width="2">
+      <path d="M245 138v24M355 138v24M465 138v24M575 138v24M685 138v24"/>
+    </g>
+    <g font-size="19" text-anchor="middle">
+      <text x="245" y="188">−5</text><text x="355" y="188">−3</text><text x="465" y="188">−1</text><text x="575" y="188">1</text><text x="685" y="188">3</text>
+    </g>
+    <line x1="355" y1="150" x2="782" y2="150" stroke="#e36b3d" stroke-width="9"/>
+    <circle cx="355" cy="150" r="12" fill="#f7f9fc" stroke="#e36b3d" stroke-width="5"/>
+    <path d="M790 150l-20-13v26z" fill="#e36b3d"/>
+    <text x="90" y="282" font-size="25" font-weight="700">x ≤ 2</text>
+    <line x1="185" y1="310" x2="790" y2="310" stroke="#49627a" stroke-width="4"/>
+    <path d="M185 310l18-11v22z" fill="#49627a"/>
+    <g stroke="#49627a" stroke-width="2">
+      <path d="M245 298v24M355 298v24M465 298v24M575 298v24M685 298v24"/>
+    </g>
+    <g font-size="19" text-anchor="middle">
+      <text x="245" y="348">−4</text><text x="355" y="348">−2</text><text x="465" y="348">0</text><text x="575" y="348">2</text><text x="685" y="348">4</text>
+    </g>
+    <line x1="193" y1="310" x2="575" y2="310" stroke="#1f7a6e" stroke-width="9"/>
+    <path d="M185 310l20-13v26z" fill="#1f7a6e"/>
+    <circle cx="575" cy="310" r="12" fill="#1f7a6e" stroke="#1f7a6e" stroke-width="4"/>
+  </g>
+  <text x="450" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#51677c">Κενό σημείο: το άκρο δεν ανήκει · Γεμάτο σημείο: το άκρο ανήκει</text>
+</svg>

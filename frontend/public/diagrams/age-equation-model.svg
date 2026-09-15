@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">Πίνακας οργάνωσης προβλήματος ηλικιών</title>
+  <desc id="desc">Οι σημερινές και οι μελλοντικές ηλικίες γιου και πατέρα οργανώνονται σε πίνακα και οδηγούν στην εξίσωση 4x συν 5 ίσον 3 επί x συν 5.</desc>
+  <rect width="900" height="480" rx="28" fill="#f5f9ff"/>
+  <text x="450" y="54" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#173f6b">Από τα δεδομένα στην εξίσωση</text>
+  <rect x="90" y="92" width="720" height="220" rx="18" fill="#ffffff" stroke="#1f4e7b" stroke-width="3"/>
+  <path d="M90 152H810M270 92V312M535 92V312M90 232H810" fill="none" stroke="#9eb8d3" stroke-width="2"/>
+  <rect x="90" y="92" width="720" height="60" rx="18" fill="#dceafb"/>
+  <path d="M90 134V152H810V134" fill="#dceafb"/>
+  <g font-family="Arial, sans-serif" fill="#173f6b" font-size="21" font-weight="700" text-anchor="middle">
+    <text x="180" y="130">Πρόσωπο</text>
+    <text x="402" y="130">Σήμερα</text>
+    <text x="672" y="130">Σε 5 χρόνια</text>
+  </g>
+  <g font-family="Arial, sans-serif" fill="#263b50" font-size="24" text-anchor="middle">
+    <text x="180" y="202">Γιος</text>
+    <text x="402" y="202">x</text>
+    <text x="672" y="202">x + 5</text>
+    <text x="180" y="282">Πατέρας</text>
+    <text x="402" y="282">4x</text>
+    <text x="672" y="282">4x + 5</text>
+  </g>
+  <path d="M450 332V360" stroke="#e36b3d" stroke-width="4" stroke-linecap="round"/>
+  <path d="M438 351L450 365L462 351" fill="none" stroke="#e36b3d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="183" y="375" width="534" height="70" rx="18" fill="#fff0e8" stroke="#e36b3d" stroke-width="3"/>
+  <text x="450" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#9a3f20">4x + 5 = 3(x + 5)</text>
+</svg>
