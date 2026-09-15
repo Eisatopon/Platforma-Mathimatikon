@@ -1,0 +1,24 @@
+<svg viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="560" height="420" fill="#ffffff"/>
+  <circle cx="220" cy="220" r="150" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+
+  <line x1="50" y1="220" x2="390" y2="220" stroke="#1e293b" stroke-width="2"/>
+  <line x1="220" y1="50" x2="220" y2="390" stroke="#1e293b" stroke-width="2"/>
+
+  <line x1="220" y1="220" x2="316.4" y2="105.1" stroke="#6366f1" stroke-width="2.5"/>
+  <line x1="220" y1="220" x2="123.6" y2="105.1" stroke="#10b981" stroke-width="2.5"/>
+  <circle cx="316.4" cy="105.1" r="5" fill="#6366f1"/>
+  <circle cx="123.6" cy="105.1" r="5" fill="#10b981"/>
+
+  <text x="324.4" y="97.1" font-size="14" fill="#6366f1" font-weight="700">ω=50°</text>
+  <text x="53.6" y="97.1" font-size="14" fill="#10b981" font-weight="700">180°-ω=130°</text>
+
+  <!-- vertical dashed line showing symmetry -->
+  <line x1="220" y1="55" x2="220" y2="385" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <!-- y-coordinate marker (same for both, showing sin equal) -->
+  <line x1="316.4" y1="105.1" x2="123.6" y2="105.1" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="220" y="90.1" font-size="13" fill="#f59e0b" text-anchor="middle">ίδιο ύψος (ίδιο ημίτονο)</text>
+
+  <text x="280" y="400" font-size="15" fill="#475569" text-anchor="middle">Συμμετρία ως προς y-άξονα: ημ(180°-ω)=ημω, συν(180°-ω)=-συνω</text>
+</svg>
