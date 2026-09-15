@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" role="img" aria-labelledby="title desc">
+ <title id="title">Μεταβολή ημιτόνου, συνημιτόνου και εφαπτομένης</title><desc id="desc">Γραφικές παραστάσεις από μηδέν έως ενενήντα μοίρες: το ημίτονο αυξάνεται, το συνημίτονο μειώνεται και η εφαπτομένη αυξάνεται απότομα καθώς πλησιάζει τις ενενήντα μοίρες.</desc>
+ <rect width="900" height="520" fill="#f8fafc"/><text x="450" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#0f172a">Μεταβολή για 0° ≤ θ ≤ 90°</text>
+ <g stroke="#cbd5e1" stroke-width="1"><path d="M90 90H840M90 180H840M90 270H840M90 360H840M90 450H840"/><path d="M90 70V450M340 70V450M590 70V450M840 70V450"/></g>
+ <g stroke="#334155" stroke-width="3"><path d="M90 450H850"/><path d="M90 460V65"/></g>
+ <g font-family="Arial,sans-serif" font-size="18" fill="#334155" text-anchor="middle"><text x="90" y="485">0°</text><text x="340" y="485">30°</text><text x="590" y="485">60°</text><text x="840" y="485">90°</text><text x="55" y="455">0</text><text x="55" y="275">1</text></g>
+ <path d="M90 450 C260 415 510 325 840 270" fill="none" stroke="#2563eb" stroke-width="6"/><path d="M90 270 C410 300 675 390 840 450" fill="none" stroke="#16a34a" stroke-width="6"/><path d="M90 450 C360 440 610 350 735 155 C785 80 815 30 833 5" fill="none" stroke="#dc2626" stroke-width="6"/>
+ <g font-family="Arial,sans-serif" font-size="21" font-weight="700"><text x="700" y="252" fill="#2563eb">ημθ</text><text x="690" y="426" fill="#16a34a">συνθ</text><text x="720" y="125" fill="#dc2626">εφθ</text></g>
+</svg>
