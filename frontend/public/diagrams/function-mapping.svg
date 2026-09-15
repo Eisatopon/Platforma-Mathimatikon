@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 450" role="img" aria-labelledby="title desc">
+  <title id="title">Η συνάρτηση ως μοναδική αντιστοίχιση</title>
+  <desc id="desc">Κάθε τιμή x του πεδίου ορισμού συνδέεται με ακριβώς μία τιμή y.</desc>
+  <rect width="900" height="450" rx="28" fill="#f6f9fd"/>
+  <text x="450" y="52" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#173f6b">Κάθε x αντιστοιχίζεται σε ακριβώς ένα y</text>
+  <ellipse cx="245" cy="245" rx="135" ry="145" fill="#dceafb" stroke="#1f4e7b" stroke-width="4"/>
+  <ellipse cx="655" cy="245" rx="135" ry="145" fill="#e0f1eb" stroke="#1f7a6e" stroke-width="4"/>
+  <g font-family="Arial" font-size="23" text-anchor="middle" fill="#263b50">
+    <text x="245" y="92" font-weight="700">x</text><text x="655" y="92" font-weight="700">y=f(x)</text>
+    <text x="245" y="175">−1</text><text x="245" y="250">0</text><text x="245" y="325">2</text>
+    <text x="655" y="175">−1</text><text x="655" y="250">1</text><text x="655" y="325">5</text>
+  </g>
+  <g fill="none" stroke="#e36b3d" stroke-width="4" marker-end="url(#arrow)">
+    <path d="M285 168C400 145 500 145 615 168"/><path d="M285 245C400 245 500 245 615 245"/><path d="M285 318C400 340 500 340 615 318"/>
+  </g>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L9 3L0 6z" fill="#e36b3d"/></marker></defs>
+  <text x="450" y="420" text-anchor="middle" font-family="Arial" font-size="22" fill="#51677c">Παράδειγμα: f(x)=2x+1</text>
+</svg>
