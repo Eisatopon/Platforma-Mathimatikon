@@ -1,0 +1,31 @@
+<svg viewBox="0 0 560 440" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="560" height="440" fill="#ffffff"/>
+  <circle cx="220" cy="220" r="150" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+
+  <line x1="50" y1="220" x2="390" y2="220" stroke="#1e293b" stroke-width="2"/>
+  <line x1="220" y1="50" x2="220" y2="390" stroke="#1e293b" stroke-width="2"/>
+  <polygon points="390,220 378,214 378,226" fill="#1e293b"/>
+  <polygon points="220,50 214,62 226,62" fill="#1e293b"/>
+  <text x="398" y="225" font-size="15" fill="#1e293b">x</text>
+  <text x="228" y="45" font-size="15" fill="#1e293b">y</text>
+
+  <!-- radius to terminal point -->
+  <line x1="220" y1="220" x2="123.6" y2="105.1" stroke="#dc2626" stroke-width="2.5"/>
+  <circle cx="123.6" cy="105.1" r="5" fill="#dc2626"/>
+
+  <!-- angle arc -->
+  <path d="M 260 220 A 40 40 0 0 0 194.3 189.4" fill="none" stroke="#f59e0b" stroke-width="2"/>
+  <text x="235" y="175" font-size="15" fill="#f59e0b" font-weight="700">ω=130°</text>
+
+  <!-- projections: cos (x-coordinate) and sin (y-coordinate) -->
+  <line x1="123.6" y1="105.1" x2="123.6" y2="220" stroke="#10b981" stroke-width="2" stroke-dasharray="5 3"/>
+  <line x1="123.6" y1="105.1" x2="220" y2="105.1" stroke="#6366f1" stroke-width="2" stroke-dasharray="5 3"/>
+
+  <text x="78.6" y="240" font-size="14" fill="#10b981" font-weight="700">συνω (x)</text>
+  <text x="125" y="97.1" font-size="14" fill="#6366f1" font-weight="700">ημω (y)</text>
+
+  <text x="133.6" y="95.1" font-size="14" fill="#dc2626" font-weight="700">Μ</text>
+  <text x="228" y="238" font-size="13" fill="#1e293b">Ο</text>
+
+  <text x="280" y="410" font-size="15" fill="#475569" text-anchor="middle">Στον μοναδιαίο κύκλο: ημω = τεταγμένη, συνω = τετμημένη του Μ</text>
+</svg>
