@@ -1,0 +1,18 @@
+<svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="560" height="320" fill="#ffffff"/>
+  <polygon points="80,260 380,260 220,60" fill="#eef2ff" stroke="#6366f1" stroke-width="2.5"/>
+
+  <text x="60" y="280" font-size="16" fill="#1e293b" font-weight="700">Α</text>
+  <text x="388" y="280" font-size="16" fill="#1e293b" font-weight="700">Β</text>
+  <text x="215" y="48" font-size="16" fill="#1e293b" font-weight="700">Γ</text>
+
+  <text x="310.0" y="160.0" font-size="14" fill="#dc2626" font-weight="700">α</text>
+  <text x="125.0" y="160.0" font-size="14" fill="#10b981" font-weight="700">β</text>
+  <text x="230.0" y="280.0" font-size="14" fill="#f59e0b" font-weight="700">γ</text>
+
+  <text x="400" y="120" font-size="15" fill="#1e293b">Νόμος ημιτόνων:</text>
+  <text x="400" y="145" font-size="14" fill="#1e293b">α/ημΑ = β/ημΒ = γ/ημΓ</text>
+
+  <text x="400" y="185" font-size="15" fill="#1e293b">Νόμος συνημιτόνων:</text>
+  <text x="400" y="210" font-size="13" fill="#1e293b">α² = β²+γ²-2βγ·συνΑ</text>
+</svg>
