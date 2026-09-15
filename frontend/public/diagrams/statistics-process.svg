@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" role="img" aria-labelledby="title desc">
+ <title id="title">Από τον πληθυσμό στη στατιστική σύνοψη</title><desc id="desc">Ροή από πληθυσμό και αντιπροσωπευτικό δείγμα σε πίνακα συχνοτήτων, ομαδοποίηση και μέτρα θέσης.</desc>
+ <rect width="1000" height="420" rx="28" fill="#f6f9fd"/><text x="500" y="52" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#173f6b">Από τα δεδομένα στη στατιστική σύνοψη</text>
+ <g font-family="Arial" text-anchor="middle"><g fill="#dceafb" stroke="#1f4e7b" stroke-width="3"><rect x="45" y="120" width="180" height="150" rx="22"/><rect x="285" y="120" width="180" height="150" rx="22"/><rect x="525" y="120" width="180" height="150" rx="22"/><rect x="765" y="120" width="180" height="150" rx="22"/></g>
+ <g fill="#173f6b" font-size="22" font-weight="700"><text x="135" y="158">Πληθυσμός</text><text x="375" y="158">Δείγμα</text><text x="615" y="158">Συχνότητες</text><text x="855" y="158">Σύνοψη</text></g>
+ <g fill="#263b50" font-size="18"><text x="135" y="205">όλα τα άτομα</text><text x="135" y="232">που μελετάμε</text><text x="375" y="205">αντιπροσωπευτικό</text><text x="375" y="232">υποσύνολο</text><text x="615" y="205">νᵢ και fᵢ=νᵢ/ν</text><text x="615" y="232">Σfᵢ=100%</text><text x="855" y="198">μέση τιμή</text><text x="855" y="225">διάμεσος</text><text x="855" y="252">διαγράμματα</text></g>
+ <g fill="#e36b3d"><path d="M245 195h24l-12-10v20z"/><path d="M485 195h24l-12-10v20z"/><path d="M725 195h24l-12-10v20z"/></g>
+ <text x="500" y="340" font-size="21" fill="#51677c">Η ποιότητα του συμπεράσματος εξαρτάται πρώτα από την ποιότητα του δείγματος</text></g>
+</svg>
