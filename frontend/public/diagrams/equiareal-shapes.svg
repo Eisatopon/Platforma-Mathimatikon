@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+  <title id="title">Δύο ισεμβαδικά σχήματα</title><desc id="desc">Ορθογώνιο έξι επί τέσσερα και τρίγωνο με βάση δώδεκα και ύψος τέσσερα, εμβαδού είκοσι τεσσάρων τετραγωνικών μονάδων.</desc>
+  <rect width="900" height="360" fill="#f8fafc"/><g stroke="#94a3b8" stroke-width="1">
+    <path d="M90 70v240M140 70v240M190 70v240M240 70v240M290 70v240M340 70v240M390 70v240M40 110h400M40 150h400M40 190h400M40 230h400M40 270h400"/>
+  </g><rect x="90" y="110" width="300" height="160" fill="#60a5fa" fill-opacity=".45" stroke="#1d4ed8" stroke-width="4"/>
+  <text x="240" y="45" text-anchor="middle" font-family="sans-serif" font-size="23" fill="#0f172a">Ορθογώνιο 6 × 4</text><text x="240" y="335" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#1d4ed8">Ε = 24</text>
+  <g stroke="#94a3b8" stroke-width="1"><path d="M500 70v240M550 70v240M600 70v240M650 70v240M700 70v240M750 70v240M800 70v240M850 70v240M450 110h400M450 150h400M450 190h400M450 230h400M450 270h400"/></g>
+  <path d="M470 270L830 270 650 110Z" fill="#34d399" fill-opacity=".45" stroke="#047857" stroke-width="4"/><path d="M650 110V270" stroke="#dc2626" stroke-width="3" stroke-dasharray="8 6"/>
+  <text x="650" y="45" text-anchor="middle" font-family="sans-serif" font-size="23" fill="#0f172a">Τρίγωνο: β = 12, υ = 4</text><text x="650" y="335" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#047857">Ε = 12 · 4 / 2 = 24</text>
+</svg>

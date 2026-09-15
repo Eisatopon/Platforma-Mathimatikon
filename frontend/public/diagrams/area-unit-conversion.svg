@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300" role="img" aria-labelledby="title desc">
+  <title id="title">Κλίμακα μετατροπής μονάδων εμβαδού</title><desc id="desc">Από τετραγωνικά μέτρα προς τετραγωνικά δεκατόμετρα και τετραγωνικά εκατοστόμετρα κάθε βήμα πολλαπλασιάζει επί εκατό. Αντίστροφα διαιρεί διά εκατό.</desc>
+  <rect width="900" height="300" fill="#f8fafc"/><text x="450" y="42" text-anchor="middle" font-family="sans-serif" font-size="27" font-weight="700" fill="#0f172a">Μονάδες εμβαδού</text>
+  <g font-family="sans-serif" text-anchor="middle"><rect x="70" y="105" width="190" height="85" rx="14" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/><text x="165" y="158" font-size="30" fill="#1e3a8a">m²</text>
+  <rect x="355" y="105" width="190" height="85" rx="14" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/><text x="450" y="158" font-size="30" fill="#14532d">dm²</text>
+  <rect x="640" y="105" width="190" height="85" rx="14" fill="#fef3c7" stroke="#d97706" stroke-width="3"/><text x="735" y="158" font-size="30" fill="#78350f">cm²</text>
+  <text x="307" y="105" font-size="20" fill="#0f172a">× 100 →</text><text x="592" y="105" font-size="20" fill="#0f172a">× 100 →</text><text x="307" y="222" font-size="20" fill="#0f172a">← ÷ 100</text><text x="592" y="222" font-size="20" fill="#0f172a">← ÷ 100</text>
+  <text x="450" y="270" font-size="20" fill="#475569">1 m² = 100 dm² = 10.000 cm²</text></g>
+</svg>
