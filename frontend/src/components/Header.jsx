@@ -35,18 +35,25 @@ export const Header = () => {
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-4">
-        <Link to="/" data-testid="logo-link" className="flex items-center gap-2.5">
+        <Link
+          to="/"
+          data-testid="logo-link"
+          aria-label="MathTopon — Αρχική"
+          className="group flex min-w-0 items-center gap-2.5"
+        >
           <img
             src={`${process.env.PUBLIC_URL}/mathtopon-mark.svg`}
             alt=""
             aria-hidden="true"
-            className="h-11 w-14 shrink-0"
+            className="h-11 w-[3.85rem] shrink-0 transition-transform duration-200 group-hover:scale-[1.03]"
           />
-          <div className="leading-tight">
-            <div className="text-[18px] font-extrabold tracking-tight">
-              <span className="text-[#1F4E7B] dark:text-[#75B7E3]">Math</span><span className="text-foreground">Topon</span>
+          <div className="min-w-0 leading-tight">
+            <div className="whitespace-nowrap text-[19px] font-extrabold tracking-[-0.035em] text-[#1F4E7B] dark:text-[#75B7E3]">
+              MathTopon
             </div>
-            <div className="text-[11px] font-medium text-foreground/65">Ο τόπος των Μαθηματικών</div>
+            <div className="hidden whitespace-nowrap text-[10.5px] font-medium tracking-[-0.01em] text-foreground/65 min-[430px]:block">
+              Ο τόπος των Μαθηματικών
+            </div>
           </div>
         </Link>
 

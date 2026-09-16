@@ -1,11 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 35 320 205" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 230" role="img" aria-labelledby="title desc">
   <title id="title">MathTopon</title>
   <desc id="desc">Ανοιχτό γεωμετρικό βιβλίο με κόκκινο γράμμα e</desc>
-  <g transform="translate(10 48)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M18 44 L18 143 M18 44 C75 37 119 58 150 120 M18 143 C70 137 113 151 150 185" stroke="#1F4E7B" stroke-width="13"/>
-    <path d="M282 44 L282 143 M282 44 C225 37 181 58 150 120 M282 143 C230 137 187 151 150 185" stroke="#1F4E7B" stroke-width="13"/>
-    <path d="M35 68 C82 63 117 80 140 126" stroke="#4288B9" stroke-width="7"/>
-    <path d="M265 68 C218 63 183 80 160 126" stroke="#4288B9" stroke-width="7"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 58 L22 174 C76 169 119 184 160 217 C201 184 244 169 298 174 L298 58 C242 52 196 72 160 132 C124 72 78 52 22 58 Z"
+      stroke="#1F4E7B" stroke-width="14"/>
+    <path d="M42 88 C91 83 126 101 150 148 M278 88 C229 83 194 101 170 148"
+      stroke="#397FAC" stroke-width="8"/>
+    <path d="M160 132 L160 211" stroke="#1F4E7B" stroke-width="10"/>
   </g>
-  <text x="160" y="120" text-anchor="middle" font-family="Arial,sans-serif" font-size="96" font-weight="800" fill="#F0142F">e</text>
+  <text x="160" y="94" text-anchor="middle" font-family="Arial, sans-serif" font-size="88" font-weight="800" fill="#F0142F">e</text>
 </svg>
