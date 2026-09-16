@@ -11,8 +11,8 @@
     <line x1="120" y1="0" x2="360" y2="320" stroke="#dc2626" stroke-width="2.5"/>
     <!-- top intersection angles -->
     <circle cx="176" cy="80" r="3" fill="#1e293b"/>
-    <path d="M 196 80 A 20 20 0 0 0 187 62" fill="none" stroke="#6366f1" stroke-width="2.5"/>
-    <text x="200" y="60" font-size="15" fill="#6366f1" font-weight="700">α</text>
+    <path d="M 156 80 A 20 20 0 0 0 188 96" fill="none" stroke="#6366f1" stroke-width="2.5"/>
+    <text x="150" y="108" font-size="15" fill="#6366f1" font-weight="700">α</text>
     <!-- bottom intersection angles -->
     <circle cx="272" cy="240" r="3" fill="#1e293b"/>
     <path d="M 292 240 A 20 20 0 0 0 283 222" fill="none" stroke="#10b981" stroke-width="2.5"/>
