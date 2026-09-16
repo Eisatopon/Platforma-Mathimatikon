@@ -283,7 +283,7 @@ export default function Lesson() {
             <div>
               <h1 className="text-2xl font-extrabold tracking-tight"><MathText text={lesson.title} /></h1>
               <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
-                <span>{lesson.category}</span>·<span className="inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" />{lesson.minutes} λεπτά</span>·<span>{lesson.questionCount} ερωτήσεις</span>
+                <span>{lesson.category}</span>·<span className="inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" />{lesson.minutes} λεπτά</span>·<span>{lesson.questionCount} διαθέσιμες ερωτήσεις</span>
               </div>
             </div>
           </div>

@@ -236,7 +236,7 @@ export default function Home() {
                     <div className="min-w-0 flex-1">
                       <div className="truncate font-bold"><MathText text={l.title} /></div>
                       <div className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
-                        <span>{gradeTitle(l.gradeId)}</span>·<span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" />{l.minutes}′</span>·<span>{l.questionCount} ερωτήσεις</span>
+                        <span>{gradeTitle(l.gradeId)}</span>·<span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" />{l.minutes}′</span>·<span>{l.questionCount} διαθέσιμες</span>
                       </div>
                     </div>
                     <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ChevronRight, Clock, CheckCircle2, Circle, BookOpen, Library, ExternalLink, HardHat } from "lucide-react";
+import { ArrowLeft, ChevronRight, Clock, CheckCircle2, Circle, BookOpen, Library, ExternalLink } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MathText } from "@/components/MathText";
@@ -100,8 +100,8 @@ export default function Grade() {
                 </div>
                 <h2 className="text-lg font-extrabold tracking-tight">Βιβλία (Πολλαπλό βιβλίο)</h2>
               </div>
-              <span data-testid="under-construction-badge" className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/60 bg-amber-100 px-2.5 py-1 text-xs font-bold text-amber-700 dark:border-amber-400/30 dark:bg-amber-500/15 dark:text-amber-300">
-                <HardHat className="h-3.5 w-3.5" /> Υπό κατασκευή
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/5 px-2.5 py-1 text-xs font-bold text-primary">
+                <Library className="h-3.5 w-3.5" /> {books.length} προτεινόμενα βιβλία
               </span>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -170,7 +170,7 @@ export default function Grade() {
                         <div className="min-w-0 flex-1">
                           <div className="font-bold"><MathText text={l.title} /></div>
                           <div className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
-                            <span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" />{l.minutes} λεπτά</span>·<span>{l.questionCount} ερωτήσεις</span>
+                            <span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" />{l.minutes} λεπτά</span>·<span>{l.questionCount} διαθέσιμες</span>
                           </div>
                           {mastery.level > 0 && <div className={`mt-1 text-[11px] font-bold ${reviewDue ? "text-amber-600" : "text-indigo-600 dark:text-indigo-300"}`}>{reviewDue ? "Ώρα για επανάληψη" : masteryLabel}</div>}
                         </div>
