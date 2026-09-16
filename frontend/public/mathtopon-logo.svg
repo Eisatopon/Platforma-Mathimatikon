@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 154" role="img" aria-labelledby="title desc">
+  <title id="title">MathTopon</title>
+  <desc id="desc">MathTopon — Ο τόπος των Μαθηματικών</desc>
+
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 42 L10 118 C43 114 70 124 94 145 C118 124 145 114 178 118 L178 42 C143 38 115 51 94 88 C73 51 45 38 10 42 Z"
+      stroke="#1F4E7B" stroke-width="8"/>
+    <path d="M23 61 C53 58 75 69 89 97 M165 61 C135 58 113 69 99 97"
+      stroke="#397FAC" stroke-width="5"/>
+    <path d="M94 88 L94 141" stroke="#1F4E7B" stroke-width="6"/>
+  </g>
+
+  <text x="94" y="62" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+    font-size="54" font-weight="800" fill="#F0142F">e</text>
+
+  <text x="205" y="83" font-family="Arial, Helvetica, sans-serif"
+    font-size="62" font-weight="800" letter-spacing="-2.2" fill="#1F4E7B">MathTopon</text>
+  <text x="207" y="124" font-family="Arial, Helvetica, sans-serif"
+    font-size="26" font-weight="500" fill="#667085">Ο τόπος των Μαθηματικών</text>
+</svg>
