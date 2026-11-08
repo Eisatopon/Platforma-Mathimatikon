@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  ChevronRight, ArrowLeft, BookOpen, Lightbulb, Clock, Home as HomeIcon,
+  ChevronRight, ChevronLeft, ArrowLeft, BookOpen, Lightbulb, Clock, Home as HomeIcon,
   ClipboardList, PencilRuler, MousePointerClick, Timer, CheckCircle2, Flag,
   Target, ListChecks, Package, Eye, EyeOff, AlertTriangle, Link2, GraduationCap,
 } from "lucide-react";
@@ -14,12 +14,11 @@ import { Worksheet } from "@/components/lesson/Worksheet";
 import { InteractiveExercises } from "@/components/lesson/InteractiveExercises";
 import { TimedTest } from "@/components/lesson/TimedTest";
 import { GuidedPractice } from "@/components/lesson/GuidedPractice";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { fetchLesson, fetchGrade, readApiCache } from "@/lib/api";
-import { categoryIcon, categoryColor } from "@/lib/ui";
+import { categoryIcon } from "@/lib/ui";
 
 const SECTIONS = [
-  { id: "plan", n: 1, title: "Σχέδιο μαθήματος", Icon: ClipboardList },
+  { id: "plan", n: 1, title: "Ξεκίνα εδώ", Icon: ClipboardList },
   { id: "theory", n: 2, title: "Θεωρία / Επανάληψη", Icon: BookOpen },
   { id: "worksheet", n: 3, title: "Φύλλο εργασίας", Icon: PencilRuler },
   { id: "interactive", n: 4, title: "Διαδραστικές ασκήσεις", Icon: MousePointerClick },
@@ -28,13 +27,114 @@ const SECTIONS = [
   { id: "recap", n: 7, title: "Ανακεφαλαίωση", Icon: Flag },
 ];
 
+const SOLUTION_LEVEL_SUBTITLES = {
+  "Επίπεδο Α": "Βασικές ασκήσεις",
+  "Επίπεδο Β": "Ασκήσεις μέτριας δυσκολίας",
+  "Επίπεδο Γ": "Προχωρημένες ασκήσεις",
+};
+
+const LessonExperience = ({ lesson, gradeTitle, nextLesson, navigate, Icon, renderSection }) => {
+  const [active, setActive] = useState(0);
+  const section = SECTIONS[active];
+  const progress = Math.round(((active + 1) / SECTIONS.length) * 100);
+
+  useEffect(() => {
+    setActive(0);
+    window.scrollTo(0, 0);
+  }, [lesson.id]);
+
+  const goTo = (index) => {
+    setActive(index);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  return (
+    <div className="App min-h-screen bg-[#f5f7fb] dark:bg-background">
+      <Header />
+      <div className="border-b border-[#dbe3ef] bg-white dark:border-border dark:bg-card">
+        <div className="mx-auto flex max-w-[1380px] items-center justify-between gap-4 px-4 py-3 sm:px-6">
+          <button onClick={() => navigate(`/grade/${lesson.gradeId}`)} className="inline-flex items-center gap-2 text-sm font-bold text-[#40566f] transition hover:text-primary dark:text-muted-foreground">
+            <ArrowLeft className="h-4 w-4" /> {gradeTitle || "Επιστροφή στην τάξη"}
+          </button>
+          <div className="hidden items-center gap-2 text-xs font-semibold text-muted-foreground sm:flex">
+            <span>{lesson.chapter}</span><ChevronRight className="h-3.5 w-3.5" /><span className="text-foreground">{lesson.category}</span>
+          </div>
+        </div>
+      </div>
+
+      <main className="mx-auto grid max-w-[1380px] gap-6 px-4 py-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:px-6">
+        <aside className="self-start lg:sticky lg:top-5">
+          <div className="rounded-2xl border border-[#dce4ef] bg-white p-4 shadow-[0_12px_35px_rgba(35,64,96,0.06)] dark:border-border dark:bg-card">
+            <div className="mb-4 flex items-center gap-3 border-b border-[#e6ebf2] pb-4 dark:border-border">
+              <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#eaf1fb] text-[#1f4e7b] dark:bg-primary/15 dark:text-primary"><Icon className="h-5 w-5" /></div>
+              <div className="min-w-0">
+                <div className="text-[10px] font-extrabold uppercase tracking-[.16em] text-[#738398]">MathTopon · Μάθημα</div>
+                <div className="mt-1 line-clamp-2 text-sm font-extrabold leading-tight"><MathText text={lesson.title} /></div>
+              </div>
+            </div>
+
+            <div className="mb-2 flex items-center justify-between text-xs font-bold text-[#64768b] dark:text-muted-foreground"><span>Πρόοδος μαθήματος</span><span>{progress}%</span></div>
+            <div className="mb-5 h-2 overflow-hidden rounded-full bg-[#e7edf5] dark:bg-secondary"><div className="h-full rounded-full bg-gradient-to-r from-[#1f4e7b] to-[#557fbe] transition-all duration-300" style={{ width: `${progress}%` }} /></div>
+
+            <nav aria-label="Ενότητες μαθήματος" className="flex gap-2 overflow-x-auto pb-2 lg:grid lg:grid-cols-1 lg:overflow-visible lg:pb-0">
+              {SECTIONS.map((item, index) => {
+                const SelectedIcon = item.Icon;
+                const selected = index === active;
+                const visited = index < active;
+                return (
+                  <button key={item.id} onClick={() => goTo(index)} aria-current={selected ? "step" : undefined} className={`group flex min-h-12 min-w-[155px] items-center gap-3 rounded-xl px-3 py-2.5 text-left text-xs font-bold transition sm:text-sm lg:min-w-0 ${selected ? "bg-[#1f4e7b] text-white shadow-md shadow-[#1f4e7b]/20" : "text-[#53677e] hover:bg-[#eef3f9] dark:text-muted-foreground dark:hover:bg-secondary"}`}>
+                    <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg ${selected ? "bg-white/15" : visited ? "bg-emerald-100 text-emerald-700" : "bg-[#eaf0f7] text-[#315d88] dark:bg-secondary dark:text-primary"}`}>{visited ? <CheckCircle2 className="h-4 w-4" /> : <SelectedIcon className="h-4 w-4" />}</span>
+                    <span className="leading-tight"><span className={`mb-0.5 block text-[9px] font-extrabold uppercase tracking-wider ${selected ? "text-white/65" : "text-[#93a0af]"}`}>Βήμα {item.n}</span>{item.title}</span>
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+        </aside>
+
+        <section className="min-w-0">
+          <div className="mb-4 overflow-hidden rounded-2xl bg-gradient-to-br from-[#173f68] via-[#1f4e7b] to-[#416fa8] p-5 text-white shadow-[0_14px_35px_rgba(31,78,123,0.16)] sm:p-6">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-bold backdrop-blur"><GraduationCap className="h-4 w-4" /> {lesson.category}</div>
+            <h1 className="max-w-3xl text-2xl font-black leading-tight tracking-tight sm:text-3xl"><MathText text={lesson.title} /></h1>
+            <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold text-white/85">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5"><Clock className="h-4 w-4" /> {lesson.minutes} λεπτά</span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5"><ListChecks className="h-4 w-4" /> {lesson.questionCount} διαθέσιμες ερωτήσεις</span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5"><Flag className="h-4 w-4" /> Βήμα {section.n} από {SECTIONS.length}</span>
+            </div>
+          </div>
+
+          <article key={section.id} className="rounded-3xl border border-[#dce4ef] bg-white shadow-[0_12px_38px_rgba(35,64,96,0.07)] dark:border-border dark:bg-card">
+            <header className="flex items-center gap-4 border-b border-[#e5ebf2] px-5 py-5 sm:px-8 dark:border-border">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#eaf1fb] text-[#1f4e7b] dark:bg-primary/15 dark:text-primary"><section.Icon className="h-5 w-5" /></span>
+              <div><div className="text-[10px] font-extrabold uppercase tracking-[.16em] text-[#8290a1]">Βήμα {section.n} από {SECTIONS.length}</div><h2 className="mt-0.5 text-xl font-black sm:text-2xl">{section.title}</h2></div>
+            </header>
+            <div className="px-5 py-6 sm:px-8 sm:py-8">{renderSection(section.id)}</div>
+          </article>
+
+          <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <button disabled={active === 0} onClick={() => goTo(active - 1)} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#cfd9e6] bg-white px-5 py-2.5 text-sm font-bold text-[#35536f] transition hover:bg-[#eef3f9] disabled:cursor-not-allowed disabled:opacity-35 dark:border-border dark:bg-card dark:text-foreground"><ChevronLeft className="h-4 w-4" /> Προηγούμενο βήμα</button>
+            {active < SECTIONS.length - 1 ? (
+              <button onClick={() => goTo(active + 1)} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1f4e7b] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#1f4e7b]/20 transition hover:-translate-y-0.5">Επόμενο: {SECTIONS[active + 1].title}<ChevronRight className="h-4 w-4" /></button>
+            ) : nextLesson ? (
+              <button onClick={() => navigate(`/lesson/${nextLesson.id}`)} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1f4e7b] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#1f4e7b]/20">Επόμενο μάθημα<ChevronRight className="h-4 w-4" /></button>
+            ) : (
+              <button onClick={() => navigate(`/grade/${lesson.gradeId}`)} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1f4e7b] px-6 py-2.5 text-sm font-bold text-white"><HomeIcon className="h-4 w-4" /> Επιστροφή στα μαθήματα</button>
+            )}
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
 const SolutionItem = ({ sol, i }) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="rounded-xl border border-border bg-card p-4">
-      <div className="flex items-center justify-between gap-3">
-        <span className="font-bold">{sol.title}</span>
-        <button data-testid={`solution-toggle-${i}`} onClick={() => setOpen((o) => !o)} className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1.5 text-xs font-bold hover:bg-secondary/70">
+      <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div><span className="text-base font-extrabold">{sol.title}</span>{SOLUTION_LEVEL_SUBTITLES[sol.title] && <span className="ml-2 text-xs font-semibold text-muted-foreground">· {SOLUTION_LEVEL_SUBTITLES[sol.title]}</span>}</div>
+        <button data-testid={`solution-toggle-${i}`} onClick={() => setOpen((o) => !o)} className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-secondary px-3 py-1.5 text-xs font-bold hover:bg-secondary/70">
           {open ? <><EyeOff className="h-3.5 w-3.5" /> Απόκρυψη</> : <><Eye className="h-3.5 w-3.5" /> Εμφάνιση λύσης</>}
         </button>
       </div>
@@ -54,11 +154,9 @@ export default function Lesson() {
   const [slowLoading, setSlowLoading] = useState(false);
   const [gradeTitle, setGradeTitle] = useState("");
   const [nextLesson, setNextLesson] = useState(null);
-  const [open, setOpen] = useState(["plan", "theory"]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setOpen(["plan", "theory"]);
     setLesson(readApiCache(`lesson:${lessonId}`));
     setSlowLoading(false);
     const slowTimer = window.setTimeout(() => setSlowLoading(true), 1800);
@@ -91,14 +189,6 @@ export default function Lesson() {
       </div>
     );
   }
-
-  const jump = (id) => {
-    setOpen((prev) => (prev.includes(id) ? prev : [...prev, id]));
-    setTimeout(() => {
-      const el = document.getElementById(`sec-${id}`);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 80);
-  };
 
   const plan = lesson.plan || {};
   const planHasContent = (plan.objectives?.length || plan.prerequisites?.length || plan.duration || plan.materials?.length || plan.overview || plan.phases?.length || plan.formativeAssessment?.length || plan.exitTicket?.length);
@@ -263,75 +353,5 @@ export default function Lesson() {
     }
   };
 
-  return (
-    <div className="App min-h-screen">
-      <Header />
-      <main className="mx-auto max-w-3xl px-4 py-8">
-        {/* breadcrumb */}
-        <div className="mb-5 flex items-center gap-2 text-sm text-muted-foreground">
-          <button data-testid="back-grade" onClick={() => navigate(`/grade/${lesson.gradeId}`)} className="inline-flex items-center gap-1.5 font-semibold hover:text-foreground">
-            <ArrowLeft className="h-4 w-4" /> {gradeTitle}
-          </button>
-          <ChevronRight className="h-3.5 w-3.5" />
-          <span className="font-semibold text-foreground">{lesson.chapter}</span>
-        </div>
-
-        {/* lesson header */}
-        <div className="rounded-2xl border border-border bg-card p-5">
-          <div className="flex items-center gap-4">
-            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-accent"><Icon className={`h-6 w-6 ${categoryColor[lesson.category] || "text-primary"}`} /></div>
-            <div>
-              <h1 className="text-2xl font-extrabold tracking-tight"><MathText text={lesson.title} /></h1>
-              <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
-                <span>{lesson.category}</span>·<span className="inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" />{lesson.minutes} λεπτά</span>·<span>{lesson.questionCount} διαθέσιμες ερωτήσεις</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* step nav */}
-        <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
-          {SECTIONS.map((s) => (
-            <button key={s.id} data-testid={`stepnav-${s.id}`} onClick={() => jump(s.id)} className="flex shrink-0 items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground">
-              <span className="grid h-5 w-5 place-items-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">{s.n}</span>
-              {s.title}
-            </button>
-          ))}
-        </div>
-
-        {/* 7 sections */}
-        <Accordion type="multiple" value={open} onValueChange={setOpen} className="mt-3 space-y-3">
-          {SECTIONS.map((s) => (
-            <div key={s.id} id={`sec-${s.id}`} className="scroll-mt-20 rounded-2xl border border-border bg-card">
-              <AccordionItem value={s.id} className="border-0">
-                <AccordionTrigger data-testid={`section-${s.id}`} className="px-5 py-4 hover:no-underline">
-                  <div className="flex items-center gap-3 text-left">
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-sm font-bold text-white">{s.n}</span>
-                    <div className="flex items-center gap-2">
-                      <s.Icon className="h-4 w-4 text-primary" />
-                      <span className="text-base font-extrabold">{s.title}</span>
-                    </div>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="px-5 pb-5 pt-1">{renderSection(s.id)}</AccordionContent>
-              </AccordionItem>
-            </div>
-          ))}
-        </Accordion>
-
-        {/* bottom navigation */}
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-between">
-          <button data-testid="back-grade-bottom" onClick={() => navigate(`/grade/${lesson.gradeId}`)} className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-bold hover:bg-secondary">
-            <HomeIcon className="h-4 w-4" /> Λίστα μαθημάτων
-          </button>
-          {nextLesson && (
-            <button data-testid="next-lesson-btn" onClick={() => navigate(`/lesson/${nextLesson.id}`)} className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/25 hover:scale-[1.03]">
-              Επόμενο μάθημα: <MathText text={nextLesson.title} /> <ChevronRight className="h-4 w-4" />
-            </button>
-          )}
-        </div>
-      </main>
-      <Footer />
-    </div>
-  );
+  return <LessonExperience lesson={lesson} gradeTitle={gradeTitle} nextLesson={nextLesson} navigate={navigate} Icon={Icon} renderSection={renderSection} />;
 }
