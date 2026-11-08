@@ -31,7 +31,9 @@ function toHtml(input, largeFractions = false) {
       .map((p) => {
         if (p.startsWith("$$") && p.endsWith("$$")) return renderKatex(p.slice(2, -2), true);
         if (p.startsWith("$") && p.endsWith("$")) {
-          const expression = largeFractions ? p.slice(1, -1).replace(/\\frac/g, "\\dfrac") : p.slice(1, -1);
+          // Fractions must remain legible throughout the platform, including
+          // theory, worksheets, interactive practice and assessment.
+          const expression = p.slice(1, -1).replace(/\\frac/g, "\\dfrac");
           return renderKatex(expression, false);
         }
         return formatPlainText(p);

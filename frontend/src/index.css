@@ -69,8 +69,9 @@ body {
     }
 }
 
-.katex { font-size: 1.02em; }
-.interactive-math .katex { font-size: 1.35em; }
+.katex { font-size: 1.06em; }
+.katex .mfrac { font-size: 1.22em; }
+.interactive-math .katex { font-size: 1.42em; }
 
 @keyframes rise {
     from { opacity: 0; transform: translateY(14px); }
