@@ -108,7 +108,7 @@ export const TimedTest = ({ lessonId, questions, durationMinutes = 15, fallback 
             return (
               <div key={i} className="rounded-xl border border-border bg-card p-4">
                 <div className="mb-1 text-xs font-extrabold uppercase tracking-wide text-primary">Ερώτηση {i + 1}</div>
-                <div className="text-base font-bold leading-snug"><MathText text={questionPrompt(q)} /></div>
+                <div className="interactive-math text-base font-bold leading-relaxed"><MathText text={questionPrompt(q)} largeFractions /></div>
                 <div className="mt-2 space-y-1.5">
                   {q.options.map((opt, oi) => {
                     const isCorrect = oi === q.correct;
@@ -119,7 +119,7 @@ export const TimedTest = ({ lessonId, questions, durationMinutes = 15, fallback 
                     return (
                       <div key={oi} className={`flex items-center gap-2 text-sm ${cls}`}>
                         {isCorrect ? <CheckCircle2 className="h-4 w-4 shrink-0" /> : isChosen ? <XCircle className="h-4 w-4 shrink-0" /> : <span className="h-4 w-4 shrink-0" />}
-                        <MathText text={opt} />
+                        <span className="interactive-math"><MathText text={opt} largeFractions /></span>
                       </div>
                     );
                   })}
@@ -149,7 +149,7 @@ export const TimedTest = ({ lessonId, questions, durationMinutes = 15, fallback 
         {questions.map((q, i) => (
           <div key={i} className="rounded-xl border border-border bg-card p-4">
             <div className="mb-1 text-xs font-extrabold uppercase tracking-wide text-primary">Ερώτηση {i + 1}</div>
-            <div className="rounded-lg bg-secondary/60 px-3 py-2.5 text-base font-bold leading-snug"><MathText text={questionPrompt(q)} /></div>
+            <div className="interactive-math rounded-lg bg-secondary/60 px-3 py-2.5 text-base font-bold leading-relaxed"><MathText text={questionPrompt(q)} largeFractions /></div>
             <div className="mt-3 grid gap-2 sm:grid-cols-2">
               {q.options.map((opt, oi) => {
                 const sel = answers[i] === oi;
@@ -161,7 +161,7 @@ export const TimedTest = ({ lessonId, questions, durationMinutes = 15, fallback 
                     className={`flex items-center gap-2.5 rounded-lg border-2 px-3 py-2.5 text-left text-sm transition-all ${sel ? "border-primary bg-primary/5" : "border-border bg-card hover:border-primary/40"}`}
                   >
                     <span className={`grid h-6 w-6 shrink-0 place-items-center rounded-full text-xs font-bold ${sel ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground"}`}>{LETTERS[oi]}</span>
-                    <span className="flex-1 font-medium"><MathText text={opt} /></span>
+                    <span className="interactive-math flex-1 font-medium"><MathText text={opt} largeFractions /></span>
                   </button>
                 );
               })}
