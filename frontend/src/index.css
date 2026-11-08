@@ -70,6 +70,7 @@ body {
 }
 
 .katex { font-size: 1.02em; }
+.interactive-math .katex { font-size: 1.12em; }
 
 @keyframes rise {
     from { opacity: 0; transform: translateY(14px); }

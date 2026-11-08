@@ -21,7 +21,7 @@ function renderKatex(expr, display) {
   }
 }
 
-function toHtml(input) {
+function toHtml(input, largeFractions = false) {
   if (input == null) return "";
   const s = String(input);
   if (s.includes("$")) {
@@ -30,7 +30,10 @@ function toHtml(input) {
       .split(regex)
       .map((p) => {
         if (p.startsWith("$$") && p.endsWith("$$")) return renderKatex(p.slice(2, -2), true);
-        if (p.startsWith("$") && p.endsWith("$")) return renderKatex(p.slice(1, -1), false);
+        if (p.startsWith("$") && p.endsWith("$")) {
+          const expression = largeFractions ? p.slice(1, -1).replace(/\\frac/g, "\\dfrac") : p.slice(1, -1);
+          return renderKatex(expression, false);
+        }
         return formatPlainText(p);
       })
       .join("");
@@ -40,7 +43,7 @@ function toHtml(input) {
   return formatPlainText(s);
 }
 
-export const MathText = ({ text, className }) => {
-  const html = useMemo(() => toHtml(text), [text]);
+export const MathText = ({ text, className, largeFractions = false }) => {
+  const html = useMemo(() => toHtml(text, largeFractions), [text, largeFractions]);
   return <span className={className} dangerouslySetInnerHTML={{ __html: html }} />;
 };

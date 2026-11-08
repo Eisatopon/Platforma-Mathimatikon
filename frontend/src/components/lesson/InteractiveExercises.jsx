@@ -219,7 +219,7 @@ export const InteractiveExercises = ({ lessonId, questions }) => {
       <AnimatePresence mode="wait">
         <motion.div key={idx} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }}>
           {q.skill && <div className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">Δεξιότητα: {q.skill}</div>}
-          <h4 className="text-base font-bold leading-snug"><MathText text={q.prompt} /></h4>
+          <h4 className="interactive-math text-[17px] font-bold leading-relaxed"><MathText text={q.prompt} largeFractions /></h4>
           {q.recall && <div className="mb-3 rounded-lg bg-violet-50 px-3 py-2 text-xs font-bold text-violet-700 dark:bg-violet-500/10 dark:text-violet-300">Σύντομη επανάληψη προηγούμενου μαθήματος</div>}
           {!q.type && <div className="mt-3 space-y-2.5">
             {q.options.map((opt, i) => {
@@ -229,7 +229,7 @@ export const InteractiveExercises = ({ lessonId, questions }) => {
               let badge = "bg-secondary text-muted-foreground";
               if (resolved && isCorrect) { cls = "border-emerald-500 bg-emerald-50 dark:bg-emerald-500/10"; badge = "bg-emerald-500 text-white"; }
               else if (wasWrong) { cls = "border-rose-400 bg-rose-50 opacity-70 dark:bg-rose-500/10"; badge = "bg-rose-500 text-white"; }
-              return <button key={i} data-testid={`ix-option-${i}`} disabled={resolved || wasWrong} onClick={() => choose(i)} className={`flex w-full items-center gap-3 rounded-xl border-2 px-4 py-3 text-left transition-all ${cls}`}><span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-sm font-bold ${badge}`}>{LETTERS[i]}</span><span className="flex-1 font-semibold"><MathText text={opt} /></span>{resolved && isCorrect && <CheckCircle2 className="h-5 w-5 text-emerald-500" />}{wasWrong && <XCircle className="h-5 w-5 text-rose-500" />}</button>;
+              return <button key={i} data-testid={`ix-option-${i}`} disabled={resolved || wasWrong} onClick={() => choose(i)} className={`flex w-full items-center gap-3 rounded-xl border-2 px-4 py-3 text-left transition-all ${cls}`}><span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-sm font-bold ${badge}`}>{LETTERS[i]}</span><span className="interactive-math flex-1 font-semibold"><MathText text={opt} largeFractions /></span>{resolved && isCorrect && <CheckCircle2 className="h-5 w-5 text-emerald-500" />}{wasWrong && <XCircle className="h-5 w-5 text-rose-500" />}</button>;
             })}
           </div>}
           {["input", "fill", "self-check"].includes(q.type) && (
