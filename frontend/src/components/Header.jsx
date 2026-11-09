@@ -34,8 +34,8 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-4">
-        <Link to="/" data-testid="logo-link" aria-label="MathTopon — Αρχική" className="group min-w-0 shrink-0">
+      <div className="mx-auto flex h-[4.5rem] max-w-5xl items-center justify-between gap-3 px-4">
+        <Link to="/" data-testid="logo-link" aria-label="MathTopon — Αρχική" className="group ml-2 min-w-0 shrink-0">
           <img
             src={`${process.env.PUBLIC_URL}/mathtopon-logo-original.png`}
             alt="MathTopon — Ο τόπος των Μαθηματικών"
