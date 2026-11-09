@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 518 518" role="img" aria-labelledby="title description">
+  <title id="title">MathTopon</title>
+  <desc id="description">Το γεωμετρικό σύμβολο του MathTopon</desc>
+
+  <defs>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a548e"/>
+      <stop offset="1" stop-color="#003766"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f41418"/>
+      <stop offset="1" stop-color="#dc0007"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c8efbd"/>
+      <stop offset="1" stop-color="#9fd697"/>
+    </linearGradient>
+  </defs>
+
+  <!-- A white tile keeps the emblem crisp in both light and dark browser tabs. -->
+  <rect x="4" y="4" width="510" height="510" rx="100" fill="#fff"/>
+
+  <!-- The approved MathTopon geometric emblem, enlarged for favicon clarity. -->
+  <circle cx="255" cy="258" r="228" fill="none" stroke="url(#navy)" stroke-width="28"/>
+  <path d="M76 407 C155 334 250 270 350 244 L444 407 Z" fill="url(#green)"/>
+  <path d="M260 37 L76 407 M260 37 L444 407" fill="none" stroke="url(#navy)" stroke-width="30" stroke-linecap="round"/>
+  <path d="M76 407 C156 333 250 270 350 244 M76 407 H444" fill="none" stroke="url(#navy)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="260" cy="34" r="38" fill="url(#red)" stroke="#fff" stroke-width="14"/>
+  <circle cx="75" cy="407" r="38" fill="url(#red)" stroke="#fff" stroke-width="14"/>
+  <circle cx="444" cy="407" r="38" fill="url(#red)" stroke="#fff" stroke-width="14"/>
+</svg>
