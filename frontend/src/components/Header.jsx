@@ -37,9 +37,9 @@ export const Header = () => {
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-4">
         <Link to="/" data-testid="logo-link" aria-label="MathTopon — Αρχική" className="group min-w-0 shrink-0">
           <img
-            src={`${process.env.PUBLIC_URL}/mathtopon-logo.svg`}
+            src={`${process.env.PUBLIC_URL}/mathtopon-logo-original.png`}
             alt="MathTopon — Ο τόπος των Μαθηματικών"
-            className="h-[3.15rem] w-auto max-w-[10.5rem] transition-transform duration-200 group-hover:scale-[1.02] min-[430px]:max-w-[13.5rem]"
+            className="h-auto w-[10.75rem] max-w-full transition-transform duration-200 group-hover:scale-[1.02] min-[430px]:w-[14.5rem]"
           />
         </Link>
 
