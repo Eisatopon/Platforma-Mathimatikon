@@ -38,7 +38,7 @@ export default function Achievements() {
         <p className="mt-1 text-muted-foreground">Μάζεψε badges ολοκληρώνοντας μαθήματα και πετυχαίνοντας στα κουίζ.</p>
 
         <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <StatBox testid="ach-xp" Icon={Zap} color="text-amber-500" value={stats.xp} label="Συνολικά XP" />
+          <StatBox testid="ach-xp" Icon={Zap} color="text-amber-500" value={stats.xp} label="Συνολικοί πόντοι" />
           <StatBox testid="ach-streak" Icon={Flame} color="text-orange-500" value={stats.streak} label="Σερί ημερών" />
           <StatBox testid="ach-progress" Icon={Target} color="text-indigo-500" value={`${stats.overallPct}%`} label="Πρόοδος" />
           <StatBox testid="ach-badges" Icon={Award} color="text-emerald-500" value={`${unlocked}/${badges.length}`} label="Badges" />
