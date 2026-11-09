@@ -53,9 +53,9 @@ export const Header = () => {
             <Flame className="h-3.5 w-3.5 text-orange-500" />
             {streak}<span className="font-medium text-muted-foreground">σερί</span>
           </div>
-          <div data-testid="xp-badge" className="hidden items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-xs font-bold sm:flex">
+          <div data-testid="xp-badge" aria-label={`${xp} πόντοι`} title={`${xp} πόντοι`} className="hidden items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-xs font-bold sm:flex">
             <Zap className="h-3.5 w-3.5 text-amber-500" />
-            {xp}<span className="font-medium text-muted-foreground">XP</span>
+            {xp}<span className="font-medium text-muted-foreground"><span className="lg:hidden">π.</span><span className="hidden lg:inline">πόντοι</span></span>
           </div>
           <div data-testid="level-badge" aria-label={`Επίπεδο ${level}`} title={`Επίπεδο ${level}`} className="rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 px-2.5 py-1 text-xs font-bold text-white">
             <span className="sm:hidden">Επ. {level}</span>
