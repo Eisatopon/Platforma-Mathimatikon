@@ -258,7 +258,7 @@ export const InteractiveExercises = ({ lessonId, questions }) => {
               {orderedSteps.map((step, stepIndex) => (
                 <div key={step} className="flex items-center gap-2 rounded-xl border border-border bg-card p-3">
                   <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-secondary text-xs font-bold">{stepIndex + 1}</span>
-                  <span className="flex-1 text-sm font-semibold">{step}</span>
+                  <MathText className="interactive-math flex-1 text-sm font-semibold leading-relaxed" text={step} largeFractions />
                   <button disabled={stepIndex === 0 || resolved} onClick={() => moveStep(stepIndex, -1)} aria-label="Μετακίνηση επάνω" className="rounded-md border px-2 py-1 disabled:opacity-30">↑</button>
                   <button disabled={stepIndex === orderedSteps.length - 1 || resolved} onClick={() => moveStep(stepIndex, 1)} aria-label="Μετακίνηση κάτω" className="rounded-md border px-2 py-1 disabled:opacity-30">↓</button>
                 </div>
