@@ -57,8 +57,9 @@ export const Header = () => {
             <Zap className="h-3.5 w-3.5 text-amber-500" />
             {xp}<span className="font-medium text-muted-foreground">XP</span>
           </div>
-          <div data-testid="level-badge" className="rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 px-2.5 py-1 text-xs font-bold text-white">
-            Lv {level}
+          <div data-testid="level-badge" aria-label={`Επίπεδο ${level}`} title={`Επίπεδο ${level}`} className="rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 px-2.5 py-1 text-xs font-bold text-white">
+            <span className="sm:hidden">Επ. {level}</span>
+            <span className="hidden sm:inline">Επίπεδο {level}</span>
           </div>
           <button
             data-testid="theme-toggle"
