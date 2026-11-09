@@ -73,6 +73,41 @@ body {
 .katex .mfrac { font-size: 1.22em; }
 .interactive-math .katex { font-size: 1.42em; }
 
+/* Keep wide lesson content inside the mobile viewport. Large equations remain
+   readable by scrolling inside the equation instead of widening the page. */
+.lesson-shell,
+.lesson-shell main,
+.lesson-content {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.lesson-content {
+    overflow-wrap: anywhere;
+}
+
+.lesson-content > *,
+.lesson-content img,
+.lesson-content svg,
+.lesson-content canvas {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.lesson-content .katex-display,
+.lesson-content table {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 639px) {
+    .lesson-content .interactive-math .katex {
+        font-size: 1.2em;
+    }
+}
+
 @keyframes rise {
     from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: translateY(0); }
