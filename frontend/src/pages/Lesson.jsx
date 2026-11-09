@@ -50,7 +50,7 @@ const LessonExperience = ({ lesson, gradeTitle, nextLesson, navigate, Icon, rend
   };
 
   return (
-    <div className="App min-h-screen bg-[#f5f7fb] dark:bg-background">
+    <div className="lesson-shell App min-h-screen w-full max-w-full overflow-x-hidden bg-[#f5f7fb] dark:bg-background">
       <Header />
       <div className="border-b border-[#dbe3ef] bg-white dark:border-border dark:bg-card">
         <div className="mx-auto flex max-w-[1380px] items-center justify-between gap-4 px-4 py-3 sm:px-6">
@@ -63,9 +63,9 @@ const LessonExperience = ({ lesson, gradeTitle, nextLesson, navigate, Icon, rend
         </div>
       </div>
 
-      <main className="mx-auto grid max-w-[1380px] gap-6 px-4 py-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:px-6">
-        <aside className="self-start lg:sticky lg:top-5">
-          <div className="rounded-2xl border border-[#dce4ef] bg-white p-4 shadow-[0_12px_35px_rgba(35,64,96,0.06)] dark:border-border dark:bg-card">
+      <main className="mx-auto grid w-full min-w-0 max-w-[1380px] gap-4 px-3 py-4 sm:gap-6 sm:px-4 sm:py-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:px-6">
+        <aside className="min-w-0 max-w-full self-start lg:sticky lg:top-5">
+          <div className="max-w-full rounded-2xl border border-[#dce4ef] bg-white p-3 shadow-[0_12px_35px_rgba(35,64,96,0.06)] dark:border-border dark:bg-card sm:p-4">
             <div className="mb-4 flex items-center gap-3 border-b border-[#e6ebf2] pb-4 dark:border-border">
               <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#eaf1fb] text-[#1f4e7b] dark:bg-primary/15 dark:text-primary"><Icon className="h-5 w-5" /></div>
               <div className="min-w-0">
@@ -77,15 +77,15 @@ const LessonExperience = ({ lesson, gradeTitle, nextLesson, navigate, Icon, rend
             <div className="mb-2 flex items-center justify-between text-xs font-bold text-[#64768b] dark:text-muted-foreground"><span>Πρόοδος μαθήματος</span><span>{progress}%</span></div>
             <div className="mb-5 h-2 overflow-hidden rounded-full bg-[#e7edf5] dark:bg-secondary"><div className="h-full rounded-full bg-gradient-to-r from-[#1f4e7b] to-[#557fbe] transition-all duration-300" style={{ width: `${progress}%` }} /></div>
 
-            <nav aria-label="Ενότητες μαθήματος" className="flex gap-2 overflow-x-auto pb-2 lg:grid lg:grid-cols-1 lg:overflow-visible lg:pb-0">
+            <nav aria-label="Ενότητες μαθήματος" className="grid min-w-0 grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-1">
               {SECTIONS.map((item, index) => {
                 const SelectedIcon = item.Icon;
                 const selected = index === active;
                 const visited = index < active;
                 return (
-                  <button key={item.id} onClick={() => goTo(index)} aria-current={selected ? "step" : undefined} className={`group flex min-h-12 min-w-[155px] items-center gap-3 rounded-xl px-3 py-2.5 text-left text-xs font-bold transition sm:text-sm lg:min-w-0 ${selected ? "bg-[#1f4e7b] text-white shadow-md shadow-[#1f4e7b]/20" : "text-[#53677e] hover:bg-[#eef3f9] dark:text-muted-foreground dark:hover:bg-secondary"}`}>
+                  <button key={item.id} onClick={() => goTo(index)} aria-current={selected ? "step" : undefined} className={`group flex min-h-14 min-w-0 items-center gap-2 rounded-xl px-2 py-2.5 text-left text-[11px] font-bold transition sm:gap-3 sm:px-3 sm:text-sm ${selected ? "bg-[#1f4e7b] text-white shadow-md shadow-[#1f4e7b]/20" : "text-[#53677e] hover:bg-[#eef3f9] dark:text-muted-foreground dark:hover:bg-secondary"}`}>
                     <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg ${selected ? "bg-white/15" : visited ? "bg-emerald-100 text-emerald-700" : "bg-[#eaf0f7] text-[#315d88] dark:bg-secondary dark:text-primary"}`}>{visited ? <CheckCircle2 className="h-4 w-4" /> : <SelectedIcon className="h-4 w-4" />}</span>
-                    <span className="leading-tight"><span className={`mb-0.5 block text-[9px] font-extrabold uppercase tracking-wider ${selected ? "text-white/65" : "text-[#93a0af]"}`}>Βήμα {item.n}</span>{item.title}</span>
+                    <span className="min-w-0 break-words leading-tight"><span className={`mb-0.5 block text-[9px] font-extrabold uppercase tracking-wider ${selected ? "text-white/65" : "text-[#93a0af]"}`}>Βήμα {item.n}</span>{item.title}</span>
                   </button>
                 );
               })}
@@ -93,7 +93,7 @@ const LessonExperience = ({ lesson, gradeTitle, nextLesson, navigate, Icon, rend
           </div>
         </aside>
 
-        <section className="min-w-0">
+        <section className="min-w-0 max-w-full overflow-hidden">
           <div className="mb-4 overflow-hidden rounded-2xl bg-gradient-to-br from-[#173f68] via-[#1f4e7b] to-[#416fa8] p-5 text-white shadow-[0_14px_35px_rgba(31,78,123,0.16)] sm:p-6">
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-bold backdrop-blur"><GraduationCap className="h-4 w-4" /> {lesson.category}</div>
             <h1 className="max-w-3xl text-2xl font-black leading-tight tracking-tight sm:text-3xl"><MathText text={lesson.title} /></h1>
@@ -104,12 +104,12 @@ const LessonExperience = ({ lesson, gradeTitle, nextLesson, navigate, Icon, rend
             </div>
           </div>
 
-          <article key={section.id} className="rounded-3xl border border-[#dce4ef] bg-white shadow-[0_12px_38px_rgba(35,64,96,0.07)] dark:border-border dark:bg-card">
-            <header className="flex items-center gap-4 border-b border-[#e5ebf2] px-5 py-5 sm:px-8 dark:border-border">
+          <article key={section.id} className="min-w-0 max-w-full overflow-hidden rounded-2xl border border-[#dce4ef] bg-white shadow-[0_12px_38px_rgba(35,64,96,0.07)] dark:border-border dark:bg-card sm:rounded-3xl">
+            <header className="flex min-w-0 items-center gap-3 border-b border-[#e5ebf2] px-4 py-4 dark:border-border sm:gap-4 sm:px-8 sm:py-5">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#eaf1fb] text-[#1f4e7b] dark:bg-primary/15 dark:text-primary"><section.Icon className="h-5 w-5" /></span>
-              <div><div className="text-[10px] font-extrabold uppercase tracking-[.16em] text-[#8290a1]">Βήμα {section.n} από {SECTIONS.length}</div><h2 className="mt-0.5 text-xl font-black sm:text-2xl">{section.title}</h2></div>
+              <div className="min-w-0"><div className="text-[10px] font-extrabold uppercase tracking-[.16em] text-[#8290a1]">Βήμα {section.n} από {SECTIONS.length}</div><h2 className="mt-0.5 break-words text-xl font-black sm:text-2xl">{section.title}</h2></div>
             </header>
-            <div className="px-5 py-6 sm:px-8 sm:py-8">{renderSection(section.id)}</div>
+            <div className="lesson-content min-w-0 max-w-full overflow-hidden px-4 py-5 sm:px-8 sm:py-8">{renderSection(section.id)}</div>
           </article>
 
           <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
