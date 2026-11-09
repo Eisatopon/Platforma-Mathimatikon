@@ -1,36 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 170" role="img" aria-labelledby="title desc">
   <title id="title">MathTopon</title>
   <desc id="desc">MathTopon — Ο τόπος των Μαθηματικών</desc>
 
   <!-- Open-book symbol -->
   <g stroke-linecap="round" stroke-linejoin="round">
-    <path d="M18 49 C55 44 91 51 119 72 C132 82 143 95 151 110
-             L151 157 C117 130 77 119 18 125 Z"
+    <path d="M14 47 C42 43 69 49 90 66 C100 74 108 86 114 99
+             L114 148 C88 124 57 115 14 120 Z"
           fill="#F7FBFF" stroke="#1F4E7B" stroke-width="7"/>
-    <path d="M284 49 C247 44 211 51 183 72 C170 82 159 95 151 110
-             L151 157 C185 130 225 119 284 125 Z"
+    <path d="M214 47 C186 43 159 49 138 66 C128 74 120 86 114 99
+             L114 148 C140 124 171 115 214 120 Z"
           fill="#F7FBFF" stroke="#1F4E7B" stroke-width="7"/>
 
-    <path d="M35 70 C78 67 114 80 139 108"
+    <path d="M28 67 C61 64 88 77 105 101"
           fill="none" stroke="#4A8DB7" stroke-width="4"/>
-    <path d="M267 70 C224 67 188 80 163 108"
+    <path d="M200 67 C167 64 140 77 123 101"
           fill="none" stroke="#4A8DB7" stroke-width="4"/>
-    <path d="M151 109 L151 157"
+    <path d="M114 99 L114 148"
           fill="none" stroke="#1F4E7B" stroke-width="7"/>
 
     <!-- The red e connects MathTopon with Eisatopon -->
-    <circle cx="151" cy="50" r="27" fill="#FFFFFF"/>
-    <text x="151" y="63" text-anchor="middle"
-          font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="800"
+    <circle cx="114" cy="48" r="25" fill="#FFFFFF"/>
+    <text x="114" y="60" text-anchor="middle"
+          font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="800"
           fill="#E51C3B">e</text>
   </g>
 
   <!-- Wordmark -->
-  <text x="322" y="91" font-family="Arial, Helvetica, sans-serif"
-        font-size="64" font-weight="800" letter-spacing="-2.4">
+  <text x="248" y="86" font-family="Arial, Helvetica, sans-serif"
+        font-size="68" font-weight="800" letter-spacing="-2.5">
     <tspan fill="#173E65">Math</tspan><tspan fill="#286A9B">Topon</tspan>
   </text>
-  <rect x="325" y="108" width="34" height="4" rx="2" fill="#E51C3B"/>
-  <text x="371" y="124" font-family="Arial, Helvetica, sans-serif"
+  <rect x="251" y="104" width="34" height="4" rx="2" fill="#E51C3B"/>
+  <text x="297" y="121" font-family="Arial, Helvetica, sans-serif"
         font-size="25" font-weight="600" letter-spacing="0.25" fill="#66778B">Ο τόπος των Μαθηματικών</text>
 </svg>
