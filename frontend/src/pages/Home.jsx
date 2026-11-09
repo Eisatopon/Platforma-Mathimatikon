@@ -119,7 +119,7 @@ export default function Home() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <StatBox testid="stat-xp" Icon={Zap} color="text-amber-500" value={stats.xp} label="Συνολικά XP" />
+              <StatBox testid="stat-xp" Icon={Zap} color="text-amber-500" value={stats.xp} label="Συνολικοί πόντοι" />
               <StatBox testid="stat-streak" Icon={Flame} color="text-orange-500" value={stats.streak} label="Σερί ημερών" />
               <StatBox testid="stat-progress" Icon={Target} color="text-indigo-500" value={`${stats.overallPct}%`} label="Συνολική πρόοδος" />
               <StatBox testid="stat-lessons" Icon={GraduationCap} color="text-emerald-500" value={stats.completedCount} label="Μαθήματα" />
@@ -128,7 +128,7 @@ export default function Home() {
           <div className="mt-6 rounded-2xl border border-border bg-card/70 p-4">
             <div className="flex items-center justify-between text-xs font-semibold">
               <span>Επίπεδο {stats.level}</span>
-              <span className="text-muted-foreground">{stats.xpInLevel} / {stats.per} XP για το επόμενο</span>
+              <span className="text-muted-foreground">{stats.xpInLevel} / {stats.per} πόντοι για το επόμενο επίπεδο</span>
             </div>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-secondary">
               <div className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-500" style={{ width: `${(stats.xpInLevel / stats.per) * 100}%` }} />
