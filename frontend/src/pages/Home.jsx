@@ -82,7 +82,7 @@ export default function Home() {
   return (
     <div className="App min-h-screen">
       <Header />
-      <main className="mx-auto max-w-5xl px-4 pb-8 pt-3">
+      <main className="mx-auto max-w-5xl px-4 pb-8 pt-6">
         {/* Hero */}
         <motion.section
           initial={{ opacity: 0, y: 16 }}
