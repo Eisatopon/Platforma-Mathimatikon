@@ -63,10 +63,14 @@ export const Header = () => {
           <button
             data-testid="theme-toggle"
             onClick={() => setTheme(toggleTheme())}
-            className="grid h-8 w-8 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-            aria-label="Εναλλαγή θέματος"
+            className="flex h-8 items-center justify-center gap-1.5 rounded-full px-2 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground lg:px-3"
+            aria-label={theme === "dark" ? "Ενεργοποίηση ημερήσιας οθόνης" : "Ενεργοποίηση βραδινής οθόνης"}
+            title={theme === "dark" ? "Ημερήσια οθόνη" : "Βραδινή οθόνη"}
           >
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            <span className="hidden text-xs font-bold lg:inline">
+              {theme === "dark" ? "Ημερήσια οθόνη" : "Βραδινή οθόνη"}
+            </span>
           </button>
         </div>
       </div>
