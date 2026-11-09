@@ -1,21 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 154" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1899 518" role="img" aria-labelledby="title description">
   <title id="title">MathTopon</title>
-  <desc id="desc">MathTopon — Ο τόπος των Μαθηματικών</desc>
+  <desc id="description">Ο τόπος των Μαθηματικών</desc>
 
-  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M10 42 L10 118 C43 114 70 124 94 145 C118 124 145 114 178 118 L178 42 C143 38 115 51 94 88 C73 51 45 38 10 42 Z"
-      stroke="#1F4E7B" stroke-width="8"/>
-    <path d="M23 61 C53 58 75 69 89 97 M165 61 C135 58 113 69 99 97"
-      stroke="#397FAC" stroke-width="5"/>
-    <path d="M94 88 L94 141" stroke="#1F4E7B" stroke-width="6"/>
-  </g>
+  <defs>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a548e"/>
+      <stop offset="1" stop-color="#003766"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f41418"/>
+      <stop offset="1" stop-color="#dc0007"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c8efbd"/>
+      <stop offset="1" stop-color="#9fd697"/>
+    </linearGradient>
+  </defs>
 
-  <text x="94" y="64" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
-    font-size="62" font-weight="800" fill="#F0142F" stroke="#FFFFFF" stroke-width="5"
-    paint-order="stroke fill">e</text>
+  <!-- Mathematical emblem -->
+  <circle cx="255" cy="258" r="239" fill="none" stroke="url(#navy)" stroke-width="26"/>
 
-  <text x="205" y="83" font-family="Arial, Helvetica, sans-serif"
-    font-size="62" font-weight="800" letter-spacing="-2.2" fill="#1F4E7B">MathTopon</text>
-  <text x="207" y="124" font-family="Arial, Helvetica, sans-serif"
-    font-size="26" font-weight="500" fill="#667085">Ο τόπος των Μαθηματικών</text>
+  <!-- Soft green sector inside the compass construction -->
+  <path d="M76 407 C155 334 250 270 350 244 L444 407 Z" fill="url(#green)"/>
+
+  <!-- Compass and triangle construction -->
+  <path d="M260 37 L76 407" fill="none" stroke="url(#navy)" stroke-width="28" stroke-linecap="round"/>
+  <path d="M260 37 L444 407" fill="none" stroke="url(#navy)" stroke-width="28" stroke-linecap="round"/>
+  <path d="M76 407 C156 333 250 270 350 244" fill="none" stroke="url(#navy)" stroke-width="28" stroke-linecap="round"/>
+  <path d="M76 407 H444" fill="none" stroke="url(#navy)" stroke-width="28" stroke-linecap="round"/>
+
+  <!-- Three construction points with white isolation rings -->
+  <circle cx="260" cy="34" r="39" fill="url(#red)" stroke="#fff" stroke-width="15"/>
+  <circle cx="75" cy="407" r="39" fill="url(#red)" stroke="#fff" stroke-width="15"/>
+  <circle cx="444" cy="407" r="39" fill="url(#red)" stroke="#fff" stroke-width="15"/>
+
+  <!-- Divider -->
+  <rect x="534" y="67" width="11" height="363" rx="5.5" fill="#8ec8ee"/>
+
+  <!-- Wordmark. textLength keeps the approved proportions consistent on every device. -->
+  <text x="590" y="255"
+        fill="url(#navy)"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="249"
+        font-weight="900"
+        letter-spacing="-9"
+        textLength="594"
+        lengthAdjust="spacingAndGlyphs">Math</text>
+  <text x="1170" y="255"
+        fill="url(#red)"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="249"
+        font-weight="900"
+        letter-spacing="-9"
+        textLength="729"
+        lengthAdjust="spacingAndGlyphs">Topon</text>
+
+  <!-- Gold bridge and Greek strapline -->
+  <path d="M596 334 C900 273 1440 270 1796 326"
+        fill="none" stroke="#f4a300" stroke-width="14" stroke-linecap="round"/>
+  <text x="612" y="421"
+        fill="url(#navy)"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="89"
+        font-style="italic"
+        font-weight="700"
+        textLength="1218"
+        lengthAdjust="spacingAndGlyphs">Ο τόπος των Μαθηματικών</text>
 </svg>
