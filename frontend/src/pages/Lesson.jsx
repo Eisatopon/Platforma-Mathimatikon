@@ -15,6 +15,7 @@ import { InteractiveExercises } from "@/components/lesson/InteractiveExercises";
 import { TimedTest } from "@/components/lesson/TimedTest";
 import { GuidedPractice } from "@/components/lesson/GuidedPractice";
 import { ParabolaExplorer } from "@/components/lesson/ParabolaExplorer";
+import { NumberSenseExplorer } from "@/components/lesson/NumberSenseExplorer";
 import { fetchLesson, fetchGrade, readApiCache } from "@/lib/api";
 import { categoryIcon } from "@/lib/ui";
 
@@ -299,6 +300,7 @@ export default function Lesson() {
                 ))}
               </div>
             )}
+            {lesson.id === "g7-a1-1" && <NumberSenseExplorer />}
             {lesson.id === "g9-a4-1" && <ParabolaExplorer />}
             <div className="rounded-xl border border-amber-300/60 bg-amber-50 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
               <div className="mb-2 flex items-center gap-2"><Lightbulb className="h-5 w-5 text-amber-500" /><h4 className="font-extrabold text-amber-700 dark:text-amber-400">{lesson.example.title}</h4></div>
