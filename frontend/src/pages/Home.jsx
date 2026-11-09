@@ -127,7 +127,7 @@ export default function Home() {
           </div>
           <div className="mt-6 rounded-2xl border border-border bg-card/70 p-4">
             <div className="flex items-center justify-between text-xs font-semibold">
-              <span>Level {stats.level}</span>
+              <span>Επίπεδο {stats.level}</span>
               <span className="text-muted-foreground">{stats.xpInLevel} / {stats.per} XP για το επόμενο</span>
             </div>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-secondary">
