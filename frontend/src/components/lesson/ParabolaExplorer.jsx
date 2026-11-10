@@ -8,6 +8,7 @@ const A_VALUES = [
 ];
 
 const PRESETS = [-2, -1, -0.5, 0.5, 1, 2];
+const TABLE_X_VALUES = [-2, -1, 0, 1, 2];
 const VIEW = { width: 640, height: 410, xMin: -5, xMax: 5, yMin: -5, yMax: 5 };
 
 const xToSvg = (x) => ((x - VIEW.xMin) / (VIEW.xMax - VIEW.xMin)) * VIEW.width;
@@ -30,6 +31,7 @@ export function ParabolaExplorer() {
   const a = A_VALUES[aIndex];
   const opensUp = a > 0;
   const curve = useMemo(() => curvePath(a), [a]);
+  const tableValues = useMemo(() => TABLE_X_VALUES.map((x) => ({ x, y: a * x * x })), [a]);
   const titleId = useId();
   const descriptionId = useId();
   const gradientId = useId().replace(/:/g, "");
@@ -139,6 +141,9 @@ export function ParabolaExplorer() {
               <text x={xToSvg(0) + 12} y="20" fill="currentColor" className="text-slate-600 dark:text-slate-300" fontSize="15" fontWeight="800">y</text>
 
               <path d={curve} fill="none" stroke={opensUp ? "#4f46e5" : "#e11d48"} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+              {tableValues.filter(({ y }) => y >= VIEW.yMin && y <= VIEW.yMax).map(({ x, y }) => (
+                <circle key={`point-${x}`} cx={xToSvg(x)} cy={yToSvg(y)} r="5" fill={opensUp ? "#4f46e5" : "#e11d48"} stroke="white" strokeWidth="2" aria-hidden="true" />
+              ))}
               <circle cx={xToSvg(0)} cy={yToSvg(0)} r="8" fill="#f59e0b" stroke="white" strokeWidth="3" />
               <g transform={`translate(${xToSvg(0) + 13} ${yToSvg(0) - 17})`}>
                 <rect x="0" y="0" width="116" height="29" rx="8" fill="#0f172a" opacity="0.9" />
@@ -149,6 +154,21 @@ export function ParabolaExplorer() {
                 <text x="59.5" y="18" textAnchor="middle" fill="#1e293b" fontSize="12" fontWeight="800">Άξονας x = 0</text>
               </g>
             </svg>
+          </div>
+
+          <div className="mt-4 overflow-hidden rounded-xl border border-indigo-200 bg-white dark:border-indigo-500/25 dark:bg-card">
+            <div className="border-b border-indigo-100 px-4 py-3 dark:border-indigo-500/20">
+              <div className="text-sm font-extrabold">Ο πίνακας αλλάζει μαζί με το γράφημα</div>
+              <p className="mt-0.5 text-[15px] text-muted-foreground sm:text-base">Σύγκρινε τις αντίθετες τιμές του <strong>x</strong>: δίνουν πάντα την ίδια τιμή του <strong>y</strong>.</p>
+            </div>
+            <div className="grid grid-cols-5 divide-x divide-indigo-100 dark:divide-indigo-500/20" role="table" aria-label={`Πίνακας τιμών της συνάρτησης y ίσον ${formatNumber(a)} x στο τετράγωνο`}>
+              {tableValues.map(({ x, y }) => (
+                <div key={x} className="p-2 text-center sm:p-3" role="row">
+                  <div className="text-xs font-bold text-muted-foreground">x = {formatNumber(x)}</div>
+                  <div className="mt-1 text-base font-black text-indigo-700 dark:text-indigo-300">y = {formatNumber(y)}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

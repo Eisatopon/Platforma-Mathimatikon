@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, XCircle, ChevronRight, Sparkles, RotateCcw, Trophy, Lightbulb, Brain, CalendarClock } from "lucide-react";
 import { MathText } from "@/components/MathText";
 import { getProgress, getLessonMastery, MASTERY_LEVELS, recordPracticeResult } from "@/lib/progress";
+import { reorderForAdaptiveDifficulty } from "./adaptivePractice";
 
 const LETTERS = ["Α", "Β", "Γ", "Δ", "Ε"];
 
@@ -30,7 +31,7 @@ function masteryText(value) {
   return MASTERY_LEVELS[value?.level || 0] || MASTERY_LEVELS[0];
 }
 
-export const InteractiveExercises = ({ lessonId, questions }) => {
+export const InteractiveExercises = ({ lessonId, questions, adaptive = false }) => {
   const [sessionQuestions, setSessionQuestions] = useState(() => makeSession(questions));
   const total = sessionQuestions.length;
   const [started, setStarted] = useState(false);
@@ -163,6 +164,9 @@ export const InteractiveExercises = ({ lessonId, questions }) => {
 
   const next = () => {
     if (idx < total - 1) {
+      if (adaptive) {
+        setSessionQuestions((items) => reorderForAdaptiveDifficulty(items, idx + 1, q.difficulty, wasCorrect && attempt === 1));
+      }
       setIdx((value) => value + 1);
       setSelected(null);
       setWrittenAnswer(""); setWasCorrect(null); setModelVisible(false);
@@ -187,7 +191,8 @@ export const InteractiveExercises = ({ lessonId, questions }) => {
     return (
       <div className="text-center">
         <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1.5 text-xs font-bold text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300"><Brain className="h-4 w-4" /> {level.label}</div>
-        <p className="text-sm text-muted-foreground">{total} ερωτήσεις διαφορετικής δυσκολίας και αναπαράστασης, με διάγνωση λάθους, υπόδειξη και δεύτερη ευκαιρία.</p>
+        <p className="text-[15px] leading-relaxed text-muted-foreground sm:text-base">{total} ερωτήσεις διαφορετικής δυσκολίας και αναπαράστασης, με διάγνωση λάθους, υπόδειξη και δεύτερη ευκαιρία.</p>
+        {adaptive && <div className="mx-auto mt-3 max-w-md rounded-xl border border-violet-200 bg-violet-50 px-3 py-2 text-[15px] font-semibold text-violet-800 dark:border-violet-500/30 dark:bg-violet-500/10 dark:text-violet-200">Η επόμενη ερώτηση προσαρμόζεται στην προηγούμενη προσπάθειά σου.</div>}
         <button data-testid="start-interactive-btn" onClick={() => setStarted(true)} className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-transform hover:scale-[1.03]"><Sparkles className="h-4 w-4" /> Ξεκίνα την εξάσκηση</button>
       </div>
     );
@@ -196,6 +201,9 @@ export const InteractiveExercises = ({ lessonId, questions }) => {
   if (done) {
     const pct = Math.round(((firstTryCorrect + secondTryCorrect * 0.5) / total) * 100);
     const newLevel = masteryText(mastery);
+    const weakestSkill = Object.entries(skillResults)
+      .map(([skill, result]) => ({ skill, ratio: result.total ? result.earned / result.total : 0 }))
+      .sort((a, b) => a.ratio - b.ratio)[0];
     return (
       <div className="text-center">
         <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-primary/30"><Trophy className="h-8 w-8" /></div>
@@ -205,6 +213,12 @@ export const InteractiveExercises = ({ lessonId, questions }) => {
           <div className="flex items-center justify-center gap-2 font-extrabold text-indigo-700 dark:text-indigo-300"><Brain className="h-5 w-5" /> {newLevel.label}</div>
           <div className="mt-1 flex items-center justify-center gap-1.5 text-xs text-muted-foreground"><CalendarClock className="h-3.5 w-3.5" /> Η επανάληψη προγραμματίστηκε αυτόματα.</div>
         </div>
+        {adaptive && weakestSkill && (
+          <div className={`mx-auto mt-3 max-w-sm rounded-xl border p-4 text-left ${weakestSkill.ratio >= 0.75 ? "border-emerald-200 bg-emerald-50 dark:border-emerald-500/30 dark:bg-emerald-500/10" : "border-amber-200 bg-amber-50 dark:border-amber-500/30 dark:bg-amber-500/10"}`}>
+            <div className="text-sm font-extrabold">Προσωπική πρόταση</div>
+            <p className="mt-1 text-[15px] leading-relaxed">{weakestSkill.ratio >= 0.75 ? "Έχεις σταθερή επίδοση. Μπορείς να προχωρήσεις στο τεστ αξιολόγησης." : <>Χρειάζεται ακόμη λίγη εξάσκηση στη δεξιότητα: <strong>{weakestSkill.skill}</strong>.</>}</p>
+          </div>
+        )}
         <button data-testid="interactive-retry" onClick={restart} className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-bold hover:bg-secondary"><RotateCcw className="h-4 w-4" /> Νέα εξάσκηση</button>
       </div>
     );

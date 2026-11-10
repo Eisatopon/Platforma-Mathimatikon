@@ -14,6 +14,7 @@ import { Worksheet } from "@/components/lesson/Worksheet";
 import { InteractiveExercises } from "@/components/lesson/InteractiveExercises";
 import { TimedTest } from "@/components/lesson/TimedTest";
 import { GuidedPractice } from "@/components/lesson/GuidedPractice";
+import { DiagnosticCheck } from "@/components/lesson/DiagnosticCheck";
 import { ParabolaExplorer } from "@/components/lesson/ParabolaExplorer";
 import { NumberSenseExplorer } from "@/components/lesson/NumberSenseExplorer";
 import { fetchLesson, fetchGrade, readApiCache } from "@/lib/api";
@@ -29,6 +30,16 @@ const SECTIONS = [
   { id: "recap", n: 7, title: "Ανακεφαλαίωση", Icon: Flag },
 ];
 
+const NEXT_GENERATION_SECTIONS = [
+  { id: "plan", n: 1, title: "Αφετηρία", Icon: ClipboardList },
+  { id: "theory", n: 2, title: "Ανακάλυψε", Icon: BookOpen },
+  { id: "worksheet", n: 3, title: "Εφάρμοσε", Icon: PencilRuler },
+  { id: "interactive", n: 4, title: "Προσαρμοστική εξάσκηση", Icon: MousePointerClick },
+  { id: "test", n: 5, title: "Έλεγξε την πρόοδό σου", Icon: Timer },
+  { id: "solutions", n: 6, title: "Κατανόησε τις λύσεις", Icon: CheckCircle2 },
+  { id: "recap", n: 7, title: "Κλείσε το μάθημα", Icon: Flag },
+];
+
 const SOLUTION_LEVEL_SUBTITLES = {
   "Επίπεδο Α": "Βασικές ασκήσεις",
   "Επίπεδο Β": "Ασκήσεις μέτριας δυσκολίας",
@@ -36,9 +47,10 @@ const SOLUTION_LEVEL_SUBTITLES = {
 };
 
 const LessonExperience = ({ lesson, gradeTitle, nextLesson, navigate, Icon, renderSection }) => {
+  const sections = lesson.experienceVersion === 2 ? NEXT_GENERATION_SECTIONS : SECTIONS;
   const [active, setActive] = useState(0);
-  const section = SECTIONS[active];
-  const progress = Math.round(((active + 1) / SECTIONS.length) * 100);
+  const section = sections[active];
+  const progress = Math.round(((active + 1) / sections.length) * 100);
 
   useEffect(() => {
     setActive(0);
@@ -79,7 +91,7 @@ const LessonExperience = ({ lesson, gradeTitle, nextLesson, navigate, Icon, rend
             <div className="mb-5 h-2 overflow-hidden rounded-full bg-[#e7edf5] dark:bg-secondary"><div className="h-full rounded-full bg-gradient-to-r from-[#1f4e7b] to-[#557fbe] transition-all duration-300" style={{ width: `${progress}%` }} /></div>
 
             <nav aria-label="Ενότητες μαθήματος" className="grid min-w-0 grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-1">
-              {SECTIONS.map((item, index) => {
+              {sections.map((item, index) => {
                 const SelectedIcon = item.Icon;
                 const selected = index === active;
                 const visited = index < active;
@@ -96,27 +108,30 @@ const LessonExperience = ({ lesson, gradeTitle, nextLesson, navigate, Icon, rend
 
         <section className="min-w-0 max-w-full overflow-hidden">
           <div className="mb-4 overflow-hidden rounded-2xl bg-gradient-to-br from-[#173f68] via-[#1f4e7b] to-[#416fa8] p-5 text-white shadow-[0_14px_35px_rgba(31,78,123,0.16)] sm:p-6">
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-bold backdrop-blur"><GraduationCap className="h-4 w-4" /> {lesson.category}</div>
+            <div className="mb-3 flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-bold backdrop-blur"><GraduationCap className="h-4 w-4" /> {lesson.category}</span>
+              {lesson.experienceVersion === 2 && <span className="inline-flex items-center gap-2 rounded-full border border-amber-200/30 bg-amber-300/15 px-3 py-1 text-xs font-bold text-amber-100">✦ Μάθημα νέας γενιάς</span>}
+            </div>
             <h1 className="max-w-3xl text-2xl font-black leading-tight tracking-tight sm:text-3xl"><MathText text={lesson.title} /></h1>
             <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold text-white/85">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5"><Clock className="h-4 w-4" /> {lesson.minutes} λεπτά</span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5"><ListChecks className="h-4 w-4" /> {lesson.questionCount} διαθέσιμες ερωτήσεις</span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5"><Flag className="h-4 w-4" /> Βήμα {section.n} από {SECTIONS.length}</span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5"><Flag className="h-4 w-4" /> Βήμα {section.n} από {sections.length}</span>
             </div>
           </div>
 
           <article key={section.id} className="min-w-0 max-w-full overflow-hidden rounded-2xl border border-[#dce4ef] bg-white shadow-[0_12px_38px_rgba(35,64,96,0.07)] dark:border-border dark:bg-card sm:rounded-3xl">
             <header className="flex min-w-0 items-center gap-3 border-b border-[#e5ebf2] px-4 py-4 dark:border-border sm:gap-4 sm:px-8 sm:py-5">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#eaf1fb] text-[#1f4e7b] dark:bg-primary/15 dark:text-primary"><section.Icon className="h-5 w-5" /></span>
-              <div className="min-w-0"><div className="text-[10px] font-extrabold uppercase tracking-[.16em] text-[#8290a1]">Βήμα {section.n} από {SECTIONS.length}</div><h2 className="mt-0.5 break-words text-xl font-black sm:text-2xl">{section.title}</h2></div>
+              <div className="min-w-0"><div className="text-[10px] font-extrabold uppercase tracking-[.16em] text-[#8290a1]">Βήμα {section.n} από {sections.length}</div><h2 className="mt-0.5 break-words text-xl font-black sm:text-2xl">{section.title}</h2></div>
             </header>
             <div className="lesson-content min-w-0 max-w-full overflow-hidden px-4 py-5 sm:px-8 sm:py-8">{renderSection(section.id)}</div>
           </article>
 
           <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <button disabled={active === 0} onClick={() => goTo(active - 1)} className="inline-flex items-center justify-center gap-2 rounded-full border border-[#cfd9e6] bg-white px-5 py-2.5 text-sm font-bold text-[#35536f] transition hover:bg-[#eef3f9] disabled:cursor-not-allowed disabled:opacity-35 dark:border-border dark:bg-card dark:text-foreground"><ChevronLeft className="h-4 w-4" /> Προηγούμενο βήμα</button>
-            {active < SECTIONS.length - 1 ? (
-              <button onClick={() => goTo(active + 1)} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1f4e7b] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#1f4e7b]/20 transition hover:-translate-y-0.5">Επόμενο: {SECTIONS[active + 1].title}<ChevronRight className="h-4 w-4" /></button>
+            {active < sections.length - 1 ? (
+              <button onClick={() => goTo(active + 1)} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1f4e7b] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#1f4e7b]/20 transition hover:-translate-y-0.5">Επόμενο: {sections[active + 1].title}<ChevronRight className="h-4 w-4" /></button>
             ) : nextLesson ? (
               <button onClick={() => navigate(`/lesson/${nextLesson.id}`)} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1f4e7b] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#1f4e7b]/20">Επόμενο μάθημα<ChevronRight className="h-4 w-4" /></button>
             ) : (
@@ -205,6 +220,7 @@ export default function Lesson() {
         return planHasContent ? (
           <div className="space-y-5">
             {plan.overview && <p className="text-base leading-relaxed text-muted-foreground sm:text-[17px]"><MathText text={plan.overview} /></p>}
+            <DiagnosticCheck lessonId={lesson.id} diagnostic={lesson.diagnostic} />
             {plan.objectives?.length > 0 && (
               <div>
                 <div className="mb-2 flex items-center gap-2 text-sm font-bold"><Target className="h-4 w-4 text-primary" /> Στόχοι</div>
@@ -320,7 +336,7 @@ export default function Lesson() {
         return <Worksheet lessonId={lesson.id} worksheet={lesson.worksheet} />;
 
       case "interactive":
-        return <InteractiveExercises key={lesson.id} lessonId={lesson.id} questions={lesson.practiceQuestions?.length ? lesson.practiceQuestions : lesson.questions} />;
+        return <InteractiveExercises key={lesson.id} lessonId={lesson.id} questions={lesson.practiceQuestions?.length ? lesson.practiceQuestions : lesson.questions} adaptive={Boolean(lesson.learningSpecification?.adaptiveDifficulty)} />;
 
       case "test":
         return <TimedTest lessonId={lesson.id} questions={testQuestions} durationMinutes={lesson.assessment?.durationMinutes || 15} fallback={testFallback} />;
