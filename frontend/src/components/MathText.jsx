@@ -21,7 +21,20 @@ function renderKatex(expr, display) {
   }
 }
 
-function toHtml(input, largeFractions = false) {
+function isSimpleNumber(expression) {
+  return /^[+-]?(?:\d{1,3}(?:\.\d{3})+|\d+)(?:,\d+)?%?$/.test(expression.trim());
+}
+
+function renderInlineExpression(expression, largeFractions) {
+  const trimmed = expression.trim();
+  if (isSimpleNumber(trimmed)) {
+    return `<span class="math-number">${escapeHtml(trimmed)}</span>`;
+  }
+  const normalized = largeFractions ? trimmed.replace(/\\frac/g, "\\dfrac") : trimmed;
+  return renderKatex(normalized, false);
+}
+
+export function toHtml(input, largeFractions = false) {
   if (input == null) return "";
   const s = String(input);
   if (s.includes("$")) {
@@ -31,10 +44,7 @@ function toHtml(input, largeFractions = false) {
       .map((p) => {
         if (p.startsWith("$$") && p.endsWith("$$")) return renderKatex(p.slice(2, -2), true);
         if (p.startsWith("$") && p.endsWith("$")) {
-          // Fractions must remain legible throughout the platform, including
-          // theory, worksheets, interactive practice and assessment.
-          const expression = p.slice(1, -1).replace(/\\frac/g, "\\dfrac");
-          return renderKatex(expression, false);
+          return renderInlineExpression(p.slice(1, -1), largeFractions);
         }
         return formatPlainText(p);
       })
