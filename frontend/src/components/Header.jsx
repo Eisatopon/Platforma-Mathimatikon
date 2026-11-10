@@ -13,7 +13,7 @@ export const Header = () => {
   useEffect(() => subscribe(setProgress), []);
 
   const xp = computeXp(progress);
-  const { level } = levelInfo(xp);
+  const { level, levelTitle, levelShortTitle } = levelInfo(xp);
   const streak = progress.streak.count;
 
   const navItem = (to, label, Icon, mobileClass = "") => {
@@ -44,22 +44,22 @@ export const Header = () => {
         </Link>
 
         <nav aria-label="Κύρια πλοήγηση" className="flex min-w-0 items-center gap-0.5 sm:gap-1">
-          {navItem("/", "Αρχική", Home, "hidden sm:flex")}
+          {navItem("/", "Αρχική", Home, "hidden md:flex")}
           {navItem("/achievements", "Επιτεύγματα", Trophy, "flex")}
         </nav>
 
         <div className="flex shrink-0 items-center gap-1 sm:gap-1.5">
-          <div data-testid="streak-badge" className="hidden items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-xs font-bold sm:flex">
+          <div data-testid="streak-badge" className="hidden items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-xs font-bold lg:flex">
             <Flame className="h-3.5 w-3.5 text-orange-500" />
             {streak}<span className="font-medium text-muted-foreground">σερί</span>
           </div>
-          <div data-testid="xp-badge" aria-label={`${xp} πόντοι`} title={`${xp} πόντοι`} className="hidden items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-xs font-bold sm:flex">
+          <div data-testid="xp-badge" aria-label={`${xp} πόντοι`} title={`${xp} πόντοι`} className="hidden items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-xs font-bold lg:flex">
             <Zap className="h-3.5 w-3.5 text-amber-500" />
             {xp}<span className="font-medium text-muted-foreground"><span className="lg:hidden">π.</span><span className="hidden lg:inline">πόντοι</span></span>
           </div>
-          <div data-testid="level-badge" aria-label={`Επίπεδο ${level}`} title={`Επίπεδο ${level}`} className="shrink-0 whitespace-nowrap rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 px-2 py-1 text-xs font-bold text-white sm:px-2.5">
-            <span className="sm:hidden">Επ. {level}</span>
-            <span className="hidden sm:inline">Επίπεδο {level}</span>
+          <div data-testid="level-badge" aria-label={`Επίπεδο ${level}: ${levelTitle}`} title={`Επίπεδο ${level}: ${levelTitle}`} className="shrink-0 whitespace-nowrap rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 px-2 py-1 text-[11px] font-bold text-white sm:px-2.5 sm:text-xs">
+            <span className="md:hidden">{levelShortTitle} · {level}</span>
+            <span className="hidden md:inline">{levelTitle} · {level}</span>
           </div>
           <button
             data-testid="theme-toggle"

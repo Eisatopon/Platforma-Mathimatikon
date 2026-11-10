@@ -4,7 +4,7 @@ import { Zap, Flame, Target, Award, Lock, RotateCcw, Footprints, Dumbbell, Gradu
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { fetchGrades } from "@/lib/api";
-import { getProgress, subscribe, computeStats, computeBadges, resetProgress } from "@/lib/progress";
+import { getProgress, subscribe, computeStats, computeBadges, resetProgress, PROGRESSION_LEVELS } from "@/lib/progress";
 
 const ICONS = { Footprints, Dumbbell, GraduationCap, Star, Flame, Crown, Target, Trophy };
 
@@ -35,14 +35,43 @@ export default function Achievements() {
       <Header />
       <main className="mx-auto max-w-5xl px-4 py-8">
         <h1 className="text-3xl font-extrabold tracking-tight">Τα Επιτεύγματά μου</h1>
-        <p className="mt-1 text-muted-foreground">Μάζεψε badges ολοκληρώνοντας μαθήματα και πετυχαίνοντας στα κουίζ.</p>
+        <p className="mt-1 text-muted-foreground">Συγκέντρωσε διακριτικά ολοκληρώνοντας μαθήματα και πετυχαίνοντας στα κουίζ.</p>
 
         <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <StatBox testid="ach-xp" Icon={Zap} color="text-amber-500" value={stats.xp} label="Συνολικοί πόντοι" />
           <StatBox testid="ach-streak" Icon={Flame} color="text-orange-500" value={stats.streak} label="Σερί ημερών" />
           <StatBox testid="ach-progress" Icon={Target} color="text-indigo-500" value={`${stats.overallPct}%`} label="Πρόοδος" />
-          <StatBox testid="ach-badges" Icon={Award} color="text-emerald-500" value={`${unlocked}/${badges.length}`} label="Badges" />
+          <StatBox testid="ach-badges" Icon={Award} color="text-emerald-500" value={`${unlocked}/${badges.length}`} label="Διακριτικά" />
         </div>
+
+        <section className="mt-6 rounded-3xl border border-border bg-gradient-to-br from-indigo-50 via-card to-violet-50 p-5 dark:from-indigo-500/10 dark:to-violet-500/10 sm:p-6" data-testid="progression-card">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <div className="text-xs font-extrabold uppercase tracking-[.16em] text-primary">Η μαθηματική σου πορεία</div>
+              <h2 className="mt-1 text-2xl font-extrabold">Επίπεδο {stats.level} — {stats.levelTitle}</h2>
+            </div>
+            <div className="text-xs font-semibold text-muted-foreground">
+              {stats.isMaxLevel ? "Ανώτατη βαθμίδα" : `${stats.xpInLevel} / ${stats.per} πόντοι για: ${stats.nextLevelTitle}`}
+            </div>
+          </div>
+          <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-secondary">
+            <div className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-500" style={{ width: `${stats.levelProgressPct}%` }} />
+          </div>
+          <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {PROGRESSION_LEVELS.map((item) => {
+              const reached = stats.level >= item.level;
+              const current = stats.level === item.level;
+              return (
+                <div key={item.level} className={`rounded-xl border px-3 py-3 ${current ? "border-primary bg-primary/10" : reached ? "border-border bg-card/80" : "border-dashed border-border bg-secondary/30 text-muted-foreground"}`}>
+                  <div className="flex items-center gap-2">
+                    <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-extrabold ${reached ? "bg-primary text-primary-foreground" : "bg-secondary"}`}>{reached ? item.level : <Lock className="h-3.5 w-3.5" />}</span>
+                    <span className="min-w-0 text-xs font-extrabold">{item.title}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
 
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {badges.map((b, i) => {

@@ -126,12 +126,14 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-5 rounded-2xl border border-border bg-card/70 p-3 sm:mt-6 sm:p-4">
-            <div className="flex items-center justify-between text-xs font-semibold">
-              <span>Επίπεδο {stats.level}</span>
-              <span className="text-muted-foreground">{stats.xpInLevel} / {stats.per} πόντοι για το επόμενο επίπεδο</span>
+            <div className="flex flex-col gap-1 text-xs font-semibold sm:flex-row sm:items-center sm:justify-between">
+              <span>Επίπεδο {stats.level} — {stats.levelTitle}</span>
+              <span className="text-muted-foreground">
+                {stats.isMaxLevel ? "Κατέκτησες την ανώτατη βαθμίδα" : `${stats.xpInLevel} / ${stats.per} πόντοι για: ${stats.nextLevelTitle}`}
+              </span>
             </div>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-secondary">
-              <div className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-500" style={{ width: `${(stats.xpInLevel / stats.per) * 100}%` }} />
+              <div className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-500" style={{ width: `${stats.levelProgressPct}%` }} />
             </div>
           </div>
         </motion.section>

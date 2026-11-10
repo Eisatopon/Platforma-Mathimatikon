@@ -146,10 +146,35 @@ export function computeXp(progress) {
   return Object.values(progress.completed).reduce((s, c) => s + c.correct * 10, 0);
 }
 
+export const PROGRESSION_LEVELS = [
+  { level: 1, title: "Αφετηρία", shortTitle: "Αφετηρία", minXp: 0 },
+  { level: 2, title: "Εξερευνητής", shortTitle: "Εξερευνητής", minXp: 400 },
+  { level: 3, title: "Λύτης", shortTitle: "Λύτης", minXp: 1000 },
+  { level: 4, title: "Συλλογιστής", shortTitle: "Συλλογιστής", minXp: 1800 },
+  { level: 5, title: "Αναλυτής", shortTitle: "Αναλυτής", minXp: 2800 },
+  { level: 6, title: "Στρατηγικός Λύτης", shortTitle: "Στρατηγός", minXp: 4200 },
+  { level: 7, title: "Ερευνητής", shortTitle: "Ερευνητής", minXp: 6000 },
+  { level: 8, title: "Δεξιοτέχνης", shortTitle: "Δεξιοτέχνης", minXp: 8400 },
+];
+
 export function levelInfo(xp) {
-  const per = 400;
-  const level = Math.floor(xp / per) + 1;
-  return { level, xpInLevel: xp % per, per };
+  const safeXp = Math.max(0, Number(xp) || 0);
+  const currentIndex = PROGRESSION_LEVELS.findLastIndex((item) => safeXp >= item.minXp);
+  const current = PROGRESSION_LEVELS[Math.max(0, currentIndex)];
+  const next = PROGRESSION_LEVELS[currentIndex + 1] || null;
+  const xpInLevel = safeXp - current.minXp;
+  const per = next ? next.minXp - current.minXp : 0;
+  return {
+    level: current.level,
+    levelTitle: current.title,
+    levelShortTitle: current.shortTitle,
+    xpInLevel,
+    per,
+    nextLevelTitle: next?.title || null,
+    nextLevelMinXp: next?.minXp || null,
+    isMaxLevel: !next,
+    levelProgressPct: next ? Math.min(100, Math.round((xpInLevel / per) * 100)) : 100,
+  };
 }
 
 export function isCompleted(progress, lessonId) {
@@ -169,11 +194,11 @@ export function computeStats(progress, grades) {
   const completedCount = completedIds.length;
   const totalLessons = grades.reduce((s, g) => s + g.lessonCount, 0);
   const xp = computeXp(progress);
-  const { level, xpInLevel, per } = levelInfo(xp);
+  const progression = levelInfo(xp);
   const overallPct = totalLessons ? Math.round((completedCount / totalLessons) * 100) : 0;
   const badges = computeBadges(progress, grades).filter((b) => b.unlocked).length;
   return {
-    xp, level, xpInLevel, per, streak: progress.streak.count,
+    xp, ...progression, streak: progress.streak.count,
     completedCount, totalLessons, overallPct, badges,
   };
 }
