@@ -1,24 +1,23 @@
-<svg viewBox="0 0 500 380" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
-  <rect width="500" height="380" fill="#ffffff"/>
-  <line x1="80" y1="340" x2="280" y2="20" stroke="#1e293b" stroke-width="2.5"/>
-  <line x1="80" y1="340" x2="440" y2="20" stroke="#1e293b" stroke-width="2.5"/>
-  <text x="62" y="360" font-size="16" fill="#1e293b" font-weight="700">Ο</text>
-
-  <line x1="111.9" y1="230" x2="226.9" y2="230" stroke="#6366f1" stroke-width="2.5"/>
-  <line x1="173.8" y1="120" x2="343.8" y2="120" stroke="#10b981" stroke-width="2.5"/>
-
-  <circle cx="141.9" cy="230" r="4.5" fill="#dc2626"/>
-  <circle cx="203.8" cy="120" r="4.5" fill="#dc2626"/>
-  <circle cx="196.9" cy="230" r="4.5" fill="#f59e0b"/>
-  <circle cx="313.8" cy="120" r="4.5" fill="#f59e0b"/>
-
-  <text x="116.9" y="252" font-size="15" fill="#dc2626" font-weight="700">Α</text>
-  <text x="195.8" y="110" font-size="15" fill="#dc2626" font-weight="700">Α΄</text>
-  <text x="204.9" y="252" font-size="15" fill="#f59e0b" font-weight="700">Β</text>
-  <text x="321.8" y="110" font-size="15" fill="#f59e0b" font-weight="700">Β΄</text>
-
-  <text x="251.9" y="235" font-size="13" fill="#6366f1">ε₁</text>
-  <text x="368.8" y="125" font-size="13" fill="#10b981">ε₂</text>
-
-  <text x="240" y="365" font-size="15" fill="#475569" text-anchor="middle">Θαλής: ε₁∥ε₂ ⟹ ΟΑ/ΑΑ΄ = ΟΒ/ΒΒ΄</text>
+<svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc" font-family="Arial, sans-serif">
+  <title id="title">Θεώρημα του Θαλή σε τρίγωνο</title>
+  <desc id="desc">Τα Δ και Ε βρίσκονται ακριβώς στις πλευρές ΑΒ και ΑΓ. Η ΔΕ είναι παράλληλη στη ΒΓ. ΑΔ=4, ΔΒ=6, ΑΕ=6, ΕΓ=9 cm.</desc>
+  <rect width="500" height="420" rx="12" fill="#ffffff"/>
+  <path d="M230 35L80 235L455 335Z" fill="#f0f9ff" stroke="#475569" stroke-width="2.5"/>
+  <path d="M230 35L80 235" stroke="#1f4e7b" stroke-width="3"/>
+  <path d="M230 35L455 335" stroke="#0f766e" stroke-width="3"/>
+  <path d="M170 115L320 155" stroke="#b45309" stroke-width="3"/>
+  <g stroke="#b45309" fill="none" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M239 128L249 136L236 139"/>
+    <path d="M261.5 278L271.5 286L258.5 289"/>
+  </g>
+  <g fill="#334155"><circle cx="230" cy="35" r="4"/><circle cx="80" cy="235" r="4"/><circle cx="455" cy="335" r="4"/></g>
+  <g fill="#fbbf24" stroke="#92400e" stroke-width="1.5"><circle cx="170" cy="115" r="5"/><circle cx="320" cy="155" r="5"/></g>
+  <g font-size="19" font-weight="700" fill="#1e293b">
+    <text x="223" y="22">Α</text><text x="54" y="252">Β</text><text x="467" y="349">Γ</text>
+    <text x="143" y="114">Δ</text><text x="335" y="152">Ε</text>
+  </g>
+  <g font-size="18" font-weight="700" fill="#1f4e7b"><text x="182" y="66">4</text><text x="99" y="172">6</text></g>
+  <g font-size="18" font-weight="700" fill="#0f766e"><text x="289" y="86">6</text><text x="399" y="241">9</text></g>
+  <text x="250" y="377" font-size="17" font-weight="700" text-anchor="middle" fill="#92400e">ΔΕ ∥ ΒΓ  ·  ΑΔ/ΔΒ = ΑΕ/ΕΓ = 2/3</text>
+  <text x="250" y="403" font-size="15" text-anchor="middle" fill="#475569">Όλα τα μήκη είναι σε cm.</text>
 </svg>
