@@ -2,7 +2,9 @@ import axios from "axios";
 import content from "@/data/content.json";
 
 const API = `${process.env.REACT_APP_BACKEND_URL || "https://platforma-mathimatikon.onrender.com"}/api`;
-const CACHE_PREFIX = "mathtopon-api-v1:";
+// Increment when bundled lesson data changes so returning learners do not keep
+// seeing a lesson snapshot from an older deployment.
+const CACHE_PREFIX = "mathtopon-api-v2:";
 
 export const readApiCache = (key, fallback = null) => {
   try {
