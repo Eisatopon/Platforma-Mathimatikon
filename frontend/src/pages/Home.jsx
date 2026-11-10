@@ -43,7 +43,7 @@ const StatBox = ({ Icon, color, value, label, testid }) => (
   <div data-testid={testid} className="rounded-2xl border border-border bg-card p-3.5">
     <Icon className={`h-4 w-4 ${color}`} />
     <div className="mt-1.5 text-2xl font-extrabold leading-none">{value}</div>
-    <div className="mt-1 text-[11px] font-medium text-muted-foreground">{label}</div>
+    <div className="mt-1 text-xs font-medium text-muted-foreground">{label}</div>
   </div>
 );
 

@@ -219,7 +219,7 @@ export const InteractiveExercises = ({ lessonId, questions }) => {
       <AnimatePresence mode="wait">
         <motion.div key={idx} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }}>
           {q.skill && <div className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">Δεξιότητα: {q.skill}</div>}
-          <h4 className="interactive-math text-[17px] font-bold leading-relaxed"><MathText text={q.prompt} largeFractions /></h4>
+          <h4 className="interactive-math text-lg font-bold leading-relaxed"><MathText text={q.prompt} largeFractions /></h4>
           {q.recall && <div className="mb-3 rounded-lg bg-violet-50 px-3 py-2 text-xs font-bold text-violet-700 dark:bg-violet-500/10 dark:text-violet-300">Σύντομη επανάληψη προηγούμενου μαθήματος</div>}
           {!q.type && <div className="mt-3 space-y-2.5">
             {q.options.map((opt, i) => {
@@ -229,22 +229,22 @@ export const InteractiveExercises = ({ lessonId, questions }) => {
               let badge = "bg-secondary text-muted-foreground";
               if (resolved && isCorrect) { cls = "border-emerald-500 bg-emerald-50 dark:bg-emerald-500/10"; badge = "bg-emerald-500 text-white"; }
               else if (wasWrong) { cls = "border-rose-400 bg-rose-50 opacity-70 dark:bg-rose-500/10"; badge = "bg-rose-500 text-white"; }
-              return <button key={i} data-testid={`ix-option-${i}`} disabled={resolved || wasWrong} onClick={() => choose(i)} className={`flex w-full items-center gap-3 rounded-xl border-2 px-4 py-3 text-left transition-all ${cls}`}><span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-sm font-bold ${badge}`}>{LETTERS[i]}</span><span className="interactive-math flex-1 font-semibold"><MathText text={opt} largeFractions /></span>{resolved && isCorrect && <CheckCircle2 className="h-5 w-5 text-emerald-500" />}{wasWrong && <XCircle className="h-5 w-5 text-rose-500" />}</button>;
+              return <button key={i} data-testid={`ix-option-${i}`} disabled={resolved || wasWrong} onClick={() => choose(i)} className={`flex w-full items-center gap-3 rounded-xl border-2 px-4 py-3 text-left text-base transition-all ${cls}`}><span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-sm font-bold ${badge}`}>{LETTERS[i]}</span><span className="interactive-math flex-1 font-semibold"><MathText text={opt} largeFractions /></span>{resolved && isCorrect && <CheckCircle2 className="h-5 w-5 text-emerald-500" />}{wasWrong && <XCircle className="h-5 w-5 text-rose-500" />}</button>;
             })}
           </div>}
           {["input", "fill", "self-check"].includes(q.type) && (
             <div className="mt-3">
               <textarea value={writtenAnswer} onChange={(event) => setWrittenAnswer(event.target.value)} rows={q.type === "self-check" ? 4 : 2} placeholder={q.type === "fill" ? "Συμπλήρωσε το κενό…" : "Γράψε την απάντηση και τη σκέψη σου…"} className="w-full resize-y rounded-xl border-2 border-border bg-background px-4 py-3 text-base outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20" />
               {!modelVisible && <button onClick={submitWritten} disabled={!writtenAnswer.trim()} className="mt-2 rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground disabled:opacity-40">Έλεγχος απάντησης</button>}
-              {modelVisible && !resolved && <div className="mt-3 rounded-xl border border-sky-200 bg-sky-50 p-4 dark:border-sky-500/30 dark:bg-sky-500/10"><div className="text-sm font-extrabold text-sky-800 dark:text-sky-300">Ενδεικτική λύση</div><MathText className="mt-1 block text-sm" text={q.modelAnswer} /><div className="mt-3 flex flex-wrap gap-2"><button onClick={() => selfAssess(true)} className="rounded-full bg-emerald-600 px-3 py-1.5 text-sm font-bold text-white">Το αιτιολόγησα σωστά</button><button onClick={() => selfAssess(false)} className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-bold">Χρειάζομαι εξάσκηση</button></div></div>}
+              {modelVisible && !resolved && <div className="mt-3 rounded-xl border border-sky-200 bg-sky-50 p-4 dark:border-sky-500/30 dark:bg-sky-500/10"><div className="text-sm font-extrabold text-sky-800 dark:text-sky-300">Ενδεικτική λύση</div><MathText className="mt-1 block text-base leading-relaxed" text={q.modelAnswer} /><div className="mt-3 flex flex-wrap gap-2"><button onClick={() => selfAssess(true)} className="rounded-full bg-emerald-600 px-3 py-1.5 text-sm font-bold text-white">Το αιτιολόγησα σωστά</button><button onClick={() => selfAssess(false)} className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-bold">Χρειάζομαι εξάσκηση</button></div></div>}
             </div>
           )}
           {q.type === "matching" && (
             <div className="mt-3 space-y-3">
               {(q.pairs || []).map((pair, pairIndex) => (
                 <label key={pairIndex} className="block rounded-xl border border-border bg-card p-3">
-                  <MathText className="mb-2 block text-sm font-semibold" text={pair.left} />
-                  <select value={matchingAnswers[pairIndex] || ""} disabled={resolved} onChange={(event) => setMatchingAnswers((values) => ({ ...values, [pairIndex]: event.target.value }))} className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm">
+                  <MathText className="mb-2 block text-base font-semibold" text={pair.left} />
+                  <select value={matchingAnswers[pairIndex] || ""} disabled={resolved} onChange={(event) => setMatchingAnswers((values) => ({ ...values, [pairIndex]: event.target.value }))} className="w-full rounded-lg border border-border bg-background px-3 py-2 text-base">
                     <option value="">Επίλεξε απάντηση</option>
                     {(q.pairs || []).map((item, optionIndex) => <option key={optionIndex} value={item.right}>{item.right}</option>)}
                   </select>
@@ -258,7 +258,7 @@ export const InteractiveExercises = ({ lessonId, questions }) => {
               {orderedSteps.map((step, stepIndex) => (
                 <div key={step} className="flex items-center gap-2 rounded-xl border border-border bg-card p-3">
                   <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-secondary text-xs font-bold">{stepIndex + 1}</span>
-                  <MathText className="interactive-math flex-1 text-sm font-semibold leading-relaxed" text={step} largeFractions />
+                  <MathText className="interactive-math flex-1 text-base font-semibold leading-relaxed" text={step} largeFractions />
                   <button disabled={stepIndex === 0 || resolved} onClick={() => moveStep(stepIndex, -1)} aria-label="Μετακίνηση επάνω" className="rounded-md border px-2 py-1 disabled:opacity-30">↑</button>
                   <button disabled={stepIndex === orderedSteps.length - 1 || resolved} onClick={() => moveStep(stepIndex, 1)} aria-label="Μετακίνηση κάτω" className="rounded-md border px-2 py-1 disabled:opacity-30">↓</button>
                 </div>
@@ -267,14 +267,14 @@ export const InteractiveExercises = ({ lessonId, questions }) => {
             </div>
           )}
           {((wrongOptions.length > 0 || (q.type && attempt > 1)) && !resolved) && (
-            <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm dark:border-amber-500/30 dark:bg-amber-500/10">
+            <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-[15px] leading-relaxed dark:border-amber-500/30 dark:bg-amber-500/10 sm:text-base">
               <div className="font-bold text-amber-700 dark:text-amber-300">Δοκίμασε ξανά — δεν χάθηκε η προσπάθεια.</div>
               {feedback && <MathText className="mt-1 block" text={feedback} />}
               {hintIndex >= 0 && hints[hintIndex] && <div className="mt-2 flex gap-2"><Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" /><MathText text={hints[hintIndex]} /></div>}
               {hintIndex < hints.length - 1 && <button onClick={showNextHint} className="mt-2 text-xs font-bold text-primary hover:underline">Μία ακόμη υπόδειξη</button>}
             </div>
           )}
-          {resolved && q.type !== "self-check" && <div className={`mt-3 rounded-xl px-4 py-3 text-sm ${wasCorrect ? "bg-emerald-50 dark:bg-emerald-500/10" : "bg-secondary"}`}><span className={`font-bold ${wasCorrect ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>{wasCorrect ? (attempt === 1 ? "Σωστό με την πρώτη! " : "Σωστό μετά την υπόδειξη! ") : "Ας το ξεκαθαρίσουμε. "}</span><MathText text={q.explanation} /></div>}
+          {resolved && q.type !== "self-check" && <div className={`mt-3 rounded-xl px-4 py-3 text-[15px] leading-relaxed sm:text-base ${wasCorrect ? "bg-emerald-50 dark:bg-emerald-500/10" : "bg-secondary"}`}><span className={`font-bold ${wasCorrect ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>{wasCorrect ? (attempt === 1 ? "Σωστό με την πρώτη! " : "Σωστό μετά την υπόδειξη! ") : "Ας το ξεκαθαρίσουμε. "}</span><MathText text={q.explanation} /></div>}
         </motion.div>
       </AnimatePresence>
       <button data-testid="ix-next-btn" disabled={!resolved} onClick={next} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none">{idx < total - 1 ? "Επόμενη" : "Ολοκλήρωση"} <ChevronRight className="h-4 w-4" /></button>

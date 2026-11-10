@@ -24,9 +24,9 @@ export const GuidedPractice = ({ lessonId, item }) => {
       <div className="flex items-center gap-2 font-extrabold text-sky-800 dark:text-sky-300">
         <PencilLine className="h-5 w-5" /> Παράδειγμα με καθοδήγηση
       </div>
-      <p className="mt-1 text-sm text-muted-foreground">Λύσε το πριν εμφανίσεις τη λύση. Η απάντησή σου αποθηκεύεται στη συσκευή.</p>
-      <MathText className="mt-3 block text-[15px] font-bold" text={item.prompt} />
-      {item.hint && <MathText className="mt-2 block text-sm text-sky-800/80 dark:text-sky-200/80" text={`Υπόδειξη: ${item.hint}`} />}
+      <p className="mt-1 text-[15px] text-muted-foreground sm:text-base">Λύσε το πριν εμφανίσεις τη λύση. Η απάντησή σου αποθηκεύεται στη συσκευή.</p>
+      <MathText className="mt-3 block text-[17px] font-bold leading-relaxed sm:text-lg" text={item.prompt} />
+      {item.hint && <MathText className="mt-2 block text-[15px] text-sky-800/80 dark:text-sky-200/80 sm:text-base" text={`Υπόδειξη: ${item.hint}`} />}
       <textarea
         value={answer}
         onChange={(event) => update(event.target.value)}
@@ -38,7 +38,7 @@ export const GuidedPractice = ({ lessonId, item }) => {
         {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
         {show ? "Απόκρυψη λύσης" : "Έλεγχος λύσης"}
       </button>
-      {show && <MathText className="mt-3 block rounded-lg bg-background p-3 text-[15px] leading-relaxed" text={item.solution} />}
+      {show && <MathText className="mt-3 block rounded-lg bg-background p-3 text-base leading-relaxed sm:text-[17px]" text={item.solution} />}
     </div>
   );
 };

@@ -84,9 +84,9 @@ const LessonExperience = ({ lesson, gradeTitle, nextLesson, navigate, Icon, rend
                 const selected = index === active;
                 const visited = index < active;
                 return (
-                  <button key={item.id} onClick={() => goTo(index)} aria-current={selected ? "step" : undefined} className={`group flex min-h-14 min-w-0 items-center gap-2 rounded-xl px-2 py-2.5 text-left text-[11px] font-bold transition sm:gap-3 sm:px-3 sm:text-sm ${selected ? "bg-[#1f4e7b] text-white shadow-md shadow-[#1f4e7b]/20" : "text-[#53677e] hover:bg-[#eef3f9] dark:text-muted-foreground dark:hover:bg-secondary"}`}>
+                  <button key={item.id} onClick={() => goTo(index)} aria-current={selected ? "step" : undefined} className={`group flex min-h-14 min-w-0 items-center gap-2 rounded-xl px-2 py-2.5 text-left text-xs font-bold transition sm:gap-3 sm:px-3 sm:text-sm ${selected ? "bg-[#1f4e7b] text-white shadow-md shadow-[#1f4e7b]/20" : "text-[#53677e] hover:bg-[#eef3f9] dark:text-muted-foreground dark:hover:bg-secondary"}`}>
                     <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg ${selected ? "bg-white/15" : visited ? "bg-emerald-100 text-emerald-700" : "bg-[#eaf0f7] text-[#315d88] dark:bg-secondary dark:text-primary"}`}>{visited ? <CheckCircle2 className="h-4 w-4" /> : <SelectedIcon className="h-4 w-4" />}</span>
-                    <span className="min-w-0 break-words leading-tight"><span className={`mb-0.5 block text-[9px] font-extrabold uppercase tracking-wider ${selected ? "text-white/65" : "text-[#93a0af]"}`}>Βήμα {item.n}</span>{item.title}</span>
+                    <span className="min-w-0 break-words leading-tight"><span className={`mb-0.5 block text-[10px] font-extrabold uppercase tracking-wider ${selected ? "text-white/65" : "text-[#93a0af]"}`}>Βήμα {item.n}</span>{item.title}</span>
                   </button>
                 );
               })}
@@ -142,7 +142,7 @@ const SolutionItem = ({ sol, i }) => {
       </div>
       {open && (
         <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="mt-3 overflow-hidden">
-          <MathText className="text-[15px] leading-relaxed" text={sol.text} />
+          <MathText className="text-base leading-relaxed sm:text-[17px]" text={sol.text} />
         </motion.div>
       )}
     </div>
@@ -204,13 +204,13 @@ export default function Lesson() {
       case "plan":
         return planHasContent ? (
           <div className="space-y-5">
-            {plan.overview && <p className="text-[15px] leading-relaxed text-muted-foreground"><MathText text={plan.overview} /></p>}
+            {plan.overview && <p className="text-base leading-relaxed text-muted-foreground sm:text-[17px]"><MathText text={plan.overview} /></p>}
             {plan.objectives?.length > 0 && (
               <div>
                 <div className="mb-2 flex items-center gap-2 text-sm font-bold"><Target className="h-4 w-4 text-primary" /> Στόχοι</div>
                 <ul className="space-y-1.5">
                   {plan.objectives.map((o, i) => (
-                    <li key={i} className="flex gap-2 text-[15px]"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" /><MathText text={o} /></li>
+                    <li key={i} className="flex gap-2 text-base sm:text-[17px]"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" /><MathText text={o} /></li>
                   ))}
                 </ul>
               </div>
@@ -219,13 +219,13 @@ export default function Lesson() {
               {plan.prerequisites?.length > 0 && (
                 <div>
                   <div className="mb-2 flex items-center gap-2 text-sm font-bold"><ListChecks className="h-4 w-4 text-primary" /> Προαπαιτούμενα</div>
-                  <ul className="list-inside list-disc space-y-1 text-[15px] text-muted-foreground">{plan.prerequisites.map((p, i) => <li key={i}><MathText text={p} /></li>)}</ul>
+                  <ul className="list-inside list-disc space-y-1 text-base text-muted-foreground sm:text-[17px]">{plan.prerequisites.map((p, i) => <li key={i}><MathText text={p} /></li>)}</ul>
                 </div>
               )}
               {plan.materials?.length > 0 && (
                 <div>
                   <div className="mb-2 flex items-center gap-2 text-sm font-bold"><Package className="h-4 w-4 text-primary" /> Υλικά</div>
-                  <ul className="list-inside list-disc space-y-1 text-[15px] text-muted-foreground">{plan.materials.map((m, i) => <li key={i}><MathText text={m} /></li>)}</ul>
+                  <ul className="list-inside list-disc space-y-1 text-base text-muted-foreground sm:text-[17px]">{plan.materials.map((m, i) => <li key={i}><MathText text={m} /></li>)}</ul>
                 </div>
               )}
             </div>
@@ -238,7 +238,7 @@ export default function Lesson() {
                       <span className="grid h-8 w-8 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground">{phase.minutes}΄</span>
                       <div>
                         <div className="text-sm font-extrabold">{phase.title}</div>
-                        <MathText className="mt-1 block text-[14px] leading-relaxed text-muted-foreground" text={phase.description} />
+                        <MathText className="mt-1 block text-[15px] leading-relaxed text-muted-foreground sm:text-base" text={phase.description} />
                       </div>
                     </li>
                   ))}
@@ -248,7 +248,7 @@ export default function Lesson() {
             {plan.formativeAssessment?.length > 0 && (
               <div className="rounded-xl border border-sky-300/60 bg-sky-50 p-4 dark:border-sky-500/30 dark:bg-sky-500/10">
                 <div className="mb-2 text-sm font-extrabold text-sky-800 dark:text-sky-300">Διαμορφωτικός έλεγχος</div>
-                <ul className="list-inside list-disc space-y-1.5 text-[14px]">{plan.formativeAssessment.map((item, i) => <li key={i}><MathText text={item} /></li>)}</ul>
+                <ul className="list-inside list-disc space-y-1.5 text-[15px] sm:text-base">{plan.formativeAssessment.map((item, i) => <li key={i}><MathText text={item} /></li>)}</ul>
               </div>
             )}
             {(plan.differentiation?.support?.length > 0 || plan.differentiation?.challenge?.length > 0) && (
@@ -257,11 +257,11 @@ export default function Lesson() {
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div className="rounded-xl border border-border p-4">
                     <div className="mb-2 text-sm font-extrabold">Υποστήριξη</div>
-                    <ul className="list-inside list-disc space-y-1 text-[14px] text-muted-foreground">{plan.differentiation.support?.map((item, i) => <li key={i}><MathText text={item} /></li>)}</ul>
+                    <ul className="list-inside list-disc space-y-1 text-[15px] text-muted-foreground sm:text-base">{plan.differentiation.support?.map((item, i) => <li key={i}><MathText text={item} /></li>)}</ul>
                   </div>
                   <div className="rounded-xl border border-border p-4">
                     <div className="mb-2 text-sm font-extrabold">Πρόκληση</div>
-                    <ul className="list-inside list-disc space-y-1 text-[14px] text-muted-foreground">{plan.differentiation.challenge?.map((item, i) => <li key={i}><MathText text={item} /></li>)}</ul>
+                    <ul className="list-inside list-disc space-y-1 text-[15px] text-muted-foreground sm:text-base">{plan.differentiation.challenge?.map((item, i) => <li key={i}><MathText text={item} /></li>)}</ul>
                   </div>
                 </div>
               </div>
@@ -269,7 +269,7 @@ export default function Lesson() {
             {plan.exitTicket?.length > 0 && (
               <div className="rounded-xl border border-emerald-300/60 bg-emerald-50 p-4 dark:border-emerald-500/30 dark:bg-emerald-500/10">
                 <div className="mb-2 text-sm font-extrabold text-emerald-800 dark:text-emerald-300">Έλεγχος εξόδου</div>
-                <ol className="list-inside list-decimal space-y-1.5 text-[14px]">{plan.exitTicket.map((item, i) => <li key={i}><MathText text={item} /></li>)}</ol>
+                <ol className="list-inside list-decimal space-y-1.5 text-[15px] sm:text-base">{plan.exitTicket.map((item, i) => <li key={i}><MathText text={item} /></li>)}</ol>
               </div>
             )}
             <div className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1.5 text-sm font-semibold"><Clock className="h-4 w-4 text-muted-foreground" /> Διάρκεια: {plan.duration || `${lesson.minutes} λεπτά`}</div>
@@ -285,7 +285,7 @@ export default function Lesson() {
               {lesson.theory.map((t, i) => (
                 <li key={i} className="flex gap-3">
                   <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md bg-primary/10 text-xs font-bold text-primary">{i + 1}</span>
-                  <MathText className="text-[15px] leading-relaxed" text={t} />
+                  <MathText className="text-base leading-relaxed sm:text-[17px]" text={t} />
                 </li>
               ))}
             </ul>
@@ -304,13 +304,13 @@ export default function Lesson() {
             {lesson.id === "g9-a4-1" && <ParabolaExplorer />}
             <div className="rounded-xl border border-amber-300/60 bg-amber-50 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
               <div className="mb-2 flex items-center gap-2"><Lightbulb className="h-5 w-5 text-amber-500" /><h4 className="font-extrabold text-amber-700 dark:text-amber-400">{lesson.example.title}</h4></div>
-              <MathText className="text-[15px] leading-relaxed" text={lesson.example.text} />
+              <MathText className="text-base leading-relaxed sm:text-[17px]" text={lesson.example.text} />
             </div>
             <GuidedPractice lessonId={lesson.id} item={lesson.guidedPractice} />
             {lesson.attention?.length > 0 && (
               <div className="rounded-xl border border-rose-300/60 bg-rose-50 p-4 dark:border-rose-500/30 dark:bg-rose-500/10">
                 <div className="mb-2 flex items-center gap-2"><AlertTriangle className="h-5 w-5 text-rose-500" /><h4 className="font-extrabold text-rose-700 dark:text-rose-400">Σημεία προσοχής</h4></div>
-                <ul className="list-inside list-disc space-y-1 text-[15px]">{lesson.attention.map((a, i) => <li key={i}><MathText text={a} /></li>)}</ul>
+                <ul className="list-inside list-disc space-y-1 text-base sm:text-[17px]">{lesson.attention.map((a, i) => <li key={i}><MathText text={a} /></li>)}</ul>
               </div>
             )}
           </div>
@@ -338,13 +338,13 @@ export default function Lesson() {
             {recap.keyPoints?.length > 0 && (
               <div>
                 <div className="mb-2 text-sm font-bold">Βασικά σημεία</div>
-                <ul className="space-y-1.5">{recap.keyPoints.map((k, i) => <li key={i} className="flex gap-2 text-[15px]"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" /><MathText text={k} /></li>)}</ul>
+                <ul className="space-y-1.5">{recap.keyPoints.map((k, i) => <li key={i} className="flex gap-2 text-base sm:text-[17px]"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" /><MathText text={k} /></li>)}</ul>
               </div>
             )}
             {recap.furtherStudy?.length > 0 && (
               <div>
                 <div className="mb-2 text-sm font-bold">Περαιτέρω μελέτη</div>
-                <ul className="list-inside list-disc space-y-1 text-[15px] text-muted-foreground">{recap.furtherStudy.map((f, i) => <li key={i}><MathText text={f} /></li>)}</ul>
+                <ul className="list-inside list-disc space-y-1 text-base text-muted-foreground sm:text-[17px]">{recap.furtherStudy.map((f, i) => <li key={i}><MathText text={f} /></li>)}</ul>
               </div>
             )}
           </div>

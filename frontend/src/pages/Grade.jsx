@@ -172,7 +172,7 @@ export default function Grade() {
                           <div className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
                             <span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" />{l.minutes} λεπτά</span>·<span>{l.questionCount} διαθέσιμες</span>
                           </div>
-                          {mastery.level > 0 && <div className={`mt-1 text-[11px] font-bold ${reviewDue ? "text-amber-600" : "text-indigo-600 dark:text-indigo-300"}`}>{reviewDue ? "Ώρα για επανάληψη" : masteryLabel}</div>}
+                          {mastery.level > 0 && <div className={`mt-1 text-xs font-bold ${reviewDue ? "text-amber-600" : "text-indigo-600 dark:text-indigo-300"}`}>{reviewDue ? "Ώρα για επανάληψη" : masteryLabel}</div>}
                         </div>
                         <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
                       </motion.button>

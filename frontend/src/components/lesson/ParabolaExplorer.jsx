@@ -52,7 +52,7 @@ export function ParabolaExplorer() {
           <div>
             <div className="text-[10px] font-extrabold uppercase tracking-[.16em] text-indigo-600 dark:text-indigo-300">Δυναμική διερεύνηση</div>
             <h3 className="mt-0.5 text-lg font-black sm:text-xl">Μετακίνησε το α και παρατήρησε την παραβολή</h3>
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">Άλλαξε την παράμετρο και σύνδεσε αμέσως τον τύπο με τη γραφική παράσταση.</p>
+            <p className="mt-1 text-[15px] leading-relaxed text-muted-foreground sm:text-base">Άλλαξε την παράμετρο και σύνδεσε αμέσως τον τύπο με τη γραφική παράσταση.</p>
           </div>
         </div>
       </div>
@@ -156,16 +156,16 @@ export function ParabolaExplorer() {
           <div className="rounded-xl border border-border bg-white/85 p-4 dark:bg-card/80">
             <div className="text-[10px] font-extrabold uppercase tracking-[.15em] text-muted-foreground">Τι αλλάζει</div>
             <div className="mt-2 text-base font-black">Η κατεύθυνση</div>
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">Για <strong>{opensUp ? "α > 0" : "α < 0"}</strong>, η παραβολή στρέφει τα κοίλα προς τα <strong>{opensUp ? "πάνω" : "κάτω"}</strong>.</p>
+            <p className="mt-1 text-[15px] leading-relaxed text-muted-foreground sm:text-base">Για <strong>{opensUp ? "α > 0" : "α < 0"}</strong>, η παραβολή στρέφει τα κοίλα προς τα <strong>{opensUp ? "πάνω" : "κάτω"}</strong>.</p>
           </div>
           <div className="rounded-xl border border-border bg-white/85 p-4 dark:bg-card/80">
             <div className="text-[10px] font-extrabold uppercase tracking-[.15em] text-muted-foreground">Τι αλλάζει</div>
             <div className="mt-2 text-base font-black">Το άνοιγμα</div>
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">Επειδή <strong>|α| {Math.abs(a) > 1 ? ">" : Math.abs(a) < 1 ? "<" : "="} 1</strong>, η παραβολή είναι <strong>{widthDescription}</strong>.</p>
+            <p className="mt-1 text-[15px] leading-relaxed text-muted-foreground sm:text-base">Επειδή <strong>|α| {Math.abs(a) > 1 ? ">" : Math.abs(a) < 1 ? "<" : "="} 1</strong>, η παραβολή είναι <strong>{widthDescription}</strong>.</p>
           </div>
           <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
             <div className="text-[10px] font-extrabold uppercase tracking-[.15em] text-amber-700 dark:text-amber-300">Κρίσιμα σημεία</div>
-            <dl className="mt-2 grid gap-2 text-sm">
+            <dl className="mt-2 grid gap-2 text-[15px] sm:text-base">
               <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Κορυφή</dt><dd className="font-extrabold">O(0, 0)</dd></div>
               <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Τομή με x΄x</dt><dd className="font-extrabold">O(0, 0)</dd></div>
               <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Τομή με y΄y</dt><dd className="font-extrabold">O(0, 0)</dd></div>
@@ -174,7 +174,7 @@ export function ParabolaExplorer() {
           </div>
           <div className="rounded-xl bg-[#173f68] p-4 text-white">
             <div className="text-xs font-extrabold text-sky-200">Σταθερό συμπέρασμα</div>
-            <p className="mt-1 text-sm leading-relaxed text-white/85">Όσο κι αν μεταβάλλεται το α, η κορυφή και οι δύο τομές παραμένουν στην αρχή των αξόνων.</p>
+            <p className="mt-1 text-[15px] leading-relaxed text-white/85 sm:text-base">Όσο κι αν μεταβάλλεται το α, η κορυφή και οι δύο τομές παραμένουν στην αρχή των αξόνων.</p>
           </div>
         </aside>
       </div>

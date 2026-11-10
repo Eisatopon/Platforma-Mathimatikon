@@ -50,14 +50,14 @@ export const Worksheet = ({ lessonId, worksheet }) => {
                   <li key={key} className="flex gap-3">
                     <span className={`mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-md text-xs font-bold ${lvl.dot} text-white`}>{i + 1}</span>
                     <div className="flex-1">
-                      <MathText className="text-[15px] leading-relaxed" text={ex} />
+                      <MathText className="text-base leading-relaxed sm:text-[17px]" text={ex} />
                       <textarea
                         data-testid={`worksheet-answer-${key}`}
                         value={answers[key] || ""}
                         onChange={(e) => save(key, e.target.value)}
                         placeholder="Η απάντησή σου…"
                         rows={2}
-                        className="mt-2 w-full resize-y rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+                        className="mt-2 w-full resize-y rounded-lg border border-border bg-background px-3 py-2 text-base outline-none focus:ring-2 focus:ring-primary/30"
                       />
                     </div>
                   </li>

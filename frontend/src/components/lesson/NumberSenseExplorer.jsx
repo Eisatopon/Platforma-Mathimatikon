@@ -57,7 +57,7 @@ export function NumberSenseExplorer() {
           <div>
             <div className="text-[10px] font-extrabold uppercase tracking-[.16em] text-sky-700 dark:text-sky-300">Δυναμική διερεύνηση</div>
             <h3 className="mt-0.5 text-lg font-black sm:text-xl">Εργαστήριο φυσικών αριθμών</h3>
-            <p className="mt-1 text-sm text-muted-foreground">Άλλαξε τον αριθμό και παρατήρησε ταυτόχρονα την αξία θέσης, την αναπτυγμένη μορφή και τη στρογγυλοποίηση.</p>
+            <p className="mt-1 text-[15px] leading-relaxed text-muted-foreground sm:text-base">Άλλαξε τον αριθμό και παρατήρησε ταυτόχρονα την αξία θέσης, την αναπτυγμένη μορφή και τη στρογγυλοποίηση.</p>
           </div>
         </div>
       </div>
@@ -83,11 +83,11 @@ export function NumberSenseExplorer() {
               <div key={place.value} className="rounded-xl border border-border bg-card p-3 text-center">
                 <div className="text-[10px] font-bold leading-tight text-muted-foreground">{place.label}</div>
                 <div className="mt-2 text-2xl font-black text-sky-700 dark:text-sky-300">{digits[index]}</div>
-                <div className="mt-1 text-[11px] font-semibold text-muted-foreground">αξία {formatNumber(digits[index] * place.value)}</div>
+                <div className="mt-1 text-xs font-semibold text-muted-foreground">αξία {formatNumber(digits[index] * place.value)}</div>
               </div>
             ))}
           </div>
-          <div className="mt-3 rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3 text-sm dark:border-indigo-500/30 dark:bg-indigo-500/10">
+          <div className="mt-3 rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3 text-[15px] leading-relaxed dark:border-indigo-500/30 dark:bg-indigo-500/10 sm:text-base">
             <span className="font-extrabold">Αναπτυγμένη μορφή:</span> <span className="font-semibold tabular-nums">{expanded}</span>
           </div>
         </div>
@@ -116,7 +116,7 @@ export function NumberSenseExplorer() {
             <div className="mt-2 flex justify-between text-xs font-bold tabular-nums"><span>{formatNumber(lower)}</span><span>{formatNumber(upper)}</span></div>
           </div>
 
-          <div className="mt-4 rounded-xl bg-secondary/70 px-4 py-3 text-sm leading-relaxed">
+          <div className="mt-4 rounded-xl bg-secondary/70 px-4 py-3 text-[15px] leading-relaxed sm:text-base">
             Ο αριθμός <strong>{formatNumber(safeNumber)}</strong> βρίσκεται πιο κοντά στο <strong>{formatNumber(rounded)}</strong>. Επομένως, στη {selectedUnit?.label}, στρογγυλοποιείται σε <strong className="text-indigo-700 dark:text-indigo-300">{formatNumber(rounded)}</strong>.
           </div>
         </div>
