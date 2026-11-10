@@ -18,6 +18,7 @@ import { DiagnosticCheck } from "@/components/lesson/DiagnosticCheck";
 import { ParabolaExplorer } from "@/components/lesson/ParabolaExplorer";
 import { QuadraticExplorer } from "@/components/lesson/QuadraticExplorer";
 import { SetExplorer } from "@/components/lesson/SetExplorer";
+import { ProbabilityExplorer } from "@/components/lesson/ProbabilityExplorer";
 import { SampleSpaceExplorer } from "@/components/lesson/SampleSpaceExplorer";
 import { NumberSenseExplorer } from "@/components/lesson/NumberSenseExplorer";
 import { fetchLesson, fetchGrade, readApiCache } from "@/lib/api";
@@ -324,6 +325,7 @@ export default function Lesson() {
             {lesson.id === "g9-a4-2" && <QuadraticExplorer />}
             {lesson.id === "g9-a5-1" && <SetExplorer />}
             {lesson.id === "g9-a5-2" && <SampleSpaceExplorer />}
+            {lesson.id === "g9-a5-3" && <ProbabilityExplorer />}
             <div className="rounded-xl border border-amber-300/60 bg-amber-50 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
               <div className="mb-2 flex items-center gap-2"><Lightbulb className="h-5 w-5 text-amber-500" /><h4 className="font-extrabold text-amber-700 dark:text-amber-400">{lesson.example.title}</h4></div>
               <MathText className="text-base leading-relaxed sm:text-[17px]" text={lesson.example.text} />
