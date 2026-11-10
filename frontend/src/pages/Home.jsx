@@ -82,37 +82,37 @@ export default function Home() {
   return (
     <div className="App min-h-screen">
       <Header />
-      <main className="mx-auto max-w-5xl px-4 pb-8 pt-6">
+      <main className="mx-auto max-w-5xl px-3 pb-8 pt-4 sm:px-4 sm:pt-6">
         {/* Hero */}
         <motion.section
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-3xl border border-border bg-gradient-to-br from-indigo-50 via-white to-violet-50 p-6 dark:from-indigo-500/10 dark:via-card dark:to-violet-500/10 sm:p-8"
+          className="rounded-3xl border border-border bg-gradient-to-br from-indigo-50 via-white to-violet-50 p-4 dark:from-indigo-500/10 dark:via-card dark:to-violet-500/10 sm:p-6 lg:p-8"
         >
           <div className="grid gap-6 md:grid-cols-[1.4fr_1fr] md:items-center">
             <div>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
                 <Sparkles className="h-3.5 w-3.5" /> Ατομική σου πορεία μάθησης
               </span>
-              <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
-                {isReturning ? "Καλώς ήρθες πίσω!" : "Καλώς ήρθες!"}<br />Ας μάθουμε Μαθηματικά.
+              <h1 className="mt-4 text-[1.875rem] font-extrabold leading-[1.08] tracking-tight min-[390px]:text-[2rem] sm:text-5xl">
+                {isReturning ? "Καλώς ήρθες πίσω!" : "Καλώς ήρθες!"}<br className="hidden min-[390px]:block" /> <span>Ας μάθουμε Μαθηματικά.</span>
               </h1>
               <p className="mt-3 max-w-md text-base text-muted-foreground">
                 Βρες το μάθημα που χρειάζεσαι, λύσε διαδραστικά κουίζ και παρακολούθησε την πρόοδό σου βήμα-βήμα.
               </p>
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="mt-5 grid gap-3 sm:mt-6 sm:flex sm:flex-wrap">
                 <button
                   data-testid="hero-start-btn"
                   onClick={() => grades[0] && navigate(`/grade/${grades[0].id}`)}
-                  className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-transform hover:scale-[1.03] active:scale-95"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-transform hover:scale-[1.03] active:scale-95 sm:w-auto"
                 >
                   <Play className="h-4 w-4" /> Ξεκίνα τώρα
                 </button>
                 <button
                   data-testid="hero-achievements-btn"
                   onClick={() => navigate("/achievements")}
-                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-bold transition-colors hover:bg-secondary"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-bold transition-colors hover:bg-secondary sm:w-auto"
                 >
                   <Trophy className="h-4 w-4" /> Τα Επιτεύγματά μου
                 </button>
@@ -125,7 +125,7 @@ export default function Home() {
               <StatBox testid="stat-lessons" Icon={GraduationCap} color="text-emerald-500" value={stats.completedCount} label="Μαθήματα" />
             </div>
           </div>
-          <div className="mt-6 rounded-2xl border border-border bg-card/70 p-4">
+          <div className="mt-5 rounded-2xl border border-border bg-card/70 p-3 sm:mt-6 sm:p-4">
             <div className="flex items-center justify-between text-xs font-semibold">
               <span>Επίπεδο {stats.level}</span>
               <span className="text-muted-foreground">{stats.xpInLevel} / {stats.per} πόντοι για το επόμενο επίπεδο</span>
