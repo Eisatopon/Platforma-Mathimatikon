@@ -187,8 +187,8 @@ export function ParabolaExplorer() {
             <div className="text-[10px] font-extrabold uppercase tracking-[.15em] text-amber-700 dark:text-amber-300">Κρίσιμα σημεία</div>
             <dl className="mt-2 grid gap-2 text-[15px] sm:text-base">
               <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Κορυφή</dt><dd className="font-extrabold">O(0, 0)</dd></div>
-              <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Τομή με x΄x</dt><dd className="font-extrabold">O(0, 0)</dd></div>
-              <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Τομή με y΄y</dt><dd className="font-extrabold">O(0, 0)</dd></div>
+              <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Τομή με τον άξονα x</dt><dd className="font-extrabold">O(0, 0)</dd></div>
+              <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Τομή με τον άξονα y</dt><dd className="font-extrabold">O(0, 0)</dd></div>
               <div className="flex justify-between gap-3"><dt className="text-muted-foreground">Ακρότατο</dt><dd className="text-right font-extrabold">{opensUp ? "Ελάχιστο 0" : "Μέγιστο 0"}</dd></div>
             </dl>
           </div>
