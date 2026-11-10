@@ -86,17 +86,17 @@ function TriangleView({ model, rotation, reflected, overlay }) {
     }
   });
   return (
-    <div className="overflow-x-auto rounded-xl border border-sky-200 bg-white p-2 dark:border-sky-500/30 dark:bg-slate-950">
+    <div className="overflow-x-auto rounded-xl border border-sky-200 bg-white p-2 [--triangle-one:#1f4e7b] [--triangle-two:#0f766e] dark:border-sky-500/30 dark:bg-slate-950 dark:[--triangle-one:#7dd3fc] dark:[--triangle-two:#5eead4]">
       <svg viewBox="0 0 720 355" className="min-w-[560px] w-full" role="img" aria-labelledby={titleId}>
         <title id={titleId}>{overlay ? "Ευθυγράμμιση αντίστοιχων κορυφών και πλευρών" : "Δύο τρίγωνα σε κοινή κλίμακα"}: {model.mode.label}. {model.congruent ? "Τα τρίγωνα είναι ίσα." : "Τα τρίγωνα δεν είναι ίσα."}</title>
         <rect x="10" y="45" width={overlay ? 700 : 340} height="275" rx="14" fill="currentColor" fillOpacity=".025" />
         {!overlay && <rect x="370" y="45" width="340" height="275" rx="14" fill="currentColor" fillOpacity=".025" />}
-        <text x="24" y="29" fill="#1f4e7b" fontSize="17" fontWeight="800">{overlay ? "Σύγκριση με κοινή αρχή και κατεύθυνση" : "Τρίγωνο ΑΒΓ"}</text>
-        {!overlay && <text x="384" y="29" fill="#0f766e" fontSize="17" fontWeight="800">Τρίγωνο ΔΕΖ</text>}
-        <TriangleDrawing vertices={first} model={model} colour="#1f4e7b" />
-        <TriangleDrawing vertices={second} model={model} colour="#0f766e" dashed={overlay} marks={!overlay || !model.congruent} />
-        <VertexLabels vertices={first} names={firstNames} colour="#1f4e7b" />
-        <VertexLabels vertices={second} names={secondNames} colour="#0f766e" />
+        <text x="24" y="29" fill="var(--triangle-one)" fontSize="17" fontWeight="800">{overlay ? "Σύγκριση με κοινή αρχή και κατεύθυνση" : "Τρίγωνο ΑΒΓ"}</text>
+        {!overlay && <text x="384" y="29" fill="var(--triangle-two)" fontSize="17" fontWeight="800">Τρίγωνο ΔΕΖ</text>}
+        <TriangleDrawing vertices={first} model={model} colour="var(--triangle-one)" />
+        <TriangleDrawing vertices={second} model={model} colour="var(--triangle-two)" dashed={overlay} marks={!overlay || !model.congruent} />
+        <VertexLabels vertices={first} names={firstNames} colour="var(--triangle-one)" />
+        <VertexLabels vertices={second} names={secondNames} colour="var(--triangle-two)" />
         <text x="360" y="345" textAnchor="middle" fill="currentColor" fontSize="14">Ίδιες χαραγές ή ίδια τόξα δηλώνουν τα δεδομένα ίσα στοιχεία.</text>
       </svg>
     </div>
