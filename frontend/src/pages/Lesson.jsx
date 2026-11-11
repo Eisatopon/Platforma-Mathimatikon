@@ -19,6 +19,7 @@ import { ParabolaExplorer } from "@/components/lesson/ParabolaExplorer";
 import { QuadraticExplorer } from "@/components/lesson/QuadraticExplorer";
 import { SetExplorer } from "@/components/lesson/SetExplorer";
 import { SegmentRatioExplorer } from "@/components/lesson/SegmentRatioExplorer";
+import { UnitCircleExplorer } from "@/components/lesson/UnitCircleExplorer";
 import { SimilarAreasExplorer } from "@/components/lesson/SimilarAreasExplorer";
 import { SimilarityExplorer } from "@/components/lesson/SimilarityExplorer";
 import { HomothetyExplorer } from "@/components/lesson/HomothetyExplorer";
@@ -338,6 +339,7 @@ export default function Lesson() {
             {lesson.id === "g9-b1-4" && <HomothetyExplorer />}
             {lesson.id === "g9-b1-5" && <SimilarityExplorer />}
             {lesson.id === "g9-b1-6" && <SimilarAreasExplorer />}
+            {lesson.id === "g9-b2-1" && <UnitCircleExplorer />}
             <div className="rounded-xl border border-amber-300/60 bg-amber-50 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
               <div className="mb-2 flex items-center gap-2"><Lightbulb className="h-5 w-5 text-amber-500" /><h4 className="font-extrabold text-amber-700 dark:text-amber-400">{lesson.example.title}</h4></div>
               <MathText className="text-base leading-relaxed sm:text-[17px]" text={lesson.example.text} />

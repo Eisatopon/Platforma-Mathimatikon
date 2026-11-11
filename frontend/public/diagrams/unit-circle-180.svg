@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" role="img" aria-labelledby="title desc" font-family="Arial, sans-serif">
+<title id="title">Συντεταγμένες στον μοναδιαίο κύκλο για γωνία 120°</title>
+<desc id="desc">Ο κύκλος έχει κέντρο Ο και ακτίνα 1. Για ω=120° το σημείο Μ έχει x=−1/2 και y=√3/2. Οι προβολές δείχνουν το αρνητικό συνημίτονο και το θετικό ημίτονο.</desc>
+<rect width="720" height="460" rx="16" fill="#fff"/>
+<circle cx="300" cy="250" r="170" fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="6 5"/>
+<path d="M470 250A170 170 0 0 0 130 250" fill="none" stroke="#475569" stroke-width="2"/>
+<g stroke="#475569" stroke-width="1.6"><path d="M70 250H520 M300 435V35"/><path d="M520 250l-10 -5v10z M300 35l-5 10h10z" fill="#475569"/></g>
+<polygon points="300,250 215,250 215,102.7756813566" fill="#ccfbf1" fill-opacity=".4"/>
+<g stroke-dasharray="6 5" stroke-width="2"><path d="M215 102.7756813566V250" stroke="#1f4e7b"/><path d="M215 102.7756813566H300" stroke="#0f766e"/></g>
+<path d="M300 250H215" stroke="#1f4e7b" stroke-width="5"/><path d="M300 250V102.7756813566" stroke="#0f766e" stroke-width="5"/>
+<path d="M300 250L215 102.7756813566" stroke="#b45309" stroke-width="3"/><path d="M345 250A45 45 0 0 0 277.5 211.0288568297" fill="none" stroke="#b45309" stroke-width="2"/>
+<path d="M224 250V241H215" fill="none" stroke="#64748b" stroke-width="1.3"/>
+<circle cx="215" cy="102.7756813566" r="6" fill="#b45309"/>
+<g fill="#334155" font-size="17"><text x="530" y="255">x</text><text x="311" y="39">y</text><text x="311" y="274">Ο</text><text x="128" y="275" text-anchor="middle">−1</text><text x="470" y="275" text-anchor="middle">1</text><text x="313" y="80">1</text></g>
+<text x="189" y="91" font-size="19" font-weight="700" fill="#b45309">Μ</text><text x="327" y="199" font-size="18" font-weight="700" fill="#b45309">ω=120°</text>
+<g font-size="18" font-weight="700"><text x="505" y="135" fill="#1f4e7b">συνω = x = −1/2</text><text x="505" y="170" fill="#0f766e">ημω = y = √3/2</text><text x="505" y="205" fill="#b45309">ΟΜ = 1</text></g>
+<text x="360" y="448" text-anchor="middle" font-size="18" fill="#334155">x²+y²=1 · συνω &lt; 0 · ημω &gt; 0</text>
+</svg>
