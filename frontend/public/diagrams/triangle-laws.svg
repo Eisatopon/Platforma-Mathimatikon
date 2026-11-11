@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 370" role="img" aria-labelledby="title desc">
+  <title id="title">Γωνίες και απέναντι πλευρές τριγώνου</title>
+  <desc id="desc">Α στο αριστερό άκρο της βάσης, Β στο δεξί και Γ ψηλότερα. Η α είναι η ΒΓ, η β είναι η ΓΑ και η γ είναι η ΑΒ. Η Α περιέχεται στις β και γ.</desc>
+  <rect width="680" height="370" rx="16" fill="#f8fafc"/>
+  <path d="M130 260L540 260L280 70Z" fill="#1f4e7b" fill-opacity=".05"/>
+  <path d="M540 260L280 70" stroke="#b45309" stroke-width="5"/>
+  <path d="M280 70L130 260" stroke="#0f766e" stroke-width="5"/>
+  <path d="M130 260L540 260" stroke="#1f4e7b" stroke-width="5"/>
+  <g font-family="Arial,sans-serif" font-size="27" font-weight="700" text-anchor="middle">
+    <text x="112" y="289" fill="#b45309">Α</text><text x="563" y="285" fill="#0f766e">Β</text><text x="280" y="49" fill="#1f4e7b">Γ</text>
+    <text x="434" y="151" fill="#b45309">α</text><text x="180" y="159" fill="#0f766e">β</text><text x="335" y="289" fill="#1f4e7b">γ</text>
+  </g>
+  <g font-family="Arial,sans-serif" text-anchor="middle" fill="#334155">
+    <text x="340" y="329" font-size="21">Α ↔ α=ΒΓ  ·  Β ↔ β=ΓΑ  ·  Γ ↔ γ=ΑΒ</text>
+    <text x="340" y="356" font-size="18">Η γωνία Α περιέχεται ανάμεσα στις πλευρές β και γ.</text>
+  </g>
+</svg>
