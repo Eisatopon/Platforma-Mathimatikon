@@ -1,24 +1,12 @@
-<svg viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
-  <rect width="560" height="260" fill="#ffffff"/>
-
-  <!-- small triangle -->
-  <polygon points="40,200 130,200 40,140" fill="#eef2ff" stroke="#6366f1" stroke-width="2.5"/>
-  <text x="25" y="220" font-size="14" fill="#1e293b" font-weight="700">Α</text>
-  <text x="132" y="220" font-size="14" fill="#1e293b" font-weight="700">Β</text>
-  <text x="20" y="140" font-size="14" fill="#1e293b" font-weight="700">Γ</text>
-  <path d="M 40 190 A 10 10 0 0 1 50 200" fill="none" stroke="#dc2626" stroke-width="1.5"/>
-
-  <!-- large similar triangle, ratio 2 -->
-  <polygon points="250,220 430,220 250,100" fill="#dcfce7" stroke="#10b981" stroke-width="2.5"/>
-  <text x="235" y="240" font-size="14" fill="#1e293b" font-weight="700">Δ</text>
-  <text x="432" y="240" font-size="14" fill="#1e293b" font-weight="700">Ε</text>
-  <text x="230" y="100" font-size="14" fill="#1e293b" font-weight="700">Ζ</text>
-  <path d="M 250 200 A 20 20 0 0 1 270 220" fill="none" stroke="#dc2626" stroke-width="1.5"/>
-
-  <text x="85" y="250" font-size="14" fill="#475569" text-anchor="middle">ΑΒΓ</text>
-  <text x="340" y="250" font-size="14" fill="#475569" text-anchor="middle">ΔΕΖ (διπλάσιο)</text>
-
-  <text x="480" y="150" font-size="15" fill="#1e293b" text-anchor="middle">ΔΕ/ΑΒ =</text>
-  <text x="480" y="170" font-size="15" fill="#1e293b" text-anchor="middle">ΕΖ/ΒΓ =</text>
-  <text x="480" y="190" font-size="15" fill="#1e293b" text-anchor="middle">ΖΔ/ΓΑ = 2</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 370" role="img" aria-labelledby="title desc" font-family="Arial, sans-serif">
+<title id="title">Όμοια τρίγωνα σε διαφορετική θέση, με λόγο 2</title>
+<desc id="desc">ΑΒΓ όμοιο με ΔΕΖ. ΑΒ=4, ΑΓ=3, ΒΓ=5 και ΔΕ=8, ΔΖ=6, ΕΖ=10. Α αντιστοιχεί στη Δ, Β στην Ε και Γ στη Ζ. Τα δύο σχήματα σχεδιάζονται στην ίδια κλίμακα.</desc>
+<rect width="680" height="370" rx="16" fill="#fff"/>
+<text x="340" y="28" text-anchor="middle" font-size="19" font-weight="700" fill="#334155">ΑΒΓ ∼ ΔΕΖ · Α↔Δ, Β↔Ε, Γ↔Ζ</text>
+<g fill="#e0f2fe" fill-opacity=".5"><polygon points="70,260 190,260 70,170"/><polygon points="390,290 390,50 570,290"/></g>
+<g stroke-width="3.5"><path d="M70 260H190 M390 290V50" stroke="#1f4e7b"/><path d="M70 260V170 M390 290H570" stroke="#0f766e"/><path d="M190 260L70 170 M390 50L570 290" stroke="#b45309"/></g>
+<g fill="none" stroke="#64748b" stroke-width="1.5"><path d="M70 248H82V260 M390 278H402V290"/></g>
+<g font-size="19" font-weight="700" fill="#334155"><text x="47" y="282">Α</text><text x="193" y="281">Β</text><text x="49" y="160">Γ</text><text x="367" y="314">Δ</text><text x="367" y="51">Ε</text><text x="580" y="310">Ζ</text></g>
+<g font-size="18" font-weight="700"><g fill="#1f4e7b"><text x="126" y="284">4</text><text x="365" y="177">8</text></g><g fill="#0f766e"><text x="45" y="221">3</text><text x="475" y="315">6</text></g><g fill="#b45309"><text x="140" y="206">5</text><text x="494" y="171">10</text></g></g>
+<text x="340" y="352" text-anchor="middle" font-size="18" fill="#334155">ΔΕ/ΑΒ = ΔΖ/ΑΓ = ΕΖ/ΒΓ = 2</text>
 </svg>
