@@ -32,6 +32,7 @@ import { ProbabilityExplorer } from "@/components/lesson/ProbabilityExplorer";
 import { SampleSpaceExplorer } from "@/components/lesson/SampleSpaceExplorer";
 import { NumberSenseExplorer } from "@/components/lesson/NumberSenseExplorer";
 import { RealOperationsExplorer } from "@/components/lesson/RealOperationsExplorer";
+import { MonomialExplorer } from "@/components/lesson/MonomialExplorer";
 import { fetchLesson, fetchGrade, readApiCache } from "@/lib/api";
 import { categoryIcon } from "@/lib/ui";
 
@@ -333,6 +334,7 @@ export default function Lesson() {
             )}
             {lesson.id === "g7-a1-1" && <NumberSenseExplorer />}
             {lesson.id === "g9-a1-1" && <RealOperationsExplorer />}
+            {lesson.id === "g9-a1-2" && <MonomialExplorer />}
             {lesson.id === "g9-a4-1" && <ParabolaExplorer />}
             {lesson.id === "g9-a4-2" && <QuadraticExplorer />}
             {lesson.id === "g9-a5-1" && <SetExplorer />}
