@@ -18258,60 +18258,12 @@ def _upgrade_g9_a1_1_next_generation(lessons):
                                'correct': 2,
                                'explanation': '$-4^2=-16$, ενώ $(-4)^2=16$. Το άθροισμα είναι 0.'},
                               {'prompt': 'Υπολόγισε $-\\frac23\\div\\frac49$.',
-                               'options': ['$-\\frac8{27}
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$\\frac32
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$-\\frac23
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$-\\frac32
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-],
+                               'options': ['$-\\frac8{27}$', '$\\frac32$', '$-\\frac23$', '$-\\frac32$'],
                                'correct': 3,
                                'explanation': 'Πολλαπλασιάζουμε με τον αντίστροφο: '
                                               '$-\\frac23\\cdot\\frac94=-\\frac{18}{12}=-\\frac32$.'},
                               {'prompt': 'Για κάθε πραγματικό $x$, ποια ισότητα ισχύει;',
-                               'options': ['$\\sqrt{x^2}=|x|
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$\\sqrt{x^2}=x
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$\\sqrt{x^2}=-x
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$\\sqrt{x^2}=\\pm x
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-],
+                               'options': ['$\\sqrt{x^2}=|x|$', '$\\sqrt{x^2}=x$', '$\\sqrt{x^2}=-x$', '$\\sqrt{x^2}=\\pm x$'],
                                'correct': 0,
                                'explanation': 'Η τετραγωνική ρίζα είναι μη αρνητική. Για x=−3, η ρίζα του x² είναι 3, δηλαδή '
                                               '|x|.'},
@@ -18320,34 +18272,10 @@ def all_books():
                                'correct': 2,
                                'explanation': 'Πρώτα $3-(-1)=4$, έπειτα $-2\\cdot4=-8$. Με επιμεριστική: −6−2=−8.'},
                               {'prompt': 'Ποια πρόταση είναι σωστή στο σύνολο των πραγματικών αριθμών;',
-                               'options': ['$\\sqrt9=\\pm3
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-,
-                                           '$0\\div0=0
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-,
-                                           '$\\sqrt{9+16}=\\sqrt9+\\sqrt{16}
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-,
-                                           '$\\sqrt9+\\sqrt{16}=7
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-],
+                               'options': ['$\\sqrt9=\\pm3$',
+                                           '$0\\div0=0$',
+                                           '$\\sqrt{9+16}=\\sqrt9+\\sqrt{16}$',
+                                           '$\\sqrt9+\\sqrt{16}=7$'],
                                'correct': 3,
                                'explanation': 'Οι ρίζες είναι 3 και 4, άρα άθροισμα 7. Η ρίζα του 25 είναι 5, η √9 είναι μόνο 3 '
                                               'και το 0/0 δεν ορίζεται.'}]},
@@ -18391,31 +18319,7 @@ def all_books():
                         'skill': 'Διαίρεση κλασμάτων',
                         'difficulty': 2,
                         'prompt': 'Υπολόγισε $-\\frac34\\div\\frac12$.',
-                        'options': ['$-\\frac38
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$\\frac32
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$-\\frac32
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$-\\frac14
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-],
+                        'options': ['$-\\frac38$', '$\\frac32$', '$-\\frac32$', '$-\\frac14$'],
                         'correct': 2,
                         'explanation': '$-\\frac34\\cdot\\frac21=-\\frac64=-\\frac32$.',
                         'hints': ['Αντιστροφή μόνο του διαιρέτη.', 'Κράτησε το αρνητικό πρόσημο.'],
@@ -18427,31 +18331,7 @@ def all_books():
                         'skill': 'Έλεγχος γενικού κανόνα',
                         'difficulty': 3,
                         'prompt': 'Ποια πρόταση ισχύει για κάθε πραγματικό x;',
-                        'options': ['$\\sqrt{x^2}=x
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$|x|=-x
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$x\\div x=1
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$\\sqrt{x^2}=|x|
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-],
+                        'options': ['$\\sqrt{x^2}=x$', '$|x|=-x$', '$x\\div x=1$', '$\\sqrt{x^2}=|x|$'],
                         'correct': 3,
                         'explanation': 'Η ρίζα του τετραγώνου είναι η απόλυτη τιμή. Το x/x απαιτεί x≠0. Οι άλλες δύο προτάσεις '
                                        'εξαρτώνται από το πρόσημο του x.',
@@ -18525,34 +18405,10 @@ def all_books():
                         'difficulty': 2,
                         'representation': 'multiple-representation',
                         'prompt': 'Αντιστοίχισε τις παραστάσεις με τις τιμές τους.',
-                        'pairs': [{'left': '$-2^2
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, 'right': '−4'},
-                                  {'left': '$(-2)^2
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, 'right': '4'},
-                                  {'left': '$|-3|
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, 'right': '3'},
-                                  {'left': '$\\sqrt{16}-3
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, 'right': '1'}],
+                        'pairs': [{'left': '$-2^2$', 'right': '−4'},
+                                  {'left': '$(-2)^2$', 'right': '4'},
+                                  {'left': '$|-3|$', 'right': '3'},
+                                  {'left': '$\\sqrt{16}-3$', 'right': '1'}],
                         'explanation': 'Οι παρενθέσεις ορίζουν τη βάση της δύναμης. Απόλυτη τιμή και τετραγωνική ρίζα είναι μη '
                                        'αρνητικές.',
                         'hints': ['Εντόπισε πρώτα τη βάση κάθε δύναμης.']},
@@ -18579,31 +18435,7 @@ def all_books():
                 'correct': 2,
                 'explanation': '$-4^2=-16$, ενώ $(-4)^2=16$. Το άθροισμα είναι 0.'},
                {'prompt': 'Υπολόγισε $-\\frac23\\div\\frac49$.',
-                'options': ['$-\\frac8{27}
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$\\frac32
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$-\\frac23
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-, '$-\\frac32
-    return GRADES, LESSONS
-
-
-def all_books():
-    return BOOKS
-],
+                'options': ['$-\\frac8{27}$', '$\\frac32$', '$-\\frac23$', '$-\\frac32$'],
                 'correct': 3,
                 'explanation': 'Πολλαπλασιάζουμε με τον αντίστροφο: $-\\frac23\\cdot\\frac94=-\\frac{18}{12}=-\\frac32$.'}],
  'questionCount': 12,
