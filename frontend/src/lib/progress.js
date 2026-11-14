@@ -68,10 +68,14 @@ export function getLessonMastery(progress, lessonId) {
   return value || { level: 0, attempts: 0, dueAt: null, lastScore: null };
 }
 
+// Credit for a correct answer on the second attempt. Every lesson declares the same value in
+// learningSpecification.secondAttemptWeight; lesson, skill and XP scores all use this constant.
+export const SECOND_ATTEMPT_WEIGHT = 0.6;
+
 export function recordPracticeResult(lessonId, { firstTryCorrect, secondTryCorrect, total, representations = [], skillResults = {} }) {
   const p = getProgress();
   const previous = getLessonMastery(p, lessonId);
-  const score = total ? (firstTryCorrect + secondTryCorrect * 0.5) / total : 0;
+  const score = total ? (firstTryCorrect + secondTryCorrect * SECOND_ATTEMPT_WEIGHT) / total : 0;
   let level = previous.level || 0;
   const successfulSessions = (previous.successfulSessions || 0) + (score >= 0.8 ? 1 : 0);
   const representationHistory = Array.from(new Set([...(previous.representations || []), ...representations]));
@@ -112,7 +116,7 @@ export function recordPracticeResult(lessonId, { firstTryCorrect, secondTryCorre
   }
 
   // Keep the existing XP/achievement model compatible.
-  const equivalentCorrect = Math.round(firstTryCorrect + secondTryCorrect * 0.5);
+  const equivalentCorrect = Math.round(firstTryCorrect + secondTryCorrect * SECOND_ATTEMPT_WEIGHT);
   const old = p.completed[lessonId];
   if (!old || equivalentCorrect > old.correct) {
     p.completed[lessonId] = { correct: equivalentCorrect, total, ts: Date.now() };

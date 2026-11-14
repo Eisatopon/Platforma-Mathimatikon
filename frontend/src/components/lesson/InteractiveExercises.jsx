@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, XCircle, ChevronRight, Sparkles, RotateCcw, Trophy, Lightbulb, Brain, CalendarClock } from "lucide-react";
 import { MathText } from "@/components/MathText";
-import { getProgress, getLessonMastery, MASTERY_LEVELS, recordPracticeResult } from "@/lib/progress";
+import { getProgress, getLessonMastery, MASTERY_LEVELS, recordPracticeResult, SECOND_ATTEMPT_WEIGHT } from "@/lib/progress";
 import { reorderForAdaptiveDifficulty } from "./adaptivePractice";
 
 const LETTERS = ["Α", "Β", "Γ", "Δ", "Ε"];
@@ -78,7 +78,7 @@ export const InteractiveExercises = ({ lessonId, questions, adaptive = false }) 
       setSuccessfulRepresentations((items) => Array.from(new Set([...items, q.representation || "symbolic"])));
       setResolved(true);
       setWasCorrect(true);
-      recordSkillOutcome(attempt === 1 ? 1 : 0.6);
+      recordSkillOutcome(attempt === 1 ? 1 : SECOND_ATTEMPT_WEIGHT);
       return;
     }
     setWrongOptions((items) => [...items, i]);
@@ -105,7 +105,7 @@ export const InteractiveExercises = ({ lessonId, questions, adaptive = false }) 
       setSuccessfulRepresentations((items) => Array.from(new Set([...items, q.representation || "constructed-response"])));
       setWasCorrect(true);
       setResolved(true);
-      recordSkillOutcome(attempt === 1 ? 1 : 0.6);
+      recordSkillOutcome(attempt === 1 ? 1 : SECOND_ATTEMPT_WEIGHT);
     } else if (attempt === 1) {
       setAttempt(2);
       setHintIndex(0);
@@ -122,7 +122,7 @@ export const InteractiveExercises = ({ lessonId, questions, adaptive = false }) 
       setSecondTryCorrect((value) => value + 1);
       setSuccessfulRepresentations((items) => Array.from(new Set([...items, q.representation || "application"])));
     }
-    recordSkillOutcome(understood ? 0.6 : 0);
+    recordSkillOutcome(understood ? SECOND_ATTEMPT_WEIGHT : 0);
     setWasCorrect(understood);
     setResolved(true);
   };
@@ -135,7 +135,7 @@ export const InteractiveExercises = ({ lessonId, questions, adaptive = false }) 
       setSuccessfulRepresentations((items) => Array.from(new Set([...items, q.representation || "procedural"])));
       setWasCorrect(true);
       setResolved(true);
-      recordSkillOutcome(attempt === 1 ? 1 : 0.6);
+      recordSkillOutcome(attempt === 1 ? 1 : SECOND_ATTEMPT_WEIGHT);
     } else if (attempt === 1) {
       setAttempt(2);
       setHintIndex(0);
@@ -199,7 +199,7 @@ export const InteractiveExercises = ({ lessonId, questions, adaptive = false }) 
   }
 
   if (done) {
-    const pct = Math.round(((firstTryCorrect + secondTryCorrect * 0.5) / total) * 100);
+    const pct = Math.round(((firstTryCorrect + secondTryCorrect * SECOND_ATTEMPT_WEIGHT) / total) * 100);
     const newLevel = masteryText(mastery);
     const weakestSkill = Object.entries(skillResults)
       .map(([skill, result]) => ({ skill, ratio: result.total ? result.earned / result.total : 0 }))
